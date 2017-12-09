@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/close.png</file>
+        <file>icons/cross.png</file>
+        <file>icons/minimalize.png</file>
+        <file>icons/open.png</file>
+        <file>icons/plus.png</file>
+        <file>icons/unvisible.png</file>
+        <file>icons/visible.png</file>
+    </qresource>
+</RCC>
