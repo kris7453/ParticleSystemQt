@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>shaders/particle.frag</file>
         <file>shaders/particle.vert</file>
+        <file>particles/ball.png</file>
+        <file>particles/ball2.png</file>
+        <file>particles/ball3.png</file>
     </qresource>
 </RCC>

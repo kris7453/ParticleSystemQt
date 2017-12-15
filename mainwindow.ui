@@ -13,7 +13,13 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true">#centralWidget{background: #8a8a8a;}</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
      <number>0</number>
@@ -51,8 +57,7 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">#menuBar{background-color: #000; }
-QWidget{font: 18px 'Arial'; color:#fff;}</string>
+       <string notr="true">QWidget{font: 18px 'Arial'; color:#fff;}</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">
@@ -93,11 +98,19 @@ QWidget{font: 18px 'Arial'; color:#fff;}</string>
          <property name="styleSheet">
           <string notr="true">#mainMenu {background-color: #3c3c3c;border: 0;}
 #mainMenu:hover{background: #525252;}
-#mainMenu::menu-indicator:open{image:url(:/images/close.png);}
-#mainMenu::menu-indicator:closed{image:url(:/images/open.png);}</string>
+#mainMenu:open{background:525252;}
+#mainMenu::menu-indicator{width: 16px; height: 16px;;subcontrol-position: right center;   subcontrol-origin: padding; right: 5px;}
+#mainMenu::menu-indicator:open{image: url(:/icons/close.png) ; }
+#mainMenu::menu-indicator:closed{image: url(:/icons/open.png);}</string>
          </property>
          <property name="text">
           <string>Menu</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -245,7 +258,7 @@ QPushButton:hover{ background: #6c6c6c;}</string>
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="styleSheet">
-       <string notr="true">background-color: #525252;</string>
+       <string notr="true">background-color: #3c3c3c;</string>
       </property>
       <property name="currentIndex">
        <number>0</number>
@@ -294,8 +307,8 @@ QPushButton:hover{ background: #6c6c6c;}</string>
           <property name="styleSheet">
            <string notr="true">::tab-bar{background-color: #fff;top:24px;}
 ::tab{font: 12px &quot;Arial&quot;; color: #fff;height:80;width:24;}
-::tab:selected{background-color: #525252;}
-::tab:!selected{background-color: #3c3c3c;}
+::tab:selected{background-color: #6c6c6c;}
+::tab:!selected{background-color: #525252;}
 ::pane{border: none;}</string>
           </property>
           <property name="tabPosition">
@@ -347,6 +360,9 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
                <number>0</number>
               </property>
               <widget class="QWidget" name="motion">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <attribute name="title">
                 <string>Ruch</string>
                </attribute>
@@ -366,8 +382,14 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">#emiterModes{border: solid 2px #000;}</string>
+                  </property>
                   <property name="currentIndex">
                    <number>1</number>
+                  </property>
+                  <property name="tabSpacing">
+                   <number>0</number>
                   </property>
                   <widget class="QWidget" name="gravityMode">
                    <property name="geometry">
@@ -375,7 +397,7 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
                      <x>0</x>
                      <y>0</y>
                      <width>229</width>
-                     <height>250</height>
+                     <height>262</height>
                     </rect>
                    </property>
                    <attribute name="label">
@@ -388,7 +410,7 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
                      <x>0</x>
                      <y>0</y>
                      <width>229</width>
-                     <height>250</height>
+                     <height>262</height>
                     </rect>
                    </property>
                    <attribute name="label">

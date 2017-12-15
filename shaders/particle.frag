@@ -1,9 +1,11 @@
 #version 330 core
 
-//uniform vec3 polygonColor;
-out vec4 fragCol;
+in vec2 textureCoord;
+in vec4 particleColor;
+
+uniform sampler2D textureSamp;
 	
 void main()
 {
-	fragCol = vec4( 1.0f,0.0f,0.0f, 1.0f);
+        gl_FragColor =  particleColor * texture2D(textureSamp, textureCoord);
 }

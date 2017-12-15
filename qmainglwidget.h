@@ -5,17 +5,16 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLFunctions_3_3_Core>
 #include <GL/gl.h>
-#include <QOpenGLVertexArrayObject>
-#include <QOpenGLBuffer>
+
 #include <QOpenGLShaderProgram>
 #include <QOpenGLShader>
 
 #include <QTimer>
 #include <QTime>
 #include <QDebug>
-#include <vector>
 #include <QOpenGLTexture>
-#include "psystem.h"
+
+#include "pparticlesystem.h"
 
     using namespace std;
 
@@ -34,7 +33,7 @@ class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
 
         void initializeGL();
         void paintGL();
-        void resize( int width, int height);
+        void resizeGL(int w, int h);
 
    private:
 
@@ -42,12 +41,17 @@ class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
         QTime *updateTime;
         int lastUpdate;
         QOpenGLFunctions_3_3_Core *oGLFunct;
-        QSize pixelSize;
-        PSystem *pSystem;
-        float *box;
-        QOpenGLVertexArrayObject *vao;
-        QOpenGLBuffer *vbo;
+
+        float   pixelWidth;
+        float   pixelHeight;
+
+        PSystemAPI::pParticleSystem *pSystem1;
+        //PSystemAPI::pParticleSystem *pSystem2;
+
+        QOpenGLTexture *texture;
         QOpenGLShaderProgram *sprogram;
+
+        void drawParticles( float deltaT);
 };
 
 #endif // QMAINGLWIDGET_H

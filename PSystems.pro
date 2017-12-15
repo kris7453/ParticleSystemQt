@@ -14,15 +14,19 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    psystem.cpp \
     qmainglwidget.cpp \
-    qmymenubar.cpp
+    qmymenubar.cpp \
+    pparticlesystem.cpp \
+    pdrawableitem.cpp \
+    pbuffer.cpp
 
 HEADERS  += mainwindow.h \
-    psystem.h \
     qmainglwidget.h \
     psystemdata.h \
-    qmymenubar.h
+    qmymenubar.h \
+    pdrawableitem.h \
+    pparticlesystem.h \
+    pbuffer.h
 
 FORMS    += mainwindow.ui
 
@@ -32,4 +36,7 @@ RESOURCES += \
 
 DISTFILES += \
     shaders/particle.frag \
-    shaders/particle.vert
+    shaders/particle.vert \
+    particles/ball.png \
+    particles/ball2.png \
+    particles/ball3.png
