@@ -4,25 +4,42 @@
 #include <cstring>
 #include <GL/gl.h>
 
+#include <QVector2D>
+#include <QVector4D>
+#include <QDebug>
+
+#define STRIDE_SIZE 8 // x, y, r, g, b, a, size, spin
+
 using namespace std;
 
 namespace PSystemAPI
 {
-    struct pPosition
+    struct pParticleValues
     {
-        GLfloat x, y;
-        pPosition(GLfloat x = 0.0f, GLfloat y = 0.0f) : x(x), y(y){}
+        QVector2D velocity;
+        GLfloat growthPerSec;
+        GLfloat rotatePerSec;
+        QVector4D colorIncreasePerSec;
+
+        pParticleValues(){}
+        pParticleValues( QVector2D velocity, GLfloat growthPerSec, GLfloat rotatePerSec, QVector4D colorIncreasePerSec) :
+            velocity(velocity), growthPerSec(growthPerSec), rotatePerSec(rotatePerSec), colorIncreasePerSec(colorIncreasePerSec){}
     };
 
     struct pParticle
     {
         float life;
-        pPosition position;
+        QVector2D position;
         GLfloat size;
+        GLfloat spin;
+        QVector4D color;
+
+        pParticleValues values;
 
         pParticle(){}
-        pParticle(float life, pPosition pos, GLfloat size) : life(life), position(pos), size(size){}
-        void setValues(float life, pPosition pos, GLfloat size){this->life = life; this->position = pos; this->size = size;}
+        pParticle(float life, QVector2D pos, GLfloat size, GLfloat spin, QVector4D color) :
+            life(life), position(pos), size(size), spin(spin), color(color){}
+        //void setValues(float life, pPosition pos, GLfloat size){this->life = life; this->position = pos; this->size = size;}
     };
 
     class pBuffer
@@ -31,6 +48,7 @@ namespace PSystemAPI
             pBuffer( int size = 128);
             ~pBuffer();
 
+            void addParticle( pParticle* particle);
             void addParticles( pParticle* particles, int count);
             void updateParticles( float deltaT);
             void loadBuffer(GLfloat *particlesBuffer);

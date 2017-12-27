@@ -19,12 +19,18 @@ namespace PSystemAPI
             static void initialize(QOpenGLFunctions_3_3_Core *glFunct);
             virtual void draw() = 0;
 
+            void setPosition( QVector2D position);
+            void translatePosition( QVector2D position);
+            void saveLastPosition();
+            void restoreLastPosition();
+
         protected:
             static QOpenGLFunctions_3_3_Core *oGLFunct;
             static GLuint bilboard;
 
         //private:
             QVector2D position;
+            QVector2D lastPosition;
 
             GLuint vao;
             GLuint propertiesBuffer;
