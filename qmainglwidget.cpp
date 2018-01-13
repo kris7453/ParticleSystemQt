@@ -26,18 +26,20 @@ void QmainGLWidget::initializeGL()
     sprogram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/particle.vert");
     sprogram->link();
 
-    texture = new QOpenGLTexture(QImage(QString(":/particles/ball.png")).mirrored());
+    texture = new QOpenGLTexture(QImage(QString(":/particles/star.png")).mirrored());
     texture->generateMipMaps();
     texture->setMinificationFilter(QOpenGLTexture::Nearest);
     texture->setMagnificationFilter(QOpenGLTexture::Linear);
 
     PSystemAPI::pDrawableItem::initialize(oGLFunct);
-    pSystem1 = new PSystemAPI::pParticleSystem(QVector2D(0,0),QVector4D(0.0f, 0.0f, 1.0f, 1.0f));
+    pSystem1 = new PSystemAPI::pParticleSystem(QVector2D(0,0));
     //pSystem2 = new PSystemAPI::pParticleSystem(QVector2D(-100,100),QVector4D(0.0f, 1.0f, 0.0f, 1.0f));
+
+    activeItem = pSystem1;
 
     updateTime = new QTime();
     t = new QTimer(this);
-    t->setInterval(1000/60);
+    t->setInterval(1);
     t->connect(t,SIGNAL(timeout()),this,SLOT(update()));
     t->start();
     updateTime->start();
@@ -60,11 +62,11 @@ void QmainGLWidget::resizeGL(int w, int h)
 {
     oGLFunct->glViewport(0,0,w,h);
 
-    pixelWidth = 2.0f /w;
-    pixelHeight = 2.0f / h;
+    pixelSize.setX( 2.0f / w);
+    pixelSize.setY( 2.0f / h);
 
-    qDebug()<< "pixels size " << pixelWidth  << " " << pixelHeight;
-    qDebug() << "psize " << (50*pixelWidth*0.5) << " " << (50*pixelHeight*0.5);
+    qDebug()<< "pixels size " << pixelSize.x()  << " " << pixelSize.y();
+    qDebug() << "psize " << (50*pixelSize.x()*0.5) << " " << (50*pixelSize.y()*0.5);
 
     paintGL();
 }
@@ -73,12 +75,13 @@ void QmainGLWidget::drawParticles( float deltaT)
 {
     oGLFunct->glClear( GL_COLOR_BUFFER_BIT );
 
-    oGLFunct->glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     oGLFunct->glEnable(GL_BLEND);
+    oGLFunct->glBlendFunc(GL_SRC_ALPHA,GL_ONE);
 
     sprogram->bind();
     sprogram->setUniformValue("textureSamp",0);
-    sprogram->setUniformValue("pixelSize", QVector2D(pixelWidth,pixelHeight));
+    sprogram->setUniformValue("pixelSize", pixelSize);
+    sprogram->setUniformValue("scale",0.5f);
 
     //oGLFunct->glBindVertexArray(vao);
 
@@ -88,4 +91,15 @@ void QmainGLWidget::drawParticles( float deltaT)
     pSystem1->draw();
     //pSystem2->draw();
     //oGLFunct->glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, 5);
+}
+
+void QmainGLWidget::mousePressEvent(QMouseEvent *e)
+{
+    activeItem->saveLastPosition();
+    mouseClickPosition = e->pos();
+}
+
+void QmainGLWidget::mouseMoveEvent(QMouseEvent *e)
+{
+    activeItem->translatePosition(QVector2D(e->pos() - mouseClickPosition)/0.5f);
 }

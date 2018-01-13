@@ -22,7 +22,6 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     qmainglwidget.h \
-    psystemdata.h \
     qmymenubar.h \
     pdrawableitem.h \
     pparticlesystem.h \
@@ -38,5 +37,4 @@ DISTFILES += \
     shaders/particle.frag \
     shaders/particle.vert \
     particles/ball.png \
-    particles/ball2.png \
-    particles/ball3.png
+    particles/ball2.png

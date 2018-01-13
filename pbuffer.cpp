@@ -13,6 +13,14 @@ namespace PSystemAPI
         delete buffer;
     }
 
+    void pBuffer::addParticle(pParticle *particle)
+    {
+        //qDebug() << "life " << fixed << qSetRealNumberPrecision(2) << particle->life;
+        void *pAddress = buffer + aliveParticles;
+        memcpy( pAddress, particle, sizeof(pParticle));
+        aliveParticles++;
+    }
+
     void pBuffer::addParticles(pParticle *particles, int count)
     {
         void *pAddress = buffer + aliveParticles;
@@ -32,7 +40,7 @@ namespace PSystemAPI
             {
                 if ( p < end-1)
                 {
-                    memcpy(p, buffer+aliveParticles-1,sizeof(pParticle));
+                    memcpy(p, end-1,sizeof(pParticle));
                     aliveParticles--;
                     end--;
                     p->life -= deltaT;
@@ -46,6 +54,11 @@ namespace PSystemAPI
 
             // Update values for live particle
 
+            p->position += p->values.velocity * deltaT;
+            p->color += p->values.colorIncreasePerSec * deltaT;
+            p->size += p->values.growthPerSec * deltaT;
+            p->spin += p->values.rotatePerSec * deltaT;
+
         }
     }
 
@@ -53,16 +66,20 @@ namespace PSystemAPI
     {
         pParticle *particle = buffer;
         GLfloat *bufferParticle = particlesBuffer;
-
-        for( int i = 0; i < aliveParticles; i++, particle++, bufferParticle += 7)
+        //qDebug() << "load particles";
+        for( int i = 0; i < aliveParticles; i++, particle++, bufferParticle += STRIDE_SIZE)
         {
-            *bufferParticle     = particle->position.x;
-            *(bufferParticle+1) = particle->position.y;
+            *bufferParticle     = particle->position.x();
+            *(bufferParticle+1) = particle->position.y();
             *(bufferParticle+2) = particle->size;
-            *(bufferParticle+3) = 1.0f;
-            *(bufferParticle+4) = 0.0f;
-            *(bufferParticle+5) = 0.0f;
-            *(bufferParticle+6) = 1.0f;
+            *(bufferParticle+3) = particle->spin;
+
+            *(bufferParticle+4) = particle->color.x();
+            *(bufferParticle+5) = particle->color.y();
+            *(bufferParticle+6) = particle->color.z();
+            *(bufferParticle+7) = particle->color.w();
+
+            //qDebug()<< *bufferParticle << " " << *(bufferParticle+1) << " " << *(bufferParticle+2) << " " << *(bufferParticle+3) << " " << *(bufferParticle+4) << " " << *(bufferParticle+5) << " " << *(bufferParticle+6) << " " << *(bufferParticle+7) << " " << particle->life;
         }
     }
 

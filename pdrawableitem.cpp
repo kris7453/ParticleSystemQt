@@ -19,4 +19,26 @@ namespace PSystemAPI
         oGLFunct->glBindBuffer(GL_ARRAY_BUFFER, bilboard);
         oGLFunct->glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*16, box, GL_STATIC_DRAW);
     }
+
+    void pDrawableItem::setPosition(QVector2D position)
+    {
+        this->position = position;
+    }
+
+    void pDrawableItem::translatePosition(QVector2D position)
+    {
+        //qDebug() << "position " << position.x() << " "  << position.y();
+        position.setY(-position.y());
+        this->position = lastPosition + position;
+    }
+
+    void pDrawableItem::saveLastPosition()
+    {
+        lastPosition = position;
+    }
+
+    void pDrawableItem::restoreLastPosition()
+    {
+        position = lastPosition;
+    }
 }

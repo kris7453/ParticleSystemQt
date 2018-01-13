@@ -9,6 +9,7 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLShader>
 
+#include <QMouseEvent>
 #include <QTimer>
 #include <QTime>
 #include <QDebug>
@@ -37,10 +38,15 @@ class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
 
    private:
 
+        QPoint mouseClickPosition;
+        PSystemAPI::pDrawableItem *activeItem;
+
         QTimer *t;
         QTime *updateTime;
         int lastUpdate;
         QOpenGLFunctions_3_3_Core *oGLFunct;
+
+        QVector2D pixelSize;
 
         float   pixelWidth;
         float   pixelHeight;
@@ -52,6 +58,11 @@ class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
         QOpenGLShaderProgram *sprogram;
 
         void drawParticles( float deltaT);
+
+        void mousePressEvent(QMouseEvent *e);
+        void mouseMoveEvent(QMouseEvent *e);
+        //void mouseReleaseEvent(QMouseEvent *e);
+
 };
 
 #endif // QMAINGLWIDGET_H

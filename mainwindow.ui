@@ -318,7 +318,7 @@ QPushButton:hover{ background: #6c6c6c;}</string>
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="properties">
            <property name="styleSheet">
@@ -357,7 +357,7 @@ QPushButton:hover{ background: #6c6c6c;}</string>
 QLabel{font: 20px bold 'Arial';color:#fff;}</string>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="motion">
                <property name="styleSheet">
@@ -505,6 +505,11 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
            <attribute name="title">
             <string>Warstwy</string>
            </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QListWidget" name="listWidget"/>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
