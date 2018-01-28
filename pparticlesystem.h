@@ -26,8 +26,8 @@ namespace PSystemAPI
     class pParticleSystem : public pDrawableItem
     {
         public:
-            pParticleSystem();
-            pParticleSystem( QVector2D position);
+            pParticleSystem( QString *resourceImagePath, QString name = QString("Default"));
+            pParticleSystem( QVector2D position, QString *resourceImagePath, QString name = QString("Default"));
 
             void spawnParticle();
             void updateParticles( float deltaT);
@@ -35,16 +35,22 @@ namespace PSystemAPI
 
             void setPosition( QVector2D position, QVector2D positionVariance = QVector2D(0.0f,0.0f));
             void setPositionVariance( QVector2D positionVariance);
+
             void setParticlesLife( int life, int lifeVariance = 0);
             void setParticlesLife( float life, float lifeVariance = 0.0f);
+
             void setLifeVariance( int lifeVariance);
             void setLifeVariance( float lifeVariance);
+
             void setParticlesColor( QVector4D startColor, QVector4D startColorVariance);
             void setParticlesColor( QVector4D startColor,QVector4D startColorVariance, QVector4D endColor, QVector4D endColorVariance);
+
             void setParticlesSpin( short startSpin, short startSpinVariance);
             void setParticlesSpin( short startSpin, short startSpinVariance, short endSpin, short endSpinVariance);
             void setParticlesSize( short startSize, short startSizeVariance);
             void setParticlesSize( short startSize, short startSizeVariance, short endSize, short endSizeVariance);
+
+            bool operator==(const pParticleSystem& item);
 
         private:
             pBuffer *particles;

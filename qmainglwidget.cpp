@@ -2,12 +2,20 @@
 
 QmainGLWidget::QmainGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
-
 }
 
 QmainGLWidget::~QmainGLWidget()
 {
+}
 
+void QmainGLWidget::addParticleSystem(PSystemAPI::pParticleSystem *pSystem)
+{
+    itemsController->addParticleSystem(pSystem);
+}
+
+void QmainGLWidget::addParticleSystem(QString *resourceImagePath, QString name)
+{
+    itemsController->addParticleSystem(resourceImagePath, name);
 }
 
 void QmainGLWidget::initializeGL()
@@ -15,8 +23,8 @@ void QmainGLWidget::initializeGL()
     oGLFunct = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
     oGLFunct->glClearColor( 0.0f, 0.0f, 0.0f, 1.0f);
 
-    pixelWidth = 2.0f / this->width();
-    pixelHeight = 2.0f / this->height();
+    pixelSize.setX( 2.0f / this->width());
+    pixelSize.setY( 2.0f / this->height());
 
     lastUpdate = QTime::currentTime().msec();
 
@@ -26,16 +34,12 @@ void QmainGLWidget::initializeGL()
     sprogram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/particle.vert");
     sprogram->link();
 
-    texture = new QOpenGLTexture(QImage(QString(":/particles/star.png")).mirrored());
-    texture->generateMipMaps();
-    texture->setMinificationFilter(QOpenGLTexture::Nearest);
-    texture->setMagnificationFilter(QOpenGLTexture::Linear);
-
     PSystemAPI::pDrawableItem::initialize(oGLFunct);
-    pSystem1 = new PSystemAPI::pParticleSystem(QVector2D(0,0));
-    //pSystem2 = new PSystemAPI::pParticleSystem(QVector2D(-100,100),QVector4D(0.0f, 1.0f, 0.0f, 1.0f));
+    itemsController = new PSystemAPI::pDrawItemsController( MainWindow::drawableListWidget);
+    MainWindow::drawableListWidget->setController(itemsController);
 
-    activeItem = pSystem1;
+    addParticleSystem( new QString(":/particles/star.png"), QString("star"));
+    addParticleSystem( new QString(":/particles/ball.png"), QString("ball"));
 
     updateTime = new QTime();
     t = new QTimer(this);
@@ -48,14 +52,7 @@ void QmainGLWidget::initializeGL()
 void QmainGLWidget::paintGL()
 {
     float deltaT = updateTime->restart() / 1000.0f;
-    //lastUpdate = updateTime->elapsed();
-
-
     drawParticles(deltaT);
-
-    //qDebug() << deltaT ;
-
-
 }
 
 void QmainGLWidget::resizeGL(int w, int h)
@@ -83,23 +80,16 @@ void QmainGLWidget::drawParticles( float deltaT)
     sprogram->setUniformValue("pixelSize", pixelSize);
     sprogram->setUniformValue("scale",0.5f);
 
-    //oGLFunct->glBindVertexArray(vao);
-
-    oGLFunct->glActiveTexture(GL_TEXTURE0);
-    texture->bind();
-    pSystem1->updateParticles(deltaT);
-    pSystem1->draw();
-    //pSystem2->draw();
-    //oGLFunct->glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, 5);
+    itemsController->drawItems(deltaT);
 }
 
 void QmainGLWidget::mousePressEvent(QMouseEvent *e)
 {
-    activeItem->saveLastPosition();
+    itemsController->saveLastPosition();
     mouseClickPosition = e->pos();
 }
 
 void QmainGLWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    activeItem->translatePosition(QVector2D(e->pos() - mouseClickPosition)/0.5f);
+    itemsController->translatePosition(QVector2D(e->pos() - mouseClickPosition)/0.5f);
 }

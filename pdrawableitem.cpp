@@ -5,6 +5,16 @@ namespace PSystemAPI
     QOpenGLFunctions_3_3_Core *pDrawableItem::oGLFunct;
     GLuint pDrawableItem::bilboard;
 
+    pDrawableItem::pDrawableItem(QString *resourceImagePath, QString name) : name(name)
+    {
+        texture = new QOpenGLTexture(QImage((resourceImagePath != nullptr) ? *resourceImagePath : QString(":/particles/star.png")).mirrored());
+        texture->generateMipMaps();
+        texture->setMinificationFilter(QOpenGLTexture::Nearest);
+        texture->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        visibility = true;
+    }
+
     void PSystemAPI::pDrawableItem::initialize(QOpenGLFunctions_3_3_Core *glFunct)
     {
         oGLFunct = glFunct;
@@ -40,5 +50,30 @@ namespace PSystemAPI
     void pDrawableItem::restoreLastPosition()
     {
         position = lastPosition;
+    }
+
+    bool pDrawableItem::isVisible()
+    {
+        return visibility;
+    }
+
+    bool pDrawableItem::changeVisibility()
+    {
+        return visibility ^= true;
+    }
+
+    bool pDrawableItem::operator==(const pDrawableItem &item)
+    {
+        return reinterpret_cast<int>(this) == reinterpret_cast<int>(&item);
+    }
+    
+    QString pDrawableItem::getName()
+    {
+        return name;
+    }
+    
+    void pDrawableItem::setName(const QString &value)
+    {
+        name = value;
     }
 }

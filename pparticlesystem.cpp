@@ -2,7 +2,7 @@
 
 namespace PSystemAPI
 {
-    pParticleSystem::pParticleSystem()
+    pParticleSystem::pParticleSystem( QString *resourceImagePath, QString name) : pDrawableItem(resourceImagePath, name)
     {
         timeElapsed = 0;
         maxParticles = 3000;
@@ -38,8 +38,11 @@ namespace PSystemAPI
         oGLFunct->glBindVertexArray(0);
     }
 
-    pParticleSystem::pParticleSystem(QVector2D position) : pParticleSystem()
+    pParticleSystem::pParticleSystem(QVector2D position, QString *resourceImagePath, QString name) : pParticleSystem(resourceImagePath, name)
     {
+        if ( resourceImagePath == nullptr )
+            resourceImagePath = new QString(":/particles/star.png");
+
         setPosition(position, QVector2D(30,40));
         
         setParticlesLife(1.1f, 0.4f);
@@ -138,6 +141,9 @@ namespace PSystemAPI
             oGLFunct->glBufferSubData(GL_ARRAY_BUFFER,0,bufferSize*sizeof(GLfloat),reinterpret_cast<GLvoid*>(buffer));
             delete [] buffer;
 
+            oGLFunct->glActiveTexture(GL_TEXTURE0);
+            texture->bind();
+
             oGLFunct->glBindVertexArray(vao);
             oGLFunct->glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, aliveParticles);
         }
@@ -222,5 +228,10 @@ namespace PSystemAPI
         this->pProperties.endSize = endSize;
         this->pVariances.startSize = startSizeVariance;
         this->pVariances.endSize = endSizeVariance;
+    }
+
+    bool pParticleSystem::operator==(const pParticleSystem &item)
+    {
+        return reinterpret_cast<int>(this) == reinterpret_cast<int>(&item);
     }
 }

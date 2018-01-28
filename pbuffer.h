@@ -16,10 +16,10 @@ namespace PSystemAPI
 {
     struct pParticleValues
     {
-        QVector2D velocity;
-        GLfloat growthPerSec;
-        GLfloat rotatePerSec;
-        QVector4D colorIncreasePerSec;
+        QVector2D   velocity;
+        GLfloat     growthPerSec,
+                    rotatePerSec;
+        QVector4D   colorIncreasePerSec;
 
         pParticleValues(){}
         pParticleValues( QVector2D velocity, GLfloat growthPerSec, GLfloat rotatePerSec, QVector4D colorIncreasePerSec) :
@@ -28,11 +28,11 @@ namespace PSystemAPI
 
     struct pParticle
     {
-        float life;
-        QVector2D position;
-        GLfloat size;
-        GLfloat spin;
-        QVector4D color;
+        float           life;
+        QVector2D       position;
+        GLfloat         size,
+                        spin;
+        QVector4D       color;
 
         pParticleValues values;
 
@@ -56,9 +56,9 @@ namespace PSystemAPI
             int getAliveParticlesCount();
 
         private:
-            pParticle *buffer;
-            int size;
-            int aliveParticles;
+            pParticle   *buffer;
+            int         size,
+                        aliveParticles;
     };
 }
 

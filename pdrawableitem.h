@@ -16,6 +16,7 @@ namespace PSystemAPI
     class pDrawableItem
     {
         public:
+            pDrawableItem( QString *resourceImagePath, QString name);
             static void initialize(QOpenGLFunctions_3_3_Core *glFunct);
             virtual void draw() = 0;
 
@@ -24,7 +25,15 @@ namespace PSystemAPI
             void saveLastPosition();
             void restoreLastPosition();
 
-        protected:
+            bool isVisible();
+            bool changeVisibility();
+
+            bool operator==(const pDrawableItem& item);
+
+            QString getName();
+            void setName(const QString &value);
+
+    protected:
             static QOpenGLFunctions_3_3_Core *oGLFunct;
             static GLuint bilboard;
 
@@ -34,6 +43,11 @@ namespace PSystemAPI
 
             GLuint vao;
             GLuint propertiesBuffer;
+
+            QOpenGLTexture *texture;
+            QString name;
+
+            bool visibility;
     };
 }
 

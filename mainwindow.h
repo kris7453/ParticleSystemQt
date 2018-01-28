@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMouseEvent>
 #include <QPushButton>
+#include <QLabel>
 
 #include <QMenuBar>
 #include <QMenu>
@@ -12,22 +13,29 @@
 #include <QHBoxLayout>
 #include <QSpacerItem>
 
+#include <QListWidget>
+#include "qdrawablelistwidget.h"
+
+
 namespace Ui {
 class MainWindow;
 }
+class QdrawableListWidget;
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    public:
+        explicit MainWindow(QWidget *parent = 0);
+        ~MainWindow();
 
-public slots:
+        static QdrawableListWidget *drawableListWidget;
 
-private:
-    Ui::MainWindow *ui;
+    public slots:
+
+    private:
+        Ui::MainWindow *ui;
 
 };
 

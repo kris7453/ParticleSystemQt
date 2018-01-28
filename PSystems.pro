@@ -18,14 +18,20 @@ SOURCES += main.cpp\
     qmymenubar.cpp \
     pparticlesystem.cpp \
     pdrawableitem.cpp \
-    pbuffer.cpp
+    pbuffer.cpp \
+    resourceitemwidget.cpp \
+    pdrawitemscontroller.cpp \
+    qdrawablelistwidget.cpp
 
 HEADERS  += mainwindow.h \
     qmainglwidget.h \
     qmymenubar.h \
     pdrawableitem.h \
     pparticlesystem.h \
-    pbuffer.h
+    pbuffer.h \
+    resourceitemwidget.h \
+    pdrawitemscontroller.h \
+    qdrawablelistwidget.h
 
 FORMS    += mainwindow.ui
 

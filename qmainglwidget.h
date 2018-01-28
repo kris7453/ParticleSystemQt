@@ -15,9 +15,17 @@
 #include <QDebug>
 #include <QOpenGLTexture>
 
-#include "pparticlesystem.h"
+#include "mainwindow.h"
+#include "pdrawitemscontroller.h"
 
-    using namespace std;
+using namespace std;
+
+namespace PSystemAPI
+{
+    class pDrawableItem;
+    class pParticleSystem;
+    class pDrawItemsController;
+}
 
 class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
 {
@@ -27,6 +35,9 @@ class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
 
         explicit QmainGLWidget(QWidget *parent = 0);
         ~QmainGLWidget();
+
+        void addParticleSystem(PSystemAPI::pParticleSystem *pSystem = nullptr);
+        void addParticleSystem(QString *resourceImagePath, QString name);
 
     signals:
 
@@ -39,7 +50,6 @@ class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
    private:
 
         QPoint mouseClickPosition;
-        PSystemAPI::pDrawableItem *activeItem;
 
         QTimer *t;
         QTime *updateTime;
@@ -47,15 +57,8 @@ class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
         QOpenGLFunctions_3_3_Core *oGLFunct;
 
         QVector2D pixelSize;
-
-        float   pixelWidth;
-        float   pixelHeight;
-
-        PSystemAPI::pParticleSystem *pSystem1;
-        //PSystemAPI::pParticleSystem *pSystem2;
-
-        QOpenGLTexture *texture;
         QOpenGLShaderProgram *sprogram;
+        PSystemAPI::pDrawItemsController *itemsController;
 
         void drawParticles( float deltaT);
 
