@@ -46,6 +46,7 @@ resourceItemWidget::resourceItemWidget(resourceItemWidget &item) : QWidget(item.
     clearElementsConnections();
     connectElements();
     createButtonsConnections();
+    changeVisibilityIcon( itemPointer->isVisible() );
 
     qDebug() << "resourceItemWidget::resourceItemWidget copy itemWidget";
 }
