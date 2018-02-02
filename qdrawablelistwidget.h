@@ -56,11 +56,14 @@ class QdrawableListWidget : public QObject
 
         static _icon *icon;
 
-    signals:
+        PSystemAPI::pDrawItemsController *getController();
+
+signals:
         void changeVisibility(resourceItemWidget *item = nullptr);
         void close(resourceItemWidget *item = nullptr);
         void layerUp(resourceItemWidget *item = nullptr, int layerDirectio = -1 );
         void layerDown(resourceItemWidget *item = nullptr, int layerDirection = 1 );
+
 
     public slots:
 

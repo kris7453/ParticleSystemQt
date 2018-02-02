@@ -12,6 +12,12 @@ namespace PSystemAPI
         qDeleteAll(pSystemsList.begin(),pSystemsList.end());
     }
 
+    void pDrawItemsController::setParametersController(QparametersController *controller)
+    {
+        this->parametersController = controller;
+        controller->setDrawableController(this);
+    }
+
     void pDrawItemsController::drawItems(float deltaT)
     {
 
@@ -95,6 +101,17 @@ namespace PSystemAPI
     void pDrawItemsController::setActiveItem(pDrawableItem *value)
     {
         activeItem = value;
+        if( activeItem->isParticleSystem() )
+        {
+            activeSystem = reinterpret_cast<pParticleSystem*>(activeItem);
+            parametersController->changeValues(activeSystem);
+        }
+        else
+        {
+            activeSystem = nullptr;
+            parametersController->changeValues(activeItem);
+        }
+
         emit activeChanged(activeItem, drawableItemsList.indexOf(activeItem));
     }
 
@@ -133,5 +150,19 @@ namespace PSystemAPI
         }
         else
             return -1;
+    }
+
+    void pDrawItemsController::setAngle(int angle)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setAngle(angle);
+        else
+            activeItem->setAngle(angle);
+    }
+
+    void pDrawItemsController::setSpeed(int speed)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setSpeed(speed);
     }
 }

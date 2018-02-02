@@ -3,6 +3,8 @@
 #include "qmainglwidget.h"
 
 QdrawableListWidget *MainWindow::drawableListWidget;
+QWidget *MainWindow::drawableParameters;
+QWidget *MainWindow::gravityParameters;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,6 +19,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mainMenu->setMenu(a);
 
     //---------------------------------------------------------------------------------------
+
+    drawableParameters = ui->drawableWidget;
+    gravityParameters = ui->gravityMode;
 
     drawableListWidget = new QdrawableListWidget(ui->resourcesList);
     drawableListWidget->setActiveWidgets(ui->activeLayerUpBtn,

@@ -17,6 +17,7 @@
 
 #include "mainwindow.h"
 #include "pdrawitemscontroller.h"
+#include "qparameterscontroller.h"
 
 using namespace std;
 

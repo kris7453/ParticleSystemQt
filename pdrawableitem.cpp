@@ -7,6 +7,7 @@ namespace PSystemAPI
 
     pDrawableItem::pDrawableItem(QString *resourceImagePath, QString name) : name(name)
     {
+        particleSystem = false;
         texture = new QOpenGLTexture(QImage((resourceImagePath != nullptr) ? *resourceImagePath : QString(":/particles/star.png")).mirrored());
         texture->generateMipMaps();
         texture->setMinificationFilter(QOpenGLTexture::Nearest);
@@ -62,18 +63,33 @@ namespace PSystemAPI
         return visibility ^= true;
     }
 
+    bool pDrawableItem::isParticleSystem()
+    {
+        return particleSystem;
+    }
+
     bool pDrawableItem::operator==(const pDrawableItem &item)
     {
         return reinterpret_cast<int>(this) == reinterpret_cast<int>(&item);
     }
     
+    void pDrawableItem::setName(const QString &value)
+    {
+        name = value;
+    }
+
+    void pDrawableItem::setAngle(short angle)
+    {
+        this->angle = angle;
+    }
+
     QString pDrawableItem::getName()
     {
         return name;
     }
-    
-    void pDrawableItem::setName(const QString &value)
+
+    int pDrawableItem::getAngle()
     {
-        name = value;
+        return angle;
     }
 }

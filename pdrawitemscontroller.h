@@ -8,9 +8,11 @@
 #include "pdrawableitem.h"
 #include "pparticlesystem.h"
 #include "qdrawablelistwidget.h"
+#include "qparameterscontroller.h"
 
 class QmainGLWidget;
 class QdrawableListWidget;
+class QparametersController;
 class resourceItemWidget;
 
 namespace PSystemAPI
@@ -22,6 +24,7 @@ namespace PSystemAPI
             pDrawItemsController( QdrawableListWidget *drawableListWidget);
             ~pDrawItemsController();
 
+            void setParametersController( QparametersController *controller);
             void drawItems( float deltaT);
             void saveLastPosition();
             void translatePosition( QVector2D position);
@@ -46,12 +49,18 @@ namespace PSystemAPI
         signals:
             void activeChanged(pDrawableItem *active, int activeRow);
 
+        public slots:
+            void setAngle(int angle);
+            void setSpeed(int speed);
+
         private:
             pDrawableItem *activeItem;
+            pParticleSystem *activeSystem;
 
             QList<pDrawableItem*> drawableItemsList;
             QList<pParticleSystem*> pSystemsList;
 
+            QparametersController *parametersController;
             QdrawableListWidget *drawableListWidget;
     };
 }

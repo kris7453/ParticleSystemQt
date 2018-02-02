@@ -49,6 +49,7 @@ namespace PSystemAPI
 
             void setParticlesSpin( short startSpin, short startSpinVariance);
             void setParticlesSpin( short startSpin, short startSpinVariance, short endSpin, short endSpinVariance);
+            
             void setParticlesSize( short startSize, short startSizeVariance);
             void setParticlesSize( short startSize, short startSizeVariance, short endSize, short endSizeVariance);
 

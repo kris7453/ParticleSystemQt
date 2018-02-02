@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     pbuffer.cpp \
     resourceitemwidget.cpp \
     pdrawitemscontroller.cpp \
-    qdrawablelistwidget.cpp
+    qdrawablelistwidget.cpp \
+    rangeparameterwidget.cpp \
+    qparameterscontroller.cpp
 
 HEADERS  += mainwindow.h \
     qmainglwidget.h \
@@ -31,7 +33,9 @@ HEADERS  += mainwindow.h \
     pbuffer.h \
     resourceitemwidget.h \
     pdrawitemscontroller.h \
-    qdrawablelistwidget.h
+    qdrawablelistwidget.h \
+    rangeparameterwidget.h \
+    qparameterscontroller.h
 
 FORMS    += mainwindow.ui
 
@@ -42,5 +46,4 @@ RESOURCES += \
 DISTFILES += \
     shaders/particle.frag \
     shaders/particle.vert \
-    particles/ball.png \
-    particles/ball2.png
+    particles/ball.png

@@ -27,19 +27,24 @@ namespace PSystemAPI
 
             bool isVisible();
             bool changeVisibility();
+            bool isParticleSystem();
 
             bool operator==(const pDrawableItem& item);
 
-            QString getName();
             void setName(const QString &value);
+            void setAngle( short angle);
 
-    protected:
+            QString getName();
+            int getAngle();
+
+        protected:
             static QOpenGLFunctions_3_3_Core *oGLFunct;
             static GLuint bilboard;
 
         //private:
             QVector2D position;
             QVector2D lastPosition;
+            short angle;
 
             GLuint vao;
             GLuint propertiesBuffer;
@@ -48,6 +53,7 @@ namespace PSystemAPI
             QString name;
 
             bool visibility;
+            bool particleSystem;
     };
 }
 

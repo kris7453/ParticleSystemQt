@@ -10,7 +10,7 @@
 #include <QMenu>
 #include <QWidget>
 
-#include <QHBoxLayout>
+#include <QBoxLayout>
 #include <QSpacerItem>
 
 #include <QListWidget>
@@ -31,6 +31,8 @@ class MainWindow : public QMainWindow
         ~MainWindow();
 
         static QdrawableListWidget *drawableListWidget;
+        static QWidget *drawableParameters;
+        static QWidget *gravityParameters;
 
     public slots:
 

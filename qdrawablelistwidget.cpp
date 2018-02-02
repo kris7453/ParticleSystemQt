@@ -160,3 +160,8 @@ void QdrawableListWidget::setActive(PSystemAPI::pDrawableItem *active, int activ
 
     setActiveItemDesc(active);
 }
+
+PSystemAPI::pDrawItemsController *QdrawableListWidget::getController()
+{
+    return controller;
+}

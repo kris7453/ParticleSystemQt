@@ -319,7 +319,7 @@ QPushButton:hover{ background: #6c6c6c;}</string>
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="properties">
            <property name="styleSheet">
@@ -355,7 +355,7 @@ QPushButton:hover{ background: #6c6c6c;}</string>
               <property name="styleSheet">
                <string notr="true">::tab{height:24;width:100;}
 ::tab-bar{top:0;}
-QLabel{font: 20px bold 'Arial';color:#fff;}</string>
+QLabel{font: 16px bold 'Arial';color:#fff;}</string>
               </property>
               <property name="currentIndex">
                <number>0</number>
@@ -369,6 +369,33 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
                </attribute>
                <layout class="QVBoxLayout" name="verticalLayout_4">
                 <item>
+                 <widget class="QWidget" name="drawableWidget" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <layout class="QVBoxLayout" name="drawableParametersLayout">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QLabel" name="emiterTypeLabel">
                   <property name="text">
                    <string>TypEmitera</string>
@@ -377,6 +404,9 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
                 </item>
                 <item>
                  <widget class="QToolBox" name="emiterModes">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -387,7 +417,7 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
                    <string notr="true">#emiterModes{border: solid 2px #000;}</string>
                   </property>
                   <property name="currentIndex">
-                   <number>1</number>
+                   <number>0</number>
                   </property>
                   <property name="tabSpacing">
                    <number>0</number>
@@ -397,13 +427,30 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>100</width>
-                     <height>30</height>
+                     <width>231</width>
+                     <height>259</height>
                     </rect>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                    <attribute name="label">
                     <string>Grawitacyjny</string>
                    </attribute>
+                   <layout class="QVBoxLayout" name="gravityParametersLayout">
+                    <property name="spacing">
+                     <number>4</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>2</number>
+                    </property>
+                   </layout>
                   </widget>
                   <widget class="QWidget" name="radialMode">
                    <property name="geometry">
@@ -411,12 +458,48 @@ QLabel{font: 20px bold 'Arial';color:#fff;}</string>
                      <x>0</x>
                      <y>0</y>
                      <width>231</width>
-                     <height>260</height>
+                     <height>259</height>
                     </rect>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <attribute name="label">
                     <string>Radialny</string>
                    </attribute>
+                   <layout class="QVBoxLayout" name="verticalLayout_5">
+                    <property name="spacing">
+                     <number>4</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>2</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="pushButton_2">
+                      <property name="text">
+                       <string>PushButton</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </widget>
                 </item>

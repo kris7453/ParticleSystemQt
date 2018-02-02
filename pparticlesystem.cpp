@@ -4,6 +4,7 @@ namespace PSystemAPI
 {
     pParticleSystem::pParticleSystem( QString *resourceImagePath, QString name) : pDrawableItem(resourceImagePath, name)
     {
+        particleSystem = true;
         timeElapsed = 0;
         maxParticles = 3000;
         particles = new pBuffer(maxParticles);
@@ -55,6 +56,9 @@ namespace PSystemAPI
 
         spawnRate = 800.0f;
         spawnTimeSpan = 1.0f / spawnRate;
+        angle = 90;
+        pProperties.speed = 200;qDebug()<<"angle " << angle;
+        pProperties.velocity = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180)) * pProperties.speed;
     }
 
     void pParticleSystem::spawnParticle()
@@ -89,7 +93,7 @@ namespace PSystemAPI
                     startSpin,
                     startColor);
 
-        pbuffer->values.velocity = QVector2D(0,244);
+        pbuffer->values.velocity = pProperties.velocity;
         pbuffer->values.growthPerSec = (endSize - startSize) / life;
         pbuffer->values.colorIncreasePerSec = (endColor - startColor) / life;
         pbuffer->values.rotatePerSec = (endSpin - startSpin) / life;
@@ -228,6 +232,23 @@ namespace PSystemAPI
         this->pProperties.endSize = endSize;
         this->pVariances.startSize = startSizeVariance;
         this->pVariances.endSize = endSizeVariance;
+    }
+
+    void pParticleSystem::setAngle(short angle)
+    {
+        this->angle = angle;
+        pProperties.velocity = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180)) * pProperties.speed;
+    }
+
+    void pParticleSystem::setSpeed(short speed)
+    {
+        pProperties.speed = speed;
+        pProperties.velocity = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180)) * pProperties.speed;
+    }
+
+    int pParticleSystem::getSpeed()
+    {
+        return pProperties.speed;
     }
 
     bool pParticleSystem::operator==(const pParticleSystem &item)
