@@ -52,7 +52,28 @@ namespace PSystemAPI
                 }
             }
 
-            // Update values for live particle
+            // Calculate acceleration and velocity
+
+            QVector2D acceleration = p->values.gravity;
+            QVector2D radialVector = p->position - p->values.centerPosition;
+            radialVector.normalize();
+
+            if( radialVector.length() > 0 && p->values.tangentialAcceleration != 0)
+            {
+                double angle = atan(radialVector.y()/radialVector.x()) + M_PI_2;
+
+                if ( radialVector.x() < 0 && radialVector.y() > 0)
+                    angle += M_PI;
+                else
+                    if ( radialVector.x() < 0 && radialVector.y() < 0)
+                        angle -= M_PI;
+
+                QVector2D tangentialVector = QVector2D(cos(angle), sin(angle)) * p->values.tangentialAcceleration;
+                acceleration +=  tangentialVector;
+            }
+
+            acceleration += radialVector * p->values.radialAcceleration;
+            p->values.velocity += acceleration * deltaT;
 
             p->position += p->values.velocity * deltaT;
             p->color += p->values.colorIncreasePerSec * deltaT;

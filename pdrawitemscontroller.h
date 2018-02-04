@@ -52,6 +52,10 @@ namespace PSystemAPI
         public slots:
             void setAngle(int angle);
             void setSpeed(int speed);
+            void setGravityX( int x);
+            void setGravityY( int y);
+            void setRadialAcceleration( int acceleration);
+            void setTangentialAcceleration( int acceleration);
 
         private:
             pDrawableItem *activeItem;

@@ -165,4 +165,28 @@ namespace PSystemAPI
         if ( activeSystem != nullptr )
             activeSystem->setSpeed(speed);
     }
+
+    void pDrawItemsController::setGravityX(int x)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setGravityX(x);
+    }
+
+    void pDrawItemsController::setGravityY(int y)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setGravityY(y);
+    }
+
+    void pDrawItemsController::setRadialAcceleration(int acceleration)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setRadialAcceleration(acceleration);
+    }
+
+    void pDrawItemsController::setTangentialAcceleration(int acceleration)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setTangentialAcceleration(acceleration);
+    }
 }

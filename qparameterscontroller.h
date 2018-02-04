@@ -33,7 +33,11 @@ class QparametersController : public QObject
         enum range
         {
             angel,
-            speed
+            speed,
+            gravityX,
+            gravityY,
+            radialAcceleration,
+            tangentialAcceleration
         };
 
         PSystemAPI::pDrawItemsController *controller;

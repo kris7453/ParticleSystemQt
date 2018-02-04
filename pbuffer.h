@@ -7,6 +7,7 @@
 #include <QVector2D>
 #include <QVector4D>
 #include <QDebug>
+#include <math.h>
 
 #define STRIDE_SIZE 8 // x, y, r, g, b, a, size, spin
 
@@ -16,14 +17,21 @@ namespace PSystemAPI
 {
     struct pParticleValues
     {
-        QVector2D   velocity;
+        short       radialAcceleration,
+                    tangentialAcceleration;
+        QVector2D   velocity,
+                    gravity,
+                    tangentialVelocity,
+                    centerPosition;
         GLfloat     growthPerSec,
                     rotatePerSec;
         QVector4D   colorIncreasePerSec;
 
-        pParticleValues(){}
-        pParticleValues( QVector2D velocity, GLfloat growthPerSec, GLfloat rotatePerSec, QVector4D colorIncreasePerSec) :
-            velocity(velocity), growthPerSec(growthPerSec), rotatePerSec(rotatePerSec), colorIncreasePerSec(colorIncreasePerSec){}
+        pParticleValues(){tangentialVelocity=QVector2D(0,0);}
+        pParticleValues( QVector2D velocity,  QVector2D centerPosition, QVector2D gravity, short radialAcceleration, short tangentialAcceleration,
+                         GLfloat growthPerSec, GLfloat rotatePerSec, QVector4D colorIncreasePerSec) :
+            velocity(velocity), centerPosition(centerPosition), radialAcceleration(radialAcceleration), gravity(gravity),
+            tangentialAcceleration(tangentialAcceleration), growthPerSec(growthPerSec), rotatePerSec(rotatePerSec), colorIncreasePerSec(colorIncreasePerSec){}
     };
 
     struct pParticle

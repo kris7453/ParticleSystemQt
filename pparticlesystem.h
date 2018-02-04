@@ -14,15 +14,18 @@ namespace PSystemAPI
 {
     struct pParticleProperties
     {
-        int life; // in miliseconds
-        QVector4D startColor;
-        QVector4D endColor;
-        short startSpin;
-        short endSpin;
-        short startSize;
-        short endSize;
-        short speed;
-        QVector2D velocity;
+        int     life; // in miliseconds
+        short   startSpin,
+                endSpin,
+                startSize,
+                endSize,
+                speed,
+                radialAcceleration,
+                tangentialAcceleration;
+        QVector2D   velocity,
+                    gravity;
+        QVector4D   startColor,
+                    endColor;
     };
 
     class pParticleSystem : public pDrawableItem
@@ -49,28 +52,39 @@ namespace PSystemAPI
 
             void setParticlesSpin( short startSpin, short startSpinVariance);
             void setParticlesSpin( short startSpin, short startSpinVariance, short endSpin, short endSpinVariance);
+            
             void setParticlesSize( short startSize, short startSizeVariance);
             void setParticlesSize( short startSize, short startSizeVariance, short endSize, short endSizeVariance);
 
             void setAngle(short angle);
             void setSpeed(short speed);
 
+            void setGravityX( int x);
+            void setGravityY( int y);
+
+            void setRadialAcceleration( short acceleration);
+            void setRadialAcceleration( short acceleration, short accelerationVariance);
+
+            void setTangentialAcceleration( short acceleration);
+            void setTangentialAcceleration( short acceleration, short accelerationVariance);
+
             int getSpeed();
 
             bool operator==(const pParticleSystem& item);
 
         private:
-            pBuffer *particles;
-            float timeElapsed;
-            QVector2D positionVariance;
+            pBuffer     *particles;
+            float       timeElapsed;
+            QVector2D   positionVariance;
+            QVector2D   velocityDirection;
 
             pParticleProperties pProperties;
             pParticleProperties pVariances;
 
-            int maxParticles;
-            float spawnRate;
-            float spawnTimeSpan;
-            QTimer *spawnTimer;
+            int     maxParticles;
+            float   spawnRate;
+            float   spawnTimeSpan;
+            QTimer  *spawnTimer;
     };
 }
 
