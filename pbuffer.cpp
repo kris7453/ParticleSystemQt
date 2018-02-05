@@ -52,35 +52,51 @@ namespace PSystemAPI
                 }
             }
 
-            // Calculate acceleration and velocity
-
-            QVector2D acceleration = p->values.gravity;
-            QVector2D radialVector = p->position - p->values.centerPosition;
-            radialVector.normalize();
-
-            if( radialVector.length() > 0 && p->values.tangentialAcceleration != 0)
+            if ( updateMode == pSystemMode::gravity)
             {
-                double angle = atan(radialVector.y()/radialVector.x()) + M_PI_2;
+                // Calculate acceleration and velocity
 
-                if ( radialVector.x() < 0 && radialVector.y() > 0)
-                    angle += M_PI;
-                else
-                    if ( radialVector.x() < 0 && radialVector.y() < 0)
-                        angle -= M_PI;
+                QVector2D acceleration = p->values.gravity;
+                QVector2D radialVector = p->position - p->values.centerPosition;
+                radialVector.normalize();
 
-                QVector2D tangentialVector = QVector2D(cos(angle), sin(angle)) * p->values.tangentialAcceleration;
-                acceleration +=  tangentialVector;
+                if( radialVector.length() > 0 && p->values.tangentialAccValue != 0)
+                {
+                    double angle = atan(radialVector.y()/radialVector.x()) + M_PI_2;
+
+                    if ( radialVector.x() < 0 && radialVector.y() > 0)
+                        angle += M_PI;
+                    else
+                        if ( radialVector.x() < 0 && radialVector.y() < 0)
+                            angle -= M_PI;
+
+                    QVector2D tangentialVector = QVector2D(cos(angle), sin(angle)) * p->values.tangentialAccValue;
+                    acceleration +=  tangentialVector;
+                }
+
+                acceleration += radialVector * p->values.radialAccValue;
+                p->values.velocity += acceleration * deltaT;
+                p->position += p->values.velocity * deltaT;
+            }
+            else // Radius mode
+            {
+                p->values.angle += p->values.rotatePerSec * deltaT;
+                p->values.radius += p->values.radiusIncreasePerSec * deltaT;
+
+                float angleInRadians = p->values.angle / 180*M_PI;
+                p->position = p->values.centerPosition + QVector2D(-cos(angleInRadians), -sin(angleInRadians)) * p->values.radius;
             }
 
-            acceleration += radialVector * p->values.radialAcceleration;
-            p->values.velocity += acceleration * deltaT;
-
-            p->position += p->values.velocity * deltaT;
             p->color += p->values.colorIncreasePerSec * deltaT;
             p->size += p->values.growthPerSec * deltaT;
-            p->spin += p->values.rotatePerSec * deltaT;
+            p->spin += p->values.spinPerSec * deltaT;
 
         }
+    }
+
+    void pBuffer::changeUpdateMode(pSystemMode mode)
+    {
+        this->updateMode = mode;
     }
 
     void pBuffer::loadBuffer(GLfloat *particlesBuffer)

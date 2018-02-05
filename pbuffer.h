@@ -15,23 +15,38 @@ using namespace std;
 
 namespace PSystemAPI
 {
+    enum pSystemMode
+    {
+        gravity,
+        radius
+    };
+
     struct pParticleValues
     {
-        short       radialAcceleration,
-                    tangentialAcceleration;
+        QVector2D   centerPosition;
+
+        // Gravity
         QVector2D   velocity,
-                    gravity,
-                    tangentialVelocity,
-                    centerPosition;
-        GLfloat     growthPerSec,
+                    gravity;
+        short       radialAccValue,
+                    tangentialAccValue;
+
+        //Radius
+        GLfloat     radius,
+                    radiusIncreasePerSec,
+                    angle,
                     rotatePerSec;
+
+        //Outlook
+        GLfloat     growthPerSec,
+                    spinPerSec;
         QVector4D   colorIncreasePerSec;
 
-        pParticleValues(){tangentialVelocity=QVector2D(0,0);}
-        pParticleValues( QVector2D velocity,  QVector2D centerPosition, QVector2D gravity, short radialAcceleration, short tangentialAcceleration,
-                         GLfloat growthPerSec, GLfloat rotatePerSec, QVector4D colorIncreasePerSec) :
-            velocity(velocity), centerPosition(centerPosition), radialAcceleration(radialAcceleration), gravity(gravity),
-            tangentialAcceleration(tangentialAcceleration), growthPerSec(growthPerSec), rotatePerSec(rotatePerSec), colorIncreasePerSec(colorIncreasePerSec){}
+        pParticleValues(){}
+        pParticleValues( QVector2D velocity,  QVector2D centerPosition, QVector2D gravity, short radialAccValue, short tangentialAccValue,
+                         GLfloat growthPerSec, GLfloat spinPerSec, QVector4D colorIncreasePerSec) :
+            velocity(velocity), centerPosition(centerPosition), radialAccValue(radialAccValue), gravity(gravity),
+            tangentialAccValue(tangentialAccValue), growthPerSec(growthPerSec), spinPerSec(spinPerSec), colorIncreasePerSec(colorIncreasePerSec){}
     };
 
     struct pParticle
@@ -59,6 +74,7 @@ namespace PSystemAPI
             void addParticle( pParticle* particle);
             void addParticles( pParticle* particles, int count);
             void updateParticles( float deltaT);
+            void changeUpdateMode( pSystemMode mode );
             void loadBuffer(GLfloat *particlesBuffer);
 
             int getAliveParticlesCount();
@@ -67,6 +83,7 @@ namespace PSystemAPI
             pParticle   *buffer;
             int         size,
                         aliveParticles;
+            pSystemMode updateMode;
     };
 }
 

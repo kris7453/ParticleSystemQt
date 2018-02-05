@@ -178,15 +178,15 @@ namespace PSystemAPI
             activeSystem->setGravityY(y);
     }
 
-    void pDrawItemsController::setRadialAcceleration(int acceleration)
+    void pDrawItemsController::setRadialAccValue(int acceleration)
     {
         if ( activeSystem != nullptr )
-            activeSystem->setRadialAcceleration(acceleration);
+            activeSystem->setRadialAccValue(acceleration);
     }
 
-    void pDrawItemsController::setTangentialAcceleration(int acceleration)
+    void pDrawItemsController::setTangentialAccValue(int acceleration)
     {
         if ( activeSystem != nullptr )
-            activeSystem->setTangentialAcceleration(acceleration);
+            activeSystem->setTangentialAccValue(acceleration);
     }
 }

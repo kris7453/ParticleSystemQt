@@ -54,8 +54,8 @@ namespace PSystemAPI
             void setSpeed(int speed);
             void setGravityX( int x);
             void setGravityY( int y);
-            void setRadialAcceleration( int acceleration);
-            void setTangentialAcceleration( int acceleration);
+            void setRadialAccValue( int acceleration);
+            void setTangentialAccValue( int acceleration);
 
         private:
             pDrawableItem *activeItem;

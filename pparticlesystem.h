@@ -15,17 +15,26 @@ namespace PSystemAPI
     struct pParticleProperties
     {
         int     life; // in miliseconds
+
+        // outlook
         short   startSpin,
                 endSpin,
                 startSize,
-                endSize,
-                speed,
-                radialAcceleration,
-                tangentialAcceleration;
-        QVector2D   velocity,
-                    gravity;
+                endSize;
         QVector4D   startColor,
                     endColor;
+
+        //gravity mode
+        short   speed,
+                radialAccValue,
+                tangentialAccValue;
+        QVector2D   velocity,
+                    gravity;
+
+        //radius mode
+        short   startRadius,
+                endRadius,
+                rotatePerSec;
     };
 
     class pParticleSystem : public pDrawableItem
@@ -38,6 +47,7 @@ namespace PSystemAPI
             void updateParticles( float deltaT);
             void draw();
 
+            void setSystemMode( pSystemMode mode);
             void setPosition( QVector2D position, QVector2D positionVariance = QVector2D(0.0f,0.0f));
             void setPositionVariance( QVector2D positionVariance);
 
@@ -62,11 +72,11 @@ namespace PSystemAPI
             void setGravityX( int x);
             void setGravityY( int y);
 
-            void setRadialAcceleration( short acceleration);
-            void setRadialAcceleration( short acceleration, short accelerationVariance);
+            void setRadialAccValue( short acceleration);
+            void setRadialAccValue( short acceleration, short accelerationVariance);
 
-            void setTangentialAcceleration( short acceleration);
-            void setTangentialAcceleration( short acceleration, short accelerationVariance);
+            void setTangentialAccValue( short acceleration);
+            void setTangentialAccValue( short acceleration, short accelerationVariance);
 
             int getSpeed();
 
@@ -77,12 +87,13 @@ namespace PSystemAPI
             float       timeElapsed;
             QVector2D   positionVariance;
             QVector2D   velocityDirection;
+            pSystemMode mode;
 
             pParticleProperties pProperties;
             pParticleProperties pVariances;
 
             int     maxParticles;
-            float   spawnRate;
+            float   spawnRate; // emission rate
             float   spawnTimeSpan;
             QTimer  *spawnTimer;
     };

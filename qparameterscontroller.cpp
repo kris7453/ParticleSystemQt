@@ -9,8 +9,8 @@ QparametersController::QparametersController(QWidget *drawableWidget, QWidget *g
         new rangeParameterWidget("Prędkość", -2000, 2000, range::speed, drawableWidget),
         new rangeParameterWidget("Grawitacja X", -1000, 1000, range::gravityX, gravityWidget),
         new rangeParameterWidget("Grawitacja Y", -1000, 1000, range::gravityY, gravityWidget),
-        new rangeParameterWidget("Przyspieszenie promieniowe", -1000, 1000, range::radialAcceleration, gravityWidget),
-        new rangeParameterWidget("Przyspieszenie styczne", -1000, 1000, range::tangentialAcceleration, gravityWidget)
+        new rangeParameterWidget("Przyspieszenie promieniowe", -1000, 1000, range::radialAccValue, gravityWidget),
+        new rangeParameterWidget("Przyspieszenie styczne", -1000, 1000, range::tangentialAccValue, gravityWidget)
     };
 
     QLayout *layout;
@@ -22,8 +22,8 @@ QparametersController::QparametersController(QWidget *drawableWidget, QWidget *g
     layout->addWidget(values[range::speed]);
     layout->addWidget(values[range::gravityX]);
     layout->addWidget(values[range::gravityY]);
-    layout->addWidget(values[range::radialAcceleration]);
-    layout->addWidget(values[range::tangentialAcceleration]);
+    layout->addWidget(values[range::radialAccValue]);
+    layout->addWidget(values[range::tangentialAccValue]);
     layout->addItem(new QSpacerItem( 0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     for (int i = 0; i < controllersCount; i++)
@@ -61,8 +61,8 @@ void QparametersController::setValue(int itemId, int value)
         case range::speed: controller->setSpeed(value); break;
         case range::gravityX: controller->setGravityX(value); break;
         case range::gravityY: controller->setGravityY(value); break;
-        case range::radialAcceleration: controller->setRadialAcceleration(value); break;
-        case range::tangentialAcceleration: controller->setTangentialAcceleration(value); break;
+        case range::radialAccValue: controller->setRadialAccValue(value); break;
+        case range::tangentialAccValue: controller->setTangentialAccValue(value); break;
     }
 
 }

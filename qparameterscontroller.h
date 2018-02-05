@@ -36,8 +36,8 @@ class QparametersController : public QObject
             speed,
             gravityX,
             gravityY,
-            radialAcceleration,
-            tangentialAcceleration
+            radialAccValue,
+            tangentialAccValue
         };
 
         PSystemAPI::pDrawItemsController *controller;
