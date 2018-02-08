@@ -22,14 +22,14 @@ class rangeParameterWidget : public QWidget
     private:
         int rangeId;
 
-        QWidget     *nameWidget;
-
-        QLabel      *nameLabel;
-        QSpinBox    *numberBox;
-        QSlider     *slider;
-
         QVBoxLayout *mainLayout;
-        QHBoxLayout *nameLayout;
+        QLabel      *nameLabel;
+
+        QWidget     *horizontalWidget;
+        QHBoxLayout *horizontalLayout;
+
+        QSlider     *slider;
+        QSpinBox    *numberBox;
 };
 
 #endif // RANGEPARAMETERWIDGET_H

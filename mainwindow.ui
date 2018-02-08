@@ -417,7 +417,7 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                    <string notr="true">#emiterModes{border: solid 2px #000;}</string>
                   </property>
                   <property name="currentIndex">
-                   <number>0</number>
+                   <number>1</number>
                   </property>
                   <property name="tabSpacing">
                    <number>0</number>
@@ -492,13 +492,6 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                     <property name="rightMargin">
                      <number>2</number>
                     </property>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_2">
-                      <property name="text">
-                       <string>PushButton</string>
-                      </property>
-                     </widget>
-                    </item>
                    </layout>
                   </widget>
                  </widget>

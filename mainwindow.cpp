@@ -5,6 +5,7 @@
 QdrawableListWidget *MainWindow::drawableListWidget;
 QWidget *MainWindow::drawableParameters;
 QWidget *MainWindow::gravityParameters;
+QWidget *MainWindow::radialParameters;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     drawableParameters = ui->drawableWidget;
     gravityParameters = ui->gravityMode;
+    radialParameters = ui->radialMode;
 
     drawableListWidget = new QdrawableListWidget(ui->resourcesList);
     drawableListWidget->setActiveWidgets(ui->activeLayerUpBtn,

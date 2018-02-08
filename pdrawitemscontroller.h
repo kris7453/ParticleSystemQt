@@ -51,11 +51,24 @@ namespace PSystemAPI
 
         public slots:
             void setAngle(int angle);
+            void setAngleVariance(int variance);
             void setSpeed(int speed);
+            void setSpeedVariance(int variance);
             void setGravityX( int x);
+            void setGravityXVariance( int variance);
             void setGravityY( int y);
+            void setGravityYVariance( int variance);
             void setRadialAccValue( int acceleration);
+            void setRadialAccVariance( int variance);
             void setTangentialAccValue( int acceleration);
+            void setTangentialAccVariance( int variance);
+
+            void setStartRadius(int radius);
+            void setStartRadiusVariance(int variance);
+            void setEndRadius(int radius);
+            void setEndRadiusVariance(int variance);
+            void setRotatePerSec(int rotate);
+            void setRotatePerSecVariance(int variance);
 
         private:
             pDrawableItem *activeItem;

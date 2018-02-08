@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     pdrawitemscontroller.cpp \
     qdrawablelistwidget.cpp \
     rangeparameterwidget.cpp \
-    qparameterscontroller.cpp
+    qparameterscontroller.cpp \
+    rangeparametervariancewidget.cpp
 
 HEADERS  += mainwindow.h \
     qmainglwidget.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     pdrawitemscontroller.h \
     qdrawablelistwidget.h \
     rangeparameterwidget.h \
-    qparameterscontroller.h
+    qparameterscontroller.h \
+    rangeparametervariancewidget.h
 
 FORMS    += mainwindow.ui
 

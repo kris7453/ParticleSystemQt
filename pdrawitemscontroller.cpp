@@ -160,10 +160,22 @@ namespace PSystemAPI
             activeItem->setAngle(angle);
     }
 
+    void pDrawItemsController::setAngleVariance(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setAngleVariance(variance);
+    }
+
     void pDrawItemsController::setSpeed(int speed)
     {
         if ( activeSystem != nullptr )
             activeSystem->setSpeed(speed);
+    }
+
+    void pDrawItemsController::setSpeedVariance(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setSpeedVariance(variance);
     }
 
     void pDrawItemsController::setGravityX(int x)
@@ -172,10 +184,22 @@ namespace PSystemAPI
             activeSystem->setGravityX(x);
     }
 
+    void pDrawItemsController::setGravityXVariance(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setGravityXVariance(variance);
+    }
+
     void pDrawItemsController::setGravityY(int y)
     {
         if ( activeSystem != nullptr )
             activeSystem->setGravityY(y);
+    }
+
+    void pDrawItemsController::setGravityYVariance(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setGravityYVariance(variance);
     }
 
     void pDrawItemsController::setRadialAccValue(int acceleration)
@@ -184,9 +208,57 @@ namespace PSystemAPI
             activeSystem->setRadialAccValue(acceleration);
     }
 
+    void pDrawItemsController::setRadialAccVariance(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setRadialAccVariance(variance);
+    }
+
     void pDrawItemsController::setTangentialAccValue(int acceleration)
     {
         if ( activeSystem != nullptr )
             activeSystem->setTangentialAccValue(acceleration);
+    }
+
+    void pDrawItemsController::setTangentialAccVariance(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setTangentialAccVariance(variance);
+    }
+
+    void pDrawItemsController::setStartRadius(int radius)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setStartRadius(radius);
+    }
+
+    void pDrawItemsController::setStartRadiusVariance(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setStartRadiusVariance(variance);
+    }
+
+    void pDrawItemsController::setEndRadius(int radius)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setEndRadius(radius);
+    }
+
+    void pDrawItemsController::setEndRadiusVariance(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setEndRadiusVariance(variance);
+    }
+
+    void pDrawItemsController::setRotatePerSec(int rotate)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setRotatePerSec(rotate);
+    }
+
+    void pDrawItemsController::setRotatePerSecVariance(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setRotatePerSecVariance(variance);
     }
 }

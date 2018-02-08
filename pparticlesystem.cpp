@@ -48,7 +48,7 @@ namespace PSystemAPI
         setSystemMode( pSystemMode::radius );
         
         setParticlesLife(3.1f, 0.4f);
-        setParticlesSize(40, 10, 200, 0);
+        setParticlesSize(40, 10, 100, 0);
         setParticlesSpin( 0, 0, 0, 0);
         setParticlesColor(QVector4D(0.2f, 0.4f, 0.69f, 1.0f),
                           QVector4D(0.0f, 0.0f, 0.0f, 0.0f),
@@ -58,10 +58,11 @@ namespace PSystemAPI
         spawnRate = 200.0f;
         spawnTimeSpan = 1.0f / spawnRate;
         angle = 90;
+        angleVariance = 0;
 
         // Gravity
 
-        pProperties.speed = 3;
+        pProperties.speed = 10;
         pVariances.speed = 0;
         velocityDirection = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180));
         pProperties.velocity = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180)) * pProperties.speed;
@@ -91,7 +92,14 @@ namespace PSystemAPI
         QVector2D posVariance = QVector2D(rand()%(2*static_cast<int>(positionVariance.x())+1) - positionVariance.x(),
                                           rand()%(2*static_cast<int>(positionVariance.y())+1) - positionVariance.y());
 
-        QVector2D velocityVariance = velocityDirection * ( rand() % (2*pVariances.speed+1) - pVariances.speed);
+        short angle = this->angle + rand()%(2*this->angleVariance+1) - this->angleVariance;
+        double angleInRadians = angle /180.0f*M_PI;
+        short speed = pProperties.speed + rand()%(2*pVariances.speed+1) - pVariances.speed;
+
+        pProperties.velocity = QVector2D(cos(angleInRadians),sin(angleInRadians)) * speed;
+
+        QVector2D gravityVariance = QVector2D(rand()%(2*static_cast<int>(pVariances.gravity.x())+1) - pVariances.gravity.x(),
+                                         rand()%(2*static_cast<int>(pVariances.gravity.y())+1) - pVariances.gravity.y());
 
         short radialAccValue = pProperties.radialAccValue + ( rand() % (2*pVariances.radialAccValue+1) - pVariances.radialAccValue);
         short tangentialAccValue = pProperties.tangentialAccValue + ( rand() % (2*pVariances.tangentialAccValue+1) - pVariances.tangentialAccValue);
@@ -118,7 +126,6 @@ namespace PSystemAPI
                                                                 / 1000.0f;
         endColor.normalize();
 
-        float angleInRadians = this->angle / 180*M_PI;
 
         pParticle *pbuffer = new pParticle(
                     life,
@@ -132,15 +139,15 @@ namespace PSystemAPI
         pbuffer->values.centerPosition = this->position;
 
         // Gravity
-        pbuffer->values.velocity = pProperties.velocity + velocityVariance;
-        pbuffer->values.gravity = pProperties.gravity;
+        pbuffer->values.velocity = pProperties.velocity;
+        pbuffer->values.gravity = pProperties.gravity + gravityVariance;
         pbuffer->values.radialAccValue = radialAccValue;
         pbuffer->values.tangentialAccValue = tangentialAccValue;
 
         // Radius
         pbuffer->values.radius = startRadius;
         pbuffer->values.radiusIncreasePerSec = (endRadius - startRadius) / life;
-        pbuffer->values.angle = this->angle;
+        pbuffer->values.angle = angle;
         pbuffer->values.rotatePerSec = rotatePerSec;
 
         // Outlook
@@ -285,14 +292,24 @@ namespace PSystemAPI
     void pParticleSystem::setAngle(short angle)
     {
         this->angle = angle;
-        this->velocityDirection = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180));
-        this->pProperties.velocity = velocityDirection* pProperties.speed;
+//        this->velocityDirection = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180));
+//        this->pProperties.velocity = velocityDirection* pProperties.speed;
+    }
+
+    void pParticleSystem::setAngleVariance(short variance)
+    {
+        this->angleVariance = variance;
     }
 
     void pParticleSystem::setSpeed(short speed)
     {
         this->pProperties.speed = speed;
-        this->pProperties.velocity =  velocityDirection * pProperties.speed;
+//        this->pProperties.velocity =  velocityDirection * pProperties.speed;
+    }
+
+    void pParticleSystem::setSpeedVariance(short variance)
+    {
+        this->pVariances.speed = variance;
     }
 
     void pParticleSystem::setGravityX(int x)
@@ -300,14 +317,29 @@ namespace PSystemAPI
         this->pProperties.gravity.setX( x);
     }
 
+    void pParticleSystem::setGravityXVariance(int variance)
+    {
+        this->pVariances.gravity.setX( variance);
+    }
+
     void pParticleSystem::setGravityY(int y)
     {
         this->pProperties.gravity.setY( y);
     }
 
+    void pParticleSystem::setGravityYVariance(int variance)
+    {
+        this->pVariances.gravity.setY( variance);
+    }
+
     void pParticleSystem::setRadialAccValue(short acceleration)
     {
         this->pProperties.radialAccValue = acceleration;
+    }
+
+    void pParticleSystem::setRadialAccVariance(short variance)
+    {
+        this->pVariances.radialAccValue = variance;
     }
 
     void pParticleSystem::setRadialAccValue(short acceleration, short accelerationVariance)
@@ -321,15 +353,130 @@ namespace PSystemAPI
         this->pProperties.tangentialAccValue = acceleration;
     }
 
+    void pParticleSystem::setTangentialAccVariance(short variance)
+    {
+        this->pVariances.tangentialAccValue = variance;
+    }
+
     void pParticleSystem::setTangentialAccValue(short acceleration, short accelerationVariance)
     {
         this->pProperties.tangentialAccValue = acceleration;
         this->pVariances.tangentialAccValue = accelerationVariance;
     }
 
+    void pParticleSystem::setStartRadius(int radius)
+    {
+        this->pProperties.startRadius = radius;
+    }
+
+    void pParticleSystem::setStartRadiusVariance(int variance)
+    {
+        this->pVariances.startRadius = variance;
+    }
+
+    void pParticleSystem::setEndRadius(int radius)
+    {
+        this->pProperties.endRadius = radius;
+    }
+
+    void pParticleSystem::setEndRadiusVariance(int variance)
+    {
+        this->pVariances.endRadius = variance;
+    }
+
+    void pParticleSystem::setRotatePerSec(int rotates)
+    {
+        this->pProperties.rotatePerSec = rotates;
+    }
+
+    void pParticleSystem::setRotatePerSecVariance(int variance)
+    {
+        this->pVariances.rotatePerSec = variance;
+    }
+
+    int pParticleSystem::getAngleVariance()
+    {
+        return angleVariance;
+    }
+
     int pParticleSystem::getSpeed()
     {
         return pProperties.speed;
+    }
+
+    int pParticleSystem::getSpeedVariance()
+    {
+        return pVariances.speed;
+    }
+
+    int pParticleSystem::getGravityX()
+    {
+        return pProperties.gravity.x();
+    }
+
+    int pParticleSystem::getGravityXVariance()
+    {
+        return pVariances.gravity.x();
+    }
+
+    int pParticleSystem::getGravityY()
+    {
+        return pProperties.gravity.y();
+    }
+
+    int pParticleSystem::getGravityYVariance()
+    {
+        return pVariances.gravity.y();
+    }
+
+    int pParticleSystem::getRadialAccValue()
+    {
+        return pProperties.radialAccValue;
+    }
+
+    int pParticleSystem::getRadialAccVariance()
+    {
+        return pVariances.radialAccValue;
+    }
+
+    int pParticleSystem::getTangentialAccValue()
+    {
+        return pProperties.tangentialAccValue;
+    }
+
+    int pParticleSystem::getTangentialAccVariance()
+    {
+        return pVariances.tangentialAccValue;
+    }
+
+    int pParticleSystem::getStartRadius()
+    {
+        return pProperties.startRadius;
+    }
+
+    int pParticleSystem::getStartRadiusVariance()
+    {
+        return pVariances.startRadius;
+    }
+
+    int pParticleSystem::getEndRadius()
+    {
+        return pProperties.endRadius;
+    }
+
+    int pParticleSystem::getEndRadiusVariance()
+    {
+        return pVariances.endRadius;
+    }
+
+    int pParticleSystem::getRotatePerSec()
+    {
+        return pProperties.rotatePerSec;
+    }
+
+    int pParticleSystem::getRotatePerSecVariance()
+    {
+        return pVariances.rotatePerSec;
     }
 
     bool pParticleSystem::operator==(const pParticleSystem &item)

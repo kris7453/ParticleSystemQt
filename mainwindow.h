@@ -33,6 +33,7 @@ class MainWindow : public QMainWindow
         static QdrawableListWidget *drawableListWidget;
         static QWidget *drawableParameters;
         static QWidget *gravityParameters;
+        static QWidget *radialParameters;
 
     public slots:
 

@@ -38,7 +38,8 @@ void QmainGLWidget::initializeGL()
     itemsController = new PSystemAPI::pDrawItemsController( MainWindow::drawableListWidget);
     itemsController->setParametersController( new QparametersController(
                                                   MainWindow::drawableParameters,
-                                                  MainWindow::gravityParameters));
+                                                  MainWindow::gravityParameters,
+                                                  MainWindow::radialParameters));
     MainWindow::drawableListWidget->setController(itemsController);
 
     addParticleSystem( new QString(":/particles/star.png"), QString("star"));

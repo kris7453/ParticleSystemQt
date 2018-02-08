@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QSpacerItem>
 #include "rangeparameterwidget.h"
+#include "rangeparametervariancewidget.h"
 #include "pdrawitemscontroller.h"
 
 namespace PSystemAPI
@@ -18,7 +19,7 @@ class QparametersController : public QObject
 {
     Q_OBJECT
     public:
-        explicit QparametersController(QWidget *drawableWidget, QWidget *gravityWidget, QObject *parent = 0);
+        explicit QparametersController(QWidget *drawableWidget, QWidget *gravityWidget, QWidget *radialWidget,QObject *parent = 0);
 
         void setDrawableController(PSystemAPI::pDrawItemsController *controller);
         void changeValues(PSystemAPI::pDrawableItem *item);
@@ -27,21 +28,26 @@ class QparametersController : public QObject
     signals:
 
     private slots:
-        void setValue(int itemId, int value);
+        void setMainValue(int itemId, int value);
+        void setVarianceValue(int itemId, int value);
 
     private:
         enum range
         {
-            angel,
+            angle,
             speed,
             gravityX,
             gravityY,
             radialAccValue,
-            tangentialAccValue
+            tangentialAccValue,
+
+            startRadius,
+            endRadius,
+            rotatePerSec
         };
 
         PSystemAPI::pDrawItemsController *controller;
-        rangeParameterWidget **values;
+        rangeParameterVarianceWidget **values;
 };
 
 #endif // QPARAMETERSCONTROLLER_H
