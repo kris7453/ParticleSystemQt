@@ -51,7 +51,12 @@ namespace PSystemAPI
 
         public slots:
             void setAngle(int angle);
+
+
             void setAngleVariance(int variance);
+            void setMode(int mode);
+            void setParticleLife( float life);
+            void setParticleLifeVariance( float variance);
             void setSpeed(int speed);
             void setSpeedVariance(int variance);
             void setGravityX( int x);
@@ -69,6 +74,15 @@ namespace PSystemAPI
             void setEndRadiusVariance(int variance);
             void setRotatePerSec(int rotate);
             void setRotatePerSecVariance(int variance);
+
+            void setParticleStartSpin( short spin);
+            void setParticleStartSpinVariance( short variance);
+            void setParticleEndSpin( short spin);
+            void setParticleEndSpinVariance( short variance);
+            void setParticleStartSize( short size);
+            void setParticleStartSizeVariance( short variance);
+            void setParticleEndSize( short size);
+            void setParticleEndSizeVariance( short variance);
 
         private:
             pDrawableItem *activeItem;

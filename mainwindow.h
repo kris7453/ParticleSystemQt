@@ -9,6 +9,7 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QWidget>
+#include <QToolBox>
 
 #include <QBoxLayout>
 #include <QSpacerItem>
@@ -31,9 +32,14 @@ class MainWindow : public QMainWindow
         ~MainWindow();
 
         static QdrawableListWidget *drawableListWidget;
+
+        static QToolBox *emiterMode;
+
         static QWidget *drawableParameters;
         static QWidget *gravityParameters;
         static QWidget *radialParameters;
+        static QWidget *outlook;
+
 
     public slots:
 

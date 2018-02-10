@@ -1,6 +1,6 @@
 #include "rangeparameterwidget.h"
 
-rangeParameterWidget::rangeParameterWidget(QString name, int min, int max, int id, QWidget *parent) : QWidget(parent)
+rangeParameterWidget::rangeParameterWidget(QString name, double min, double max, int id, QWidget *parent) : QWidget(parent)
 {
     this->rangeId = id;
 
@@ -28,7 +28,7 @@ rangeParameterWidget::rangeParameterWidget(QString name, int min, int max, int i
     slider->setValue(0);
     slider->setOrientation(Qt::Horizontal);
 
-    numberBox = new QSpinBox(this);
+    numberBox = new QDoubleSpinBox(this);
     numberBox->setSizePolicy( QSizePolicy::Maximum,QSizePolicy::Preferred);
     numberBox->setMaximumSize(QSize(16777215, 60));
     numberBox->setMinimum( min );
@@ -48,13 +48,13 @@ rangeParameterWidget::rangeParameterWidget(QString name, int min, int max, int i
         numberBox->setValue(val);
         emit valueChanged(rangeId, val);
     });
-    connect( numberBox, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), [this](int val){
+    connect( numberBox, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), [this](double val){
         slider->setValue(val);
         emit valueChanged(rangeId, val);
     });
 }
 
-void rangeParameterWidget::setValue(int value)
+void rangeParameterWidget::setValue(double value)
 {
     numberBox->setValue(value);
     slider->setValue(value);

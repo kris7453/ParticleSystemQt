@@ -1,8 +1,8 @@
 #include "rangeparametervariancewidget.h"
 
 rangeParameterVarianceWidget::rangeParameterVarianceWidget(QString name,
-                                                           QString firstParameterName, int firstMin, int firstMax,
-                                                           QString secondParameterName, int secondMin, int secondMax,
+                                                           QString firstParameterName, double firstMin, double firstMax,
+                                                           QString secondParameterName, double secondMin, double secondMax,
                                                            int id, QWidget *parent) : QWidget(parent)
 {
     itemId = id;
@@ -21,12 +21,12 @@ rangeParameterVarianceWidget::rangeParameterVarianceWidget(QString name,
     connect(secondParameter, &rangeParameterWidget::valueChanged, this, &rangeParameterVarianceWidget::secondValueChanged);
 }
 
-void rangeParameterVarianceWidget::setFirstValue(int value)
+void rangeParameterVarianceWidget::setFirstValue(double value)
 {
     firstParameter->setValue(value);
 }
 
-void rangeParameterVarianceWidget::setSecondValue(int value)
+void rangeParameterVarianceWidget::setSecondValue(double value)
 {
     secondParameter->setValue(value);
 }

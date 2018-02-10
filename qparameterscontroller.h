@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QToolBox>
 #include <QSpacerItem>
 #include "rangeparameterwidget.h"
 #include "rangeparametervariancewidget.h"
@@ -19,7 +20,8 @@ class QparametersController : public QObject
 {
     Q_OBJECT
     public:
-        explicit QparametersController(QWidget *drawableWidget, QWidget *gravityWidget, QWidget *radialWidget,QObject *parent = 0);
+        explicit QparametersController( QToolBox *emiterMode, QWidget *drawableWidget,
+                                        QWidget *gravityWidget, QWidget *radialWidget, QWidget *outlookWidget, QObject *parent = 0);
 
         void setDrawableController(PSystemAPI::pDrawItemsController *controller);
         void changeValues(PSystemAPI::pDrawableItem *item);
@@ -28,13 +30,14 @@ class QparametersController : public QObject
     signals:
 
     private slots:
-        void setMainValue(int itemId, int value);
-        void setVarianceValue(int itemId, int value);
+        void setMainValue(int itemId, double value);
+        void setVarianceValue(int itemId, double value);
 
     private:
         enum range
         {
             angle,
+            particleLife,
             speed,
             gravityX,
             gravityY,
@@ -43,9 +46,15 @@ class QparametersController : public QObject
 
             startRadius,
             endRadius,
-            rotatePerSec
+            rotatePerSec,
+
+            startSize,
+            endSize,
+            startSpin,
+            endSpin
         };
 
+        QToolBox *emiterMode;
         PSystemAPI::pDrawItemsController *controller;
         rangeParameterVarianceWidget **values;
 };

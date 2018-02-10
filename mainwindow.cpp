@@ -3,9 +3,13 @@
 #include "qmainglwidget.h"
 
 QdrawableListWidget *MainWindow::drawableListWidget;
+
+QToolBox *MainWindow::emiterMode;
+
 QWidget *MainWindow::drawableParameters;
 QWidget *MainWindow::gravityParameters;
 QWidget *MainWindow::radialParameters;
+QWidget *MainWindow::outlook;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,9 +25,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //---------------------------------------------------------------------------------------
 
+    emiterMode = ui->emiterModes;
     drawableParameters = ui->drawableWidget;
     gravityParameters = ui->gravityMode;
     radialParameters = ui->radialMode;
+    outlook = ui->outlook;
 
     drawableListWidget = new QdrawableListWidget(ui->resourcesList);
     drawableListWidget->setActiveWidgets(ui->activeLayerUpBtn,

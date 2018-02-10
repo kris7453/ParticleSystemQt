@@ -166,6 +166,24 @@ namespace PSystemAPI
             activeSystem->setAngleVariance(variance);
     }
 
+    void pDrawItemsController::setMode(int mode)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setSystemMode(static_cast<PSystemAPI::pSystemMode>(mode));
+    }
+
+    void pDrawItemsController::setParticleLife(float life)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticlesLife(life);
+    }
+
+    void pDrawItemsController::setParticleLifeVariance(float variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setLifeVariance(variance);
+    }
+
     void pDrawItemsController::setSpeed(int speed)
     {
         if ( activeSystem != nullptr )
@@ -260,5 +278,53 @@ namespace PSystemAPI
     {
         if ( activeSystem != nullptr )
             activeSystem->setRotatePerSecVariance(variance);
+    }
+
+    void pDrawItemsController::setParticleStartSpin( short spin)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleStartSpin(spin);
+    }
+
+    void pDrawItemsController::setParticleStartSpinVariance( short variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleStartSpinVariance(variance);
+    }
+
+    void pDrawItemsController::setParticleEndSpin( short spin)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleEndSpin(spin);
+    }
+
+    void pDrawItemsController::setParticleEndSpinVariance( short variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleEndSpinVariance(variance);
+    }
+
+    void pDrawItemsController::setParticleStartSize( short size)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleStartSize(size);
+    }
+
+    void pDrawItemsController::setParticleStartSizeVariance( short variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleStartSizeVariance(variance);
+    }
+
+    void pDrawItemsController::setParticleEndSize( short size)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleEndSize(size);
+    }
+
+    void pDrawItemsController::setParticleEndSizeVariance( short variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleEndSizeVariance(variance);
     }
 }

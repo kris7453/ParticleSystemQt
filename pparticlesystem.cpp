@@ -225,6 +225,11 @@ namespace PSystemAPI
         this->pVariances.life = lifeVariance;
     }
 
+    void pParticleSystem::setParticlesLife(float life)
+    {
+        this->pProperties.life = life * 1000;
+    }
+
     void pParticleSystem::setParticlesLife(float life, float lifeVariance)
     {
         this->pProperties.life = life * 1000;
@@ -257,6 +262,26 @@ namespace PSystemAPI
         this->pVariances.endColor = endColorVariance * 1000.0f;
     }
 
+    void pParticleSystem::setParticleStartSpin( short spin)
+    {
+        this->pProperties.startSpin = spin;
+    }
+
+    void pParticleSystem::setParticleStartSpinVariance( short variance)
+    {
+        this->pVariances.startSpin = variance;
+    }
+
+    void pParticleSystem::setParticleEndSpin( short spin)
+    {
+        this->pProperties.endSpin = spin;
+    }
+
+    void pParticleSystem::setParticleEndSpinVariance( short variance)
+    {
+        this->pVariances.startSpin = variance;
+    }
+
     void pParticleSystem::setParticlesSpin(short startSpin, short startSpinVariance)
     {
         this->pProperties.startSpin = startSpin;
@@ -271,6 +296,26 @@ namespace PSystemAPI
         this->pProperties.endSpin = endSpin;
         this->pVariances.startSpin = startSpinVariance;
         this->pVariances.endSpin = endSpinVariance;
+    }
+
+    void pParticleSystem::setParticleStartSize( short size)
+    {
+        this->pProperties.startSize = size;
+    }
+
+    void pParticleSystem::setParticleStartSizeVariance( short variance)
+    {
+        this->pVariances.startSize = variance;
+    }
+
+    void pParticleSystem::setParticleEndSize( short size)
+    {
+        this->pProperties.endSize = size;
+    }
+
+    void pParticleSystem::setParticleEndSizeVariance( short variance)
+    {
+        this->pVariances.startSize = variance;
     }
 
     void pParticleSystem::setParticlesSize(short startSize, short startSizeVariance)
@@ -392,6 +437,61 @@ namespace PSystemAPI
     void pParticleSystem::setRotatePerSecVariance(int variance)
     {
         this->pVariances.rotatePerSec = variance;
+    }
+
+    int pParticleSystem::getParticleStartSpin()
+    {
+        return pProperties.startSpin;
+    }
+
+    int pParticleSystem::getParticleStartSpinVariance()
+    {
+        return pVariances.startSpin;
+    }
+
+    int pParticleSystem::getParticleEndSpin()
+    {
+        return pProperties.endSpin;
+    }
+
+    int pParticleSystem::getParticleEndSpinVariance()
+    {
+        return pVariances.endSpin;
+    }
+
+    int pParticleSystem::getParticleStartSize()
+    {
+        return pProperties.startSize;
+    }
+
+    int pParticleSystem::getParticleStartSizeVariance()
+    {
+        return pVariances.startSize;
+    }
+
+    int pParticleSystem::getParticleEndSize()
+    {
+        return pProperties.endSize;
+    }
+
+    int pParticleSystem::getParticleEndSizeVariance()
+    {
+        return pVariances.endSize;
+    }
+
+    int pParticleSystem::getSystemMode()
+    {
+        return static_cast<int>(mode);
+    }
+
+    float pParticleSystem::getParticleLife()
+    {
+        return pProperties.life;
+    }
+
+    float pParticleSystem::getParticleLifeVariance()
+    {
+        return pVariances.life;
     }
 
     int pParticleSystem::getAngleVariance()

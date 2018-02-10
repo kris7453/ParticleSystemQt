@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>406</height>
+    <width>800</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -285,7 +285,7 @@ QPushButton:hover{ background: #6c6c6c;}</string>
          <widget class="QmainGLWidget" name="mainGLWidget">
           <property name="minimumSize">
            <size>
-            <width>300</width>
+            <width>400</width>
             <height>0</height>
            </size>
           </property>
@@ -295,7 +295,7 @@ QPushButton:hover{ background: #6c6c6c;}</string>
          <widget class="QTabWidget" name="sideBar">
           <property name="minimumSize">
            <size>
-            <width>200</width>
+            <width>400</width>
             <height>0</height>
            </size>
           </property>
@@ -358,7 +358,7 @@ QPushButton:hover{ background: #6c6c6c;}</string>
 QLabel{font: 16px bold 'Arial';color:#fff;}</string>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="motion">
                <property name="styleSheet">
@@ -427,8 +427,8 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>231</width>
-                     <height>259</height>
+                     <width>358</width>
+                     <height>353</height>
                     </rect>
                    </property>
                    <property name="sizePolicy">
@@ -457,8 +457,8 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>231</width>
-                     <height>259</height>
+                     <width>358</width>
+                     <height>353</height>
                     </rect>
                    </property>
                    <property name="sizePolicy">
@@ -555,19 +555,6 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                    </item>
                   </layout>
                  </widget>
-                </item>
-                <item>
-                 <spacer name="outlookSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
                 </item>
                </layout>
               </widget>

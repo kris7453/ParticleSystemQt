@@ -11,11 +11,11 @@ class rangeParameterWidget : public QWidget
 {
     Q_OBJECT
     public:
-        explicit rangeParameterWidget(QString name, int min, int max, int id, QWidget *parent = 0);
-        void setValue(int value);
+        explicit rangeParameterWidget(QString name, double min, double max, int id, QWidget *parent = 0);
+        void setValue(double value);
 
     signals:
-        void valueChanged(int itemId, int value);
+        void valueChanged(int itemId, double value);
 
     public slots:
 
@@ -29,7 +29,7 @@ class rangeParameterWidget : public QWidget
         QHBoxLayout *horizontalLayout;
 
         QSlider     *slider;
-        QSpinBox    *numberBox;
+        QDoubleSpinBox    *numberBox;
 };
 
 #endif // RANGEPARAMETERWIDGET_H

@@ -9,15 +9,15 @@ class rangeParameterVarianceWidget : public QWidget
     Q_OBJECT
     public:
         explicit rangeParameterVarianceWidget(QString name,
-                                              QString firstParameterName, int firstMin, int firstMax,
-                                              QString secondParameterName, int secondMin, int secondMax,
+                                              QString firstParameterName, double firstMin, double firstMax,
+                                              QString secondParameterName, double secondMin, double secondMax,
                                               int id, QWidget *parent = 0);
-        void setFirstValue(int value);
-        void setSecondValue(int value);
+        void setFirstValue(double value);
+        void setSecondValue(double value);
 
     signals:
-        void firstValueChanged(int itemId, int value);
-        void secondValueChanged(int itemId, int value);
+        void firstValueChanged(int itemId, double value);
+        void secondValueChanged(int itemId, double value);
 
     public slots:
 

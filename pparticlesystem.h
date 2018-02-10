@@ -52,7 +52,8 @@ namespace PSystemAPI
             void setPositionVariance( QVector2D positionVariance);
 
             void setParticlesLife( int life, int lifeVariance = 0);
-            void setParticlesLife( float life, float lifeVariance = 0.0f);
+            void setParticlesLife( float life);
+            void setParticlesLife( float life, float lifeVariance);
 
             void setLifeVariance( int lifeVariance);
             void setLifeVariance( float lifeVariance);
@@ -60,8 +61,18 @@ namespace PSystemAPI
             void setParticlesColor( QVector4D startColor, QVector4D startColorVariance);
             void setParticlesColor( QVector4D startColor,QVector4D startColorVariance, QVector4D endColor, QVector4D endColorVariance);
 
+            void setParticleStartSpin( short spin);
+            void setParticleStartSpinVariance( short variance);
+            void setParticleEndSpin( short spin);
+            void setParticleEndSpinVariance( short variance);
+
             void setParticlesSpin( short startSpin, short startSpinVariance);
             void setParticlesSpin( short startSpin, short startSpinVariance, short endSpin, short endSpinVariance);
+
+            void setParticleStartSize( short size);
+            void setParticleStartSizeVariance( short variance);
+            void setParticleEndSize( short size);
+            void setParticleEndSizeVariance( short variance);
             
             void setParticlesSize( short startSize, short startSizeVariance);
             void setParticlesSize( short startSize, short startSizeVariance, short endSize, short endSizeVariance);
@@ -93,6 +104,21 @@ namespace PSystemAPI
 
             void setRotatePerSec(int rotates);
             void setRotatePerSecVariance(int variance);
+
+            int getParticleStartSpin();
+            int getParticleStartSpinVariance();
+            int getParticleEndSpin();
+            int getParticleEndSpinVariance();
+
+            int getParticleStartSize();
+            int getParticleStartSizeVariance();
+            int getParticleEndSize();
+            int getParticleEndSizeVariance();
+
+            int getSystemMode();
+
+            float getParticleLife();
+            float getParticleLifeVariance();
 
             int getAngleVariance();
             int getSpeed();
