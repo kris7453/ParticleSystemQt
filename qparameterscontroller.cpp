@@ -1,8 +1,68 @@
 #include "qparameterscontroller.h"
 
 QparametersController::QparametersController(QToolBox *emiterMode, QWidget *drawableWidget,
-                                             QWidget *gravityWidget, QWidget *radialWidget, QWidget *outlookWidget, QObject *parent) : QObject(parent)
+                                             QWidget *gravityWidget, QWidget *radialWidget, QWidget *outlookWidget,
+                                             QLabel *texturePath, QPushButton *textureButton, QObject *parent) : QObject(parent)
 {
+    colorWidget= new std::pair<QPushButton*,rangeParameterWidget*>*[4]
+    {
+        new std::pair<QPushButton*,rangeParameterWidget*>(
+                new QPushButton("Kolor startowy", outlookWidget),
+                new rangeParameterWidget("Kanał alfa", 0,255,range::startColorAlpha, outlookWidget)),
+        new std::pair<QPushButton*,rangeParameterWidget*>(
+                new QPushButton("Kolor startowy rozbierzność", outlookWidget),
+                new rangeParameterWidget("Kanał alfa", 0,255,range::startColorAlpha, outlookWidget)),
+        new std::pair<QPushButton*,rangeParameterWidget*>(
+                new QPushButton("Kolor końcowy", outlookWidget),
+                new rangeParameterWidget("Kanał alfa", 0,255,range::endColorAlpha, outlookWidget)),
+        new std::pair<QPushButton*,rangeParameterWidget*>(
+                new QPushButton("Kolor końcowy rozbierznoość", outlookWidget),
+                new rangeParameterWidget("Kanał alfa", 0,255,range::endColorAlpha, outlookWidget))
+    };
+
+    for (int i = 0; i < 4; i++)
+    {
+        colorWidget[i]->first->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        colorWidget[i]->first->setMinimumHeight(30);
+    }
+
+    connect(colorWidget[0]->first, &QPushButton::clicked, [this]()
+    {
+        QColor color = QColorDialog::getColor(controller->getActiveSystem()->getParticleStartColor());
+        controller->setParticleStartColor(color);
+        color.setAlpha(static_cast<int>(colorWidget[0]->second->getValue()));
+        colorButtonSetColor(colorWidget[0],"Kolor startowy : ",color);
+    });
+
+    connect(colorWidget[1]->first, &QPushButton::clicked, [this]()
+    {
+        QColor color = QColorDialog::getColor(controller->getActiveSystem()->getParticleStartColorVariance());
+        controller->setParticleStartColorVariance(color);
+        color.setAlpha(static_cast<int>(colorWidget[1]->second->getValue()));
+        colorButtonSetColor(colorWidget[1],"Kolor startowy rozbierzność : ",color);
+    });
+
+    connect(colorWidget[2]->first, &QPushButton::clicked, [this]()
+    {
+        QColor color = QColorDialog::getColor(controller->getActiveSystem()->getParticleEndColor());
+        controller->setParticleEndColor(color);
+        color.setAlpha(static_cast<int>(colorWidget[2]->second->getValue()));
+        colorButtonSetColor(colorWidget[2],"Kolor końcowy : ",color);
+    });
+
+    connect(colorWidget[3]->first, &QPushButton::clicked, [this]()
+    {
+        QColor color = QColorDialog::getColor(controller->getActiveSystem()->getParticleEndColorVariance());
+        controller->setParticleEndColorVariance(color);
+        color.setAlpha(static_cast<int>(colorWidget[3]->second->getValue()));
+        colorButtonSetColor(colorWidget[3],"Kolor końcowy rozbierzność : ",color);
+    });
+
+    connect(colorWidget[0]->second, &rangeParameterWidget::valueChanged, this, &QparametersController::setMainValue);
+    connect(colorWidget[1]->second, &rangeParameterWidget::valueChanged, this, &QparametersController::setVarianceValue);
+    connect(colorWidget[2]->second, &rangeParameterWidget::valueChanged, this, &QparametersController::setMainValue);
+    connect(colorWidget[3]->second, &rangeParameterWidget::valueChanged, this, &QparametersController::setVarianceValue);
+
     int controllersCount = 14;
     values = new rangeParameterVarianceWidget *[controllersCount]
     {
@@ -19,7 +79,7 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
         new rangeParameterVarianceWidget("Promień końcowy + rozbierzność", "", -1000, 1000, "", 0, 1000, range::endRadius, radialWidget),
         new rangeParameterVarianceWidget("Obrotów/s (stopnie) + rozbierzność", "", -1000, 1000, "", 0, 1000, range::rotatePerSec, radialWidget),
 
-        new rangeParameterVarianceWidget("Rozmiar startowy (stopnie) + rozbierzność", "", 0, 200, "", 0, 200, range::startSize, outlookWidget),
+        new rangeParameterVarianceWidget("Rozmiar startowy + rozbierzność", "", 0, 200, "", 0, 200, range::startSize, outlookWidget),
         new rangeParameterVarianceWidget("Rozmiar końcowy + rozbierzność", "", 0, 200, "", 0, 200, range::endSize, outlookWidget),
         new rangeParameterVarianceWidget("Obrót startowy (stopnie) + rozbierzność", "", -1000, 1000, "", 0, 1000, range::startSpin, outlookWidget),
         new rangeParameterVarianceWidget("Obrót końcowy (stopnie) + rozbierzność", "", -1000, 1000, "", 0, 1000, range::endSpin, outlookWidget),
@@ -49,6 +109,15 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
     layout->addItem(new QSpacerItem( 0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     layout = outlookWidget->layout();
+    layout->setSpacing(4);
+    layout->addWidget(colorWidget[0]->first);
+    layout->addWidget(colorWidget[0]->second);
+    layout->addWidget(colorWidget[1]->first);
+    layout->addWidget(colorWidget[1]->second);
+    layout->addWidget(colorWidget[2]->first);
+    layout->addWidget(colorWidget[2]->second);
+    layout->addWidget(colorWidget[3]->first);
+    layout->addWidget(colorWidget[3]->second);
     layout->addWidget(values[range::startSize]);
     layout->addWidget(values[range::endSize]);
     layout->addWidget(values[range::startSpin]);
@@ -60,7 +129,17 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
         connect(values[i], &rangeParameterVarianceWidget::firstValueChanged, this, &QparametersController::setMainValue);
         connect(values[i], &rangeParameterVarianceWidget::secondValueChanged, this, &QparametersController::setVarianceValue);
     }
+
+    this->texturePath = texturePath;
+
+    connect( textureButton, &QPushButton::clicked, [this](){
+        QString filePath = QFileDialog::getOpenFileName(nullptr, tr("Wygląd cząstki"), QString(), tr("Image(*.png)") );
+        if ( !filePath.isEmpty() )
+            controller->setActiveItemTexture(filePath);
+    });
 }
+
+// ------------------------------------------------ constructor end ---------------------------------------------------------
 
 void QparametersController::setDrawableController(PSystemAPI::pDrawItemsController *controller)
 {
@@ -112,6 +191,10 @@ void QparametersController::changeValues(PSystemAPI::pParticleSystem *system)
     values[range::endSpin]->setFirstValue(system->getParticleEndSpin());
     values[range::endSpin]->setSecondValue(system->getParticleEndSpinVariance());
 
+    colorButtonSetColor(colorWidget[0], "Kolor startowy : ", system->getParticleStartColor());
+    colorButtonSetColor(colorWidget[1], "Kolor startowy rozbierzność : ", system->getParticleStartColorVariance());
+    colorButtonSetColor(colorWidget[2], "Kolor końcowy : ", system->getParticleEndColor());
+    colorButtonSetColor(colorWidget[3], "Kolor końcowy rozbierzność : ", system->getParticleEndColorVariance());
 }
 
 // Redirection from widgets to parameters setters
@@ -137,6 +220,13 @@ void QparametersController::setMainValue(int itemId, double value)
         case range::endSize: controller->setParticleEndSize(value); break;
         case range::startSpin: controller->setParticleStartSpin(value); break;
         case range::endSpin: controller->setParticleEndSpin(value); break;
+
+        case range::startColorAlpha: controller->setParticleStartColorAlpha(value);
+                                     colorButtonSetColor(colorWidget[0], "Kolor startowy : ", controller->getParticleStartColor());
+                                     break;
+        case range::endColorAlpha: controller->setParticleEndColorAlpha(value);
+                                   colorButtonSetColor(colorWidget[2], "Kolor końcowy : ", controller->getParticleEndColor());
+                                   break;
     }
 
 }
@@ -162,6 +252,37 @@ void QparametersController::setVarianceValue(int itemId, double value)
         case range::endSize: controller->setParticleEndSizeVariance(value); break;
         case range::startSpin: controller->setParticleStartSpinVariance(value); break;
         case range::endSpin: controller->setParticleEndSpinVariance(value); break;
+
+        case range::startColorAlpha: controller->setParticleStartColorVarianceAlpha(value);
+                                     colorButtonSetColor(colorWidget[1], "Kolor startowy rozbierzność : ", controller->getParticleStartColorVariance());
+                                     break;
+        case range::endColorAlpha: controller->setParticleEndColorVarianceAlpha(value);
+                                   colorButtonSetColor(colorWidget[3], "Kolor końcowy rozbierzność : ", controller->getParticleEndColorVariance());
+                                   break;
     }
+}
+
+void QparametersController::colorButtonSetColor(std::pair<QPushButton*,rangeParameterWidget*> *pair, QString text, QColor color)
+{
+    QString colText = QVariant(color).toString();
+    int r,g,b;
+
+    r = 255- color.red();
+    if ( r > 86 && r < 172)
+        r += 50;
+
+    g = 255- color.green();
+    if ( g > 86 && g < 172)
+        g += 50;
+
+    b = 255- color.blue();
+    if ( b > 86 && b < 172)
+        b += 50;
+
+    QString colTextInvert = QVariant( QColor(r,g,b)).toString();
+
+    pair->first->setText(text+" (ARGB) "+colText);
+    pair->first->setStyleSheet("background-color: "+colText+"; color: "+colTextInvert+"; border: 2px solid #ffffff;");
+    pair->second->setValue(color.alpha());
 }
 

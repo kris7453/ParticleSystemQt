@@ -262,7 +262,7 @@ QPushButton:hover{ background: #6c6c6c;}</string>
        <string notr="true">background-color: #3c3c3c;</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mainPanel">
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -590,7 +590,7 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                          <property name="minimumSize">
                           <size>
                            <width>140</width>
-                           <height>0</height>
+                           <height>24</height>
                           </size>
                          </property>
                          <property name="maximumSize">
@@ -600,7 +600,8 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                           </size>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background: #525252;</string>
+                          <string notr="true">QPushButton:hover{background: #6c6c6c;}
+QPushButton{background: #525252;}</string>
                          </property>
                          <property name="text">
                           <string>Zmień teksture...</string>

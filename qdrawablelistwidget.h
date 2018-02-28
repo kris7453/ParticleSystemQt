@@ -50,6 +50,7 @@ class QdrawableListWidget : public QObject
         void refreshListItemsButtons();
 
         void setActiveItem(PSystemAPI::pDrawableItem *value);
+        void changeActiveItemIcon( QString *path);
         PSystemAPI::pDrawableItem *getActiveItem();
 
         resourceItemWidget *getWidgetFromPosition(int position);
@@ -61,7 +62,7 @@ class QdrawableListWidget : public QObject
 signals:
         void changeVisibility(resourceItemWidget *item = nullptr);
         void close(resourceItemWidget *item = nullptr);
-        void layerUp(resourceItemWidget *item = nullptr, int layerDirectio = -1 );
+        void layerUp(resourceItemWidget *item = nullptr, int layerDirection = -1 );
         void layerDown(resourceItemWidget *item = nullptr, int layerDirection = 1 );
 
 

@@ -33,6 +33,8 @@ namespace PSystemAPI
             void addParticleSystem(pParticleSystem *pSystem = nullptr);
             void addParticleSystem(QString *resourceImagePath, QString name);
 
+            void setActiveItemTexture( QString texturePath);
+
             int deleteItem( pDrawableItem *item);
 
             void deleteActive();
@@ -46,13 +48,17 @@ namespace PSystemAPI
 
             int moveLayer( pDrawableItem *item, short direction);
 
-        signals:
+            pParticleSystem *getActiveSystem() const;
+            QColor getParticleStartColor();
+            QColor getParticleStartColorVariance();
+            QColor getParticleEndColor();
+            QColor getParticleEndColorVariance();
+
+    signals:
             void activeChanged(pDrawableItem *active, int activeRow);
 
         public slots:
             void setAngle(int angle);
-
-
             void setAngleVariance(int variance);
             void setMode(int mode);
             void setParticleLife( float life);
@@ -74,6 +80,15 @@ namespace PSystemAPI
             void setEndRadiusVariance(int variance);
             void setRotatePerSec(int rotate);
             void setRotatePerSecVariance(int variance);
+
+            void setParticleStartColor( QColor color);
+            void setParticleStartColorAlpha( int alpha);
+            void setParticleStartColorVariance( QColor color);
+            void setParticleStartColorVarianceAlpha( int alpha);
+            void setParticleEndColor( QColor color);
+            void setParticleEndColorAlpha( int alpha);
+            void setParticleEndColorVariance( QColor color);
+            void setParticleEndColorVarianceAlpha( int alpha);
 
             void setParticleStartSpin( short spin);
             void setParticleStartSpinVariance( short variance);

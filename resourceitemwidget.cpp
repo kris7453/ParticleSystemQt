@@ -72,6 +72,11 @@ void resourceItemWidget::setLayersButtonsEnabled(bool upButton, bool downButton)
     layerDownBtn->setEnabled(downButton);
 }
 
+void resourceItemWidget::setIcon(QString *path)
+{
+    iconImage->setPixmap(QPixmap(*path));
+}
+
 void resourceItemWidget::setListWidgetPointer(QdrawableListWidget *listWidget)
 {
     listWidgetPointer = listWidget;

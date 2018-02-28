@@ -39,6 +39,8 @@ class MainWindow : public QMainWindow
         static QWidget *gravityParameters;
         static QWidget *radialParameters;
         static QWidget *outlook;
+        static QLabel *texturePath;
+        static QPushButton *textureButton;
 
 
     public slots:

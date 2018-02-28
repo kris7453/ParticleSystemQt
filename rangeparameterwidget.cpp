@@ -59,3 +59,8 @@ void rangeParameterWidget::setValue(double value)
     numberBox->setValue(value);
     slider->setValue(value);
 }
+
+double rangeParameterWidget::getValue()
+{
+    return slider->value();
+}

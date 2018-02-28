@@ -50,10 +50,10 @@ namespace PSystemAPI
         setParticlesLife(3.1f, 0.4f);
         setParticlesSize(40, 10, 100, 0);
         setParticlesSpin( 0, 0, 0, 0);
-        setParticlesColor(QVector4D(0.2f, 0.4f, 0.69f, 1.0f),
-                          QVector4D(0.0f, 0.0f, 0.0f, 0.0f),
-                          QVector4D(0.0f, 0.0f, 0.0f, 1.0f),
-                          QVector4D(0.0f, 0.0f, 0.0f, 0.0f));
+        setParticlesColor(QColor(255*0.2f, 255*0.4f, 255*0.69f, 255*1.0f),
+                          QColor(0, 0, 0, 0),
+                          QColor(0, 0, 0, 255*1.0f),
+                          QColor(0, 0, 0, 0));
 
         spawnRate = 200.0f;
         spawnTimeSpan = 1.0f / spawnRate;
@@ -110,22 +110,55 @@ namespace PSystemAPI
 
         GLfloat startSize = pProperties.startSize + rand()%(2*pVariances.startSize+1) - pVariances.startSize;
         GLfloat startSpin = pProperties.startSpin + rand()%(2*pVariances.startSpin+1) - pVariances.startSpin;
-        QVector4D startColor = pProperties.startColor + QVector4D(  rand()%(2*static_cast<int>(pVariances.startColor.x())+1) - pVariances.startColor.x(),
-                                                                    rand()%(2*static_cast<int>(pVariances.startColor.y())+1) - pVariances.startColor.y(),
-                                                                    rand()%(2*static_cast<int>(pVariances.startColor.z())+1) - pVariances.startColor.z(),
-                                                                    rand()%(2*static_cast<int>(pVariances.startColor.w())+1) - pVariances.startColor.w())
-                                                                    / 1000.0f;
-        startColor.normalize();
 
         GLfloat endSize = pProperties.endSize + rand()%(2*pVariances.endSize+1) - pVariances.endSize;
         GLfloat endSpin = pProperties.endSpin + rand()%(2*pVariances.endSpin+1) - pVariances.endSpin;
-        QVector4D endColor = pProperties.endColor + QVector4D(  rand()%(2*static_cast<int>(pVariances.endColor.x())+1) - pVariances.endColor.x(),
-                                                                rand()%(2*static_cast<int>(pVariances.endColor.y())+1) - pVariances.endColor.y(),
-                                                                rand()%(2*static_cast<int>(pVariances.endColor.z())+1) - pVariances.endColor.z(),
-                                                                rand()%(2*static_cast<int>(pVariances.endColor.w())+1) - pVariances.endColor.w())
-                                                                / 1000.0f;
-        endColor.normalize();
 
+        int r,g,b,a;
+
+        r = pVariances.startColor.red();
+        r = r == 0 ? 0 : rand()%(2*r+1) - r;
+        r += pProperties.startColor.red();
+        r = r > 255 ? 255 : (r < 0 ? 0 : r);
+
+        g = pVariances.startColor.green();
+        g = g == 0 ? 0 : rand()%(2*g+1) - g;
+        g += pProperties.startColor.green();
+        g = g > 255 ? 255 : (g < 0 ? 0 : g);
+
+        b = pVariances.startColor.blue();
+        b = b == 0 ? 0 : rand()%(2*b+1) - b;
+        b += pProperties.startColor.blue();
+        b = b > 255 ? 255 : (b < 0 ? 0 : b);
+
+        a = pVariances.startColor.alpha();
+        a = a == 0 ? 0 : rand()%(2*a+1) - a;
+        a += pProperties.startColor.alpha();
+        a = a > 255 ? 255 : (a < 0 ? 0 : a);
+
+        QVector4D startColor = QVector4D( r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f);
+
+        r = pVariances.endColor.red();
+        r = r == 0 ? 0 : rand()%(2*r+1) - r;
+        r += pProperties.endColor.red();
+        r = r > 255 ? 255 : (r < 0 ? 0 : r);
+
+        g = pVariances.endColor.green();
+        g = g == 0 ? 0 : rand()%(2*g+1) - g;
+        g += pProperties.endColor.green();
+        g = g > 255 ? 255 : (g < 0 ? 0 : g);
+
+        b = pVariances.endColor.blue();
+        b = b == 0 ? 0 : rand()%(2*b+1) - b;
+        b += pProperties.endColor.blue();
+        b = b > 255 ? 255 : (b < 0 ? 0 : b);
+
+        a = pVariances.endColor.alpha();
+        a = a == 0 ? 0 : rand()%(2*a+1) - a;
+        a += pProperties.endColor.alpha();
+        a = a > 255 ? 255 : (a < 0 ? 0 : a);
+
+        QVector4D endColor = QVector4D( r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f);
 
         pParticle *pbuffer = new pParticle(
                     life,
@@ -246,20 +279,60 @@ namespace PSystemAPI
         this->pVariances.life = lifeVariance * 1000.0f;
     }
 
-    void pParticleSystem::setParticlesColor(QVector4D startColor, QVector4D startColorVariance)
+    void pParticleSystem::setParticleStartColor(QColor color)
+    {
+        this->pProperties.startColor = color;
+    }
+
+    void pParticleSystem::setParticleStartColorAlpha(int alpha)
+    {
+        this->pProperties.startColor.setAlpha(alpha);
+    }
+
+    void pParticleSystem::setParticleStartColorVariance(QColor color)
+    {
+        this->pVariances.startColor = color;
+    }
+
+    void pParticleSystem::setParticleStartColorVarianceAlpha(int alpha)
+    {
+        this->pVariances.startColor.setAlpha(alpha);
+    }
+
+    void pParticleSystem::setParticleEndColor(QColor color)
+    {
+        this->pProperties.endColor = color;
+    }
+
+    void pParticleSystem::setParticleEndColorAlpha(int alpha)
+    {
+        this->pProperties.endColor.setAlpha(alpha);
+    }
+
+    void pParticleSystem::setParticleEndColorVariance(QColor color)
+    {
+        this->pVariances.endColor = color;
+    }
+
+    void pParticleSystem::setParticleEndColorVarianceAlpha(int alpha)
+    {
+        this->pVariances.endColor.setAlpha(alpha);
+    }
+
+    void pParticleSystem::setParticlesColor(QColor startColor, QColor startColorVariance)
     {
         this->pProperties.startColor = startColor;
         this->pProperties.endColor = startColor;
-        this->pVariances.startColor = startColorVariance * 1000.0f;
-        this->pVariances.endColor = startColorVariance * 1000.0f;
+        this->pVariances.startColor = startColorVariance;
+        this->pVariances.endColor = startColorVariance;
     }
 
-    void pParticleSystem::setParticlesColor(QVector4D startColor,QVector4D startColorVariance, QVector4D endColor, QVector4D endColorVariance )
-    {
+    void pParticleSystem::setParticlesColor(QColor startColor, QColor startColorVariance, QColor endColor, QColor endColorVariance )
+    {qDebug() << "start color " << startColor;
         this->pProperties.startColor = startColor;
         this->pProperties.endColor = endColor;
-        this->pVariances.startColor = startColorVariance * 1000.0f;
-        this->pVariances.endColor = endColorVariance * 1000.0f;
+        this->pVariances.startColor = startColorVariance;
+        this->pVariances.endColor = endColorVariance;
     }
 
     void pParticleSystem::setParticleStartSpin( short spin)
@@ -315,7 +388,7 @@ namespace PSystemAPI
 
     void pParticleSystem::setParticleEndSizeVariance( short variance)
     {
-        this->pVariances.startSize = variance;
+        this->pVariances.endSize = variance;
     }
 
     void pParticleSystem::setParticlesSize(short startSize, short startSizeVariance)
@@ -437,6 +510,26 @@ namespace PSystemAPI
     void pParticleSystem::setRotatePerSecVariance(int variance)
     {
         this->pVariances.rotatePerSec = variance;
+    }
+
+    QColor pParticleSystem::getParticleStartColor()
+    {
+        return pProperties.startColor;
+    }
+
+    QColor pParticleSystem::getParticleStartColorVariance()
+    {
+        return pVariances.startColor;
+    }
+
+    QColor pParticleSystem::getParticleEndColor()
+    {
+        return pProperties.endColor;
+    }
+
+    QColor pParticleSystem::getParticleEndColorVariance()
+    {
+        return pVariances.endColor;
     }
 
     int pParticleSystem::getParticleStartSpin()

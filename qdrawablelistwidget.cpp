@@ -50,6 +50,11 @@ void QdrawableListWidget::setActiveItem(PSystemAPI::pDrawableItem *value)
     setActiveItemDesc( activeItem );
 }
 
+void QdrawableListWidget::changeActiveItemIcon(QString *path)
+{
+    getWidgetFromPosition(activeItemRow)->setIcon(path);
+}
+
 PSystemAPI::pDrawableItem *QdrawableListWidget::getActiveItem()
 {
     return activeItem;

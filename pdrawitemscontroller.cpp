@@ -21,16 +21,16 @@ namespace PSystemAPI
     void pDrawItemsController::drawItems(float deltaT)
     {
 
-        for (QList<pParticleSystem*>::iterator i = pSystemsList.begin();
-             i != pSystemsList.end(); i++)
+        for (QList<pParticleSystem*>::reverse_iterator i = pSystemsList.rbegin();
+             i != pSystemsList.rend(); i++)
         {
             if ((*i)->isVisible())
                 (*i)->updateParticles(deltaT);
         }
 
 
-        for (QList<pDrawableItem*>::iterator i = drawableItemsList.begin();
-             i != drawableItemsList.end(); i++)
+        for (QList<pDrawableItem*>::reverse_iterator i = drawableItemsList.rbegin();
+             i != drawableItemsList.rend(); i++)
         {
             if ((*i)->isVisible())
                 (*i)->draw();
@@ -69,6 +69,15 @@ namespace PSystemAPI
     void pDrawItemsController::addParticleSystem(QString *resourceImagePath, QString name)
     {
         addDefaultParticleSystem(name, resourceImagePath);
+    }
+
+    void pDrawItemsController::setActiveItemTexture(QString texturePath)
+    {
+        if ( activeItem != nullptr )
+        {
+            activeItem->setTexture(&texturePath);
+            drawableListWidget->changeActiveItemIcon(&texturePath);
+        }
     }
 
     int pDrawItemsController::deleteItem(pDrawableItem *item)
@@ -280,6 +289,54 @@ namespace PSystemAPI
             activeSystem->setRotatePerSecVariance(variance);
     }
 
+    void pDrawItemsController::setParticleStartColor(QColor color)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleStartColor(color);
+    }
+
+    void pDrawItemsController::setParticleStartColorAlpha(int alpha)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleStartColorAlpha(alpha);
+    }
+
+    void pDrawItemsController::setParticleStartColorVariance(QColor color)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleStartColorVariance(color);
+    }
+
+    void pDrawItemsController::setParticleStartColorVarianceAlpha(int alpha)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleStartColorVarianceAlpha(alpha);
+    }
+
+    void pDrawItemsController::setParticleEndColor(QColor color)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleEndColor(color);
+    }
+
+    void pDrawItemsController::setParticleEndColorAlpha(int alpha)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleEndColorAlpha(alpha);
+    }
+
+    void pDrawItemsController::setParticleEndColorVariance(QColor color)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleEndColorVariance(color);
+    }
+
+    void pDrawItemsController::setParticleEndColorVarianceAlpha(int alpha)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setParticleEndColorVarianceAlpha(alpha);
+    }
+
     void pDrawItemsController::setParticleStartSpin( short spin)
     {
         if ( activeSystem != nullptr )
@@ -326,5 +383,30 @@ namespace PSystemAPI
     {
         if ( activeSystem != nullptr )
             activeSystem->setParticleEndSizeVariance(variance);
+    }
+
+    QColor pDrawItemsController::getParticleStartColor()
+    {
+        return activeSystem->getParticleStartColor();
+    }
+
+    QColor pDrawItemsController::getParticleStartColorVariance()
+    {
+        return activeSystem->getParticleStartColorVariance();
+    }
+
+    QColor pDrawItemsController::getParticleEndColor()
+    {
+        return activeSystem->getParticleEndColor();
+    }
+
+    QColor pDrawItemsController::getParticleEndColorVariance()
+    {
+        return activeSystem->getParticleEndColorVariance();
+    }
+
+    pParticleSystem *pDrawItemsController::getActiveSystem() const
+    {
+        return activeSystem;
     }
 }

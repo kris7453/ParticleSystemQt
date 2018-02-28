@@ -21,7 +21,7 @@ namespace PSystemAPI
                 endSpin,
                 startSize,
                 endSize;
-        QVector4D   startColor,
+        QColor   startColor,
                     endColor;
 
         //gravity mode
@@ -58,8 +58,17 @@ namespace PSystemAPI
             void setLifeVariance( int lifeVariance);
             void setLifeVariance( float lifeVariance);
 
-            void setParticlesColor( QVector4D startColor, QVector4D startColorVariance);
-            void setParticlesColor( QVector4D startColor,QVector4D startColorVariance, QVector4D endColor, QVector4D endColorVariance);
+            void setParticleStartColor( QColor color);
+            void setParticleStartColorAlpha( int alpha);
+            void setParticleStartColorVariance( QColor color);
+            void setParticleStartColorVarianceAlpha( int alpha);
+            void setParticleEndColor( QColor color);
+            void setParticleEndColorAlpha( int alpha);
+            void setParticleEndColorVariance( QColor color);
+            void setParticleEndColorVarianceAlpha( int alpha);
+
+            void setParticlesColor( QColor startColor, QColor startColorVariance);
+            void setParticlesColor( QColor startColor, QColor startColorVariance, QColor endColor, QColor endColorVariance);
 
             void setParticleStartSpin( short spin);
             void setParticleStartSpinVariance( short variance);
@@ -104,6 +113,11 @@ namespace PSystemAPI
 
             void setRotatePerSec(int rotates);
             void setRotatePerSecVariance(int variance);
+
+            QColor getParticleStartColor();
+            QColor getParticleStartColorVariance();
+            QColor getParticleEndColor();
+            QColor getParticleEndColorVariance();
 
             int getParticleStartSpin();
             int getParticleStartSpinVariance();

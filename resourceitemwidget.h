@@ -25,6 +25,7 @@ class resourceItemWidget : public QWidget
 
         void changeVisibilityIcon( bool isVisible);
         void setLayersButtonsEnabled( bool upButton, bool downButton);
+        void setIcon( QString *path);
 
         static void initializeIcons();
         static void setListWidgetPointer( QdrawableListWidget *listWidget);

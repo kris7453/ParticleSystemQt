@@ -10,6 +10,8 @@ QWidget *MainWindow::drawableParameters;
 QWidget *MainWindow::gravityParameters;
 QWidget *MainWindow::radialParameters;
 QWidget *MainWindow::outlook;
+QLabel *MainWindow::texturePath;
+QPushButton *MainWindow::textureButton;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -29,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     drawableParameters = ui->drawableWidget;
     gravityParameters = ui->gravityMode;
     radialParameters = ui->radialMode;
-    outlook = ui->outlook;
+    outlook = ui->outlookScrollArea;
 
     drawableListWidget = new QdrawableListWidget(ui->resourcesList);
     drawableListWidget->setActiveWidgets(ui->activeLayerUpBtn,
@@ -37,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent) :
                                          ui->activeVisibilityBtn,
                                          ui->activeCloseBtn,
                                          ui->activeName);
+
+    texturePath = ui->texturePath;
+    textureButton = ui->textureButton;
 
     connect( ui->activeVisibilityBtn, &QPushButton::clicked,
              [this](){emit drawableListWidget->changeVisibility();});

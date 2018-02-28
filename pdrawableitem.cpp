@@ -83,6 +83,15 @@ namespace PSystemAPI
         this->angle = angle;
     }
 
+    void pDrawableItem::setTexture(QString *imagePath)
+    {
+        delete texture;
+        texture = new QOpenGLTexture(QImage(*imagePath).mirrored());
+        texture->generateMipMaps();
+        texture->setMinificationFilter(QOpenGLTexture::Nearest);
+        texture->setMagnificationFilter(QOpenGLTexture::Linear);
+    }
+
     QString pDrawableItem::getName()
     {
         return name;

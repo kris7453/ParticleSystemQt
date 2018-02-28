@@ -33,6 +33,7 @@ namespace PSystemAPI
 
             void setName(const QString &value);
             void setAngle( short angle);
+            void setTexture( QString *imagePath);
 
             QString getName();
             int getAngle();
