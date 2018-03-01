@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QLabel>
+#include <QInputDialog>
 
 #include "qdrawablelistwidget.h"
 #include "pdrawableitem.h"
@@ -49,7 +50,8 @@ class resourceItemWidget : public QWidget
         QPushButton *visibilityBtn,
                     *closeBtn,
                     *layerUpBtn,
-                    *layerDownBtn;
+                    *layerDownBtn,
+                    *renameBtn;
 
         QLabel      *iconImage,
                     *resourceName;
@@ -62,6 +64,7 @@ class resourceItemWidget : public QWidget
         QMetaObject::Connection closeConnection;
         QMetaObject::Connection layerUpConnection;
         QMetaObject::Connection layerDownConnection;
+        QMetaObject::Connection changeNameConnection;
 };
 
 #endif // RESOURCEITEMWIDGET_H

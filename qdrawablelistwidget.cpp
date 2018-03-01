@@ -13,6 +13,7 @@ QdrawableListWidget::QdrawableListWidget(QListWidget *list) : list(list)
     connect( this, &QdrawableListWidget::close, this, &QdrawableListWidget::closeItem);
     connect( this, &QdrawableListWidget::layerUp, this, &QdrawableListWidget::changeItemLayer);
     connect( this, &QdrawableListWidget::layerDown, this, &QdrawableListWidget::changeItemLayer);
+    connect( this, &QdrawableListWidget::changeName, this, &QdrawableListWidget::changeItemName);
 }
 
 QdrawableListWidget::~QdrawableListWidget()
@@ -156,6 +157,16 @@ void QdrawableListWidget::changeItemLayer(resourceItemWidget *item, int layerDir
                 activeItemRow += layerDirection * (-1);
         qDebug() << "QdrawableListWidget::changeItemLayer active position " << activeItemRow;
     }
+}
+
+void QdrawableListWidget::changeItemName(resourceItemWidget *item, QString name)
+{
+    PSystemAPI::pDrawableItem *itemP = item == nullptr ? activeItem : item->getItemPointer();
+    item = item == nullptr ? getWidgetFromPosition(activeItemRow) : item;
+
+    itemP->setName(name);
+    if ( itemP == activeItem)
+        activeName->setText(name);
 }
 
 void QdrawableListWidget::setActive(PSystemAPI::pDrawableItem *active, int activeRow)

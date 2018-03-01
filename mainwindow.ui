@@ -499,6 +499,12 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                </layout>
               </widget>
               <widget class="QWidget" name="outlook">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <attribute name="title">
                 <string>Wygląd</string>
                </attribute>
@@ -520,6 +526,18 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                 </property>
                 <item>
                  <widget class="QScrollArea" name="scrollArea">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="verticalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAsNeeded</enum>
+                  </property>
+                  <property name="horizontalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  </property>
                   <property name="widgetResizable">
                    <bool>true</bool>
                   </property>
@@ -528,9 +546,15 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>374</width>
+                     <width>360</width>
                      <height>444</height>
                     </rect>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>360</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_8">
                     <property name="spacing">
@@ -540,7 +564,7 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                      <number>4</number>
                     </property>
                     <property name="topMargin">
-                     <number>0</number>
+                     <number>2</number>
                     </property>
                     <property name="rightMargin">
                      <number>4</number>
@@ -550,9 +574,15 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                     </property>
                     <item>
                      <widget class="QWidget" name="widget" native="true">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
+                        <width>370</width>
                         <height>30</height>
                        </size>
                       </property>
@@ -575,7 +605,10 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                        <item>
                         <widget class="QLabel" name="texturePath">
                          <property name="text">
-                          <string>Lokalnie</string>
+                          <string>llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>

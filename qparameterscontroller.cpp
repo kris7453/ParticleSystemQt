@@ -135,7 +135,10 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
     connect( textureButton, &QPushButton::clicked, [this](){
         QString filePath = QFileDialog::getOpenFileName(nullptr, tr("Wygląd cząstki"), QString(), tr("Image(*.png)") );
         if ( !filePath.isEmpty() )
+        {
+            this->texturePath->setText(filePath);
             controller->setActiveItemTexture(filePath);
+        }
     });
 }
 

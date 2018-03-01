@@ -64,7 +64,7 @@ signals:
         void close(resourceItemWidget *item = nullptr);
         void layerUp(resourceItemWidget *item = nullptr, int layerDirection = -1 );
         void layerDown(resourceItemWidget *item = nullptr, int layerDirection = 1 );
-
+        void changeName(resourceItemWidget *item, QString name );
 
     public slots:
 
@@ -72,6 +72,7 @@ signals:
         void changeItemVisibility(resourceItemWidget *item = nullptr);
         void closeItem(resourceItemWidget *item = nullptr);
         void changeItemLayer(resourceItemWidget *item = nullptr, int layerDirection = -1);
+        void changeItemName(resourceItemWidget *item, QString name);
         void setActive(PSystemAPI::pDrawableItem *active, int activeRow);
 
     private:

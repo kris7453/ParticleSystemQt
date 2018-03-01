@@ -118,6 +118,12 @@ void resourceItemWidget::createElements()
     layerDownBtn->setMinimumSize(12,12);
     layerDownBtn->setMaximumSize(12,12);
     layerDownBtn->setIcon(icon->arrowDown);
+
+    renameBtn = new QPushButton("R",this);
+    renameBtn->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
+    renameBtn->setMinimumSize(24,24);
+    renameBtn->setMaximumSize(24,24);
+    //renameBtn->setIcon(icon->close);
 }
 
 void resourceItemWidget::connectElements()
@@ -128,6 +134,7 @@ void resourceItemWidget::connectElements()
     layerButtonsLayout->addWidget(layerDownBtn);
     widgetLayout->addWidget(visibilityBtn);
     widgetLayout->addWidget(closeBtn);
+    widgetLayout->addWidget(renameBtn);
     widgetLayout->addWidget(resourceName);
 }
 
@@ -139,6 +146,7 @@ void resourceItemWidget::clearElementsConnections()
     layerButtonsLayout->removeWidget(layerDownBtn);
     widgetLayout->removeWidget(visibilityBtn);
     widgetLayout->removeWidget(closeBtn);
+    widgetLayout->removeWidget(renameBtn);
     widgetLayout->removeWidget(resourceName);
 }
 
@@ -148,6 +156,17 @@ void resourceItemWidget::createButtonsConnections()
     closeConnection = connect(closeBtn, &QPushButton::clicked, [this](){qDebug()<<"resourceItemWidget::closeBtn  ";emit listWidgetPointer->close(this);});
     layerUpConnection = connect(layerUpBtn, &QPushButton::clicked, [this](){qDebug()<<"resourceItemWidget::layerUpBtn ";emit listWidgetPointer->layerUp(this);});
     layerDownConnection = connect(layerDownBtn, &QPushButton::clicked, [this](){qDebug()<<"resourceItemWidget::layerDownBtn ";emit listWidgetPointer->layerDown(this);});
+    changeNameConnection = connect(renameBtn, &QPushButton::clicked, [this](){qDebug()<<"resourceItemWidget::renameBtn ";
+        bool ok;
+        QString name = QInputDialog::getText(this, tr("Nowa nazwa"), tr("Podaj nazwę obiektu"), QLineEdit::Normal,QString(), &ok);
+
+        if ( ok )
+        {
+            this->name = name;
+            resourceName->setText(name);
+            emit listWidgetPointer->changeName(this, name);
+        }
+        });
 }
 
 void resourceItemWidget::clearButtonsConnections()
