@@ -58,11 +58,17 @@ namespace PSystemAPI
             void activeChanged(pDrawableItem *active, int activeRow);
 
         public slots:
+            void resetSystem();
+            void resetSystemPosition();
+
             void setAngle(int angle);
             void setAngleVariance(int variance);
             void setMode(int mode);
             void setParticleLife( float life);
             void setParticleLifeVariance( float variance);
+
+            void setPositionVarianceX(int variance);
+            void setPositionVarianceY(int variance);
             void setSpeed(int speed);
             void setSpeedVariance(int variance);
             void setGravityX( int x);

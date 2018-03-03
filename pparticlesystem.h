@@ -46,10 +46,13 @@ namespace PSystemAPI
             void spawnParticle();
             void updateParticles( float deltaT);
             void draw();
+            void restart();
 
             void setSystemMode( pSystemMode mode);
-            void setPosition( QVector2D position, QVector2D positionVariance = QVector2D(0.0f,0.0f));
+            void setPosition( QVector2D position);
             void setPositionVariance( QVector2D positionVariance);
+            void setPositionVarianceX( int variance);
+            void setPositionVarianceY( int variance);
 
             void setParticlesLife( int life, int lifeVariance = 0);
             void setParticlesLife( float life);
@@ -134,6 +137,8 @@ namespace PSystemAPI
             float getParticleLife();
             float getParticleLifeVariance();
 
+            int getPositionVarianceX();
+            int getPositionVarianceY();
             int getAngleVariance();
             int getSpeed();
             int getSpeedVariance();

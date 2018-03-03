@@ -161,6 +161,18 @@ namespace PSystemAPI
             return -1;
     }
 
+    void pDrawItemsController::resetSystem()
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->restart();
+    }
+
+    void pDrawItemsController::resetSystemPosition()
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setPosition(QVector2D(0.0f, 0.0f));
+    }
+
     void pDrawItemsController::setAngle(int angle)
     {
         if ( activeSystem != nullptr )
@@ -191,6 +203,18 @@ namespace PSystemAPI
     {
         if ( activeSystem != nullptr )
             activeSystem->setLifeVariance(variance);
+    }
+
+    void pDrawItemsController::setPositionVarianceX(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setPositionVarianceX(variance);
+    }
+
+    void pDrawItemsController::setPositionVarianceY(int variance)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setPositionVarianceY(variance);
     }
 
     void pDrawItemsController::setSpeed(int speed)

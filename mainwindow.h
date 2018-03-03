@@ -41,7 +41,7 @@ class MainWindow : public QMainWindow
         static QWidget *outlook;
         static QLabel *texturePath;
         static QPushButton *textureButton;
-
+        static QPushButton *addSystemButton;
 
     public slots:
 

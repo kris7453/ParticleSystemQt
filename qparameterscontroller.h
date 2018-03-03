@@ -11,6 +11,7 @@
 #include "rangeparameterwidget.h"
 #include "rangeparametervariancewidget.h"
 #include "pdrawitemscontroller.h"
+#include "qmainglwidget.h"
 
 namespace PSystemAPI
 {
@@ -19,13 +20,16 @@ namespace PSystemAPI
     class pParticleSystem;
 }
 
+class QmainGLWidget;
+
 class QparametersController : public QObject
 {
     Q_OBJECT
     public:
         explicit QparametersController( QToolBox *emiterMode, QWidget *drawableWidget,
                                         QWidget *gravityWidget, QWidget *radialWidget, QWidget *outlookWidget,
-                                        QLabel *texturePath, QPushButton *textureButton, QObject *parent = 0);
+                                        QLabel *texturePath, QPushButton *textureButton, QPushButton *addSystemButton,
+                                        QmainGLWidget *mainGLWidget, QObject *parent = 0);
 
         void setDrawableController(PSystemAPI::pDrawItemsController *controller);
         void changeValues(PSystemAPI::pDrawableItem *item);
@@ -42,6 +46,8 @@ class QparametersController : public QObject
         {
             angle,
             particleLife,
+
+            position,
             speed,
             gravityX,
             gravityY,
@@ -64,10 +70,12 @@ class QparametersController : public QObject
             endColorAlpha
         };
 
+        QmainGLWidget *glWidget;
         QToolBox *emiterMode;
         PSystemAPI::pDrawItemsController *controller;
 
         QLabel *texturePath;
+        QPushButton *resetPositionButton;
         rangeParameterVarianceWidget **values;
         std::pair<QPushButton*,rangeParameterWidget*> **colorWidget;
 

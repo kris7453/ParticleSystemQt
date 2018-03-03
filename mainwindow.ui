@@ -310,7 +310,10 @@ QPushButton:hover{ background: #6c6c6c;}</string>
 ::tab{font: 12px &quot;Arial&quot;; color: #fff;height:80;width:24;}
 ::tab:selected{background-color: #6c6c6c;}
 ::tab:!selected{background-color: #525252;}
-::pane{border: none;}</string>
+::pane{border: none;}
+
+QPushButton{background-color:#6c6c6c; margin: 1px;}
+QPushButton:hover{background-color:#525252;}</string>
           </property>
           <property name="tabPosition">
            <enum>QTabWidget::West</enum>
@@ -427,8 +430,8 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>100</width>
-                     <height>30</height>
+                     <width>358</width>
+                     <height>353</height>
                     </rect>
                    </property>
                    <property name="sizePolicy">
@@ -605,7 +608,7 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                        <item>
                         <widget class="QLabel" name="texturePath">
                          <property name="text">
-                          <string>llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll</string>
+                          <string/>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -633,10 +636,10 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
                           </size>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background: #525252;</string>
+                          <string notr="true"/>
                          </property>
                          <property name="text">
-                          <string>Zmień teksture...</string>
+                          <string>Zmień teksture</string>
                          </property>
                         </widget>
                        </item>
@@ -655,8 +658,7 @@ QLabel{font: 16px bold 'Arial';color:#fff;}</string>
           </widget>
           <widget class="QWidget" name="layers">
            <property name="styleSheet">
-            <string notr="true">QPushButton{background-color:#6c6c6c; margin: 1px;}
-QPushButton:hover{background-color:#525252;}</string>
+            <string notr="true">QPushButton{margin: 1px;}</string>
            </property>
            <attribute name="title">
             <string>Warstwy</string>
@@ -701,14 +703,7 @@ QPushButton:hover{background-color:#525252;}</string>
                <item>
                 <widget class="QPushButton" name="addSystemBtn">
                  <property name="text">
-                  <string>Dodaj system...</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="addObjectBtn">
-                 <property name="text">
-                  <string>Dodaj objekt...</string>
+                  <string>Dodaj system</string>
                  </property>
                 </widget>
                </item>

@@ -12,6 +12,7 @@ QWidget *MainWindow::radialParameters;
 QWidget *MainWindow::outlook;
 QLabel *MainWindow::texturePath;
 QPushButton *MainWindow::textureButton;
+QPushButton *MainWindow::addSystemButton;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     texturePath = ui->texturePath;
     textureButton = ui->textureButton;
+    addSystemButton = ui->addSystemBtn;
 
     connect( ui->activeVisibilityBtn, &QPushButton::clicked,
              [this](){emit drawableListWidget->changeVisibility();});

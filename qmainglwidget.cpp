@@ -43,7 +43,9 @@ void QmainGLWidget::initializeGL()
                                                   MainWindow::radialParameters,
                                                   MainWindow::outlook,
                                                   MainWindow::texturePath,
-                                                  MainWindow::textureButton));
+                                                  MainWindow::textureButton,
+                                                  MainWindow::addSystemButton,
+                                                  this));
 
     MainWindow::drawableListWidget->setController(itemsController);
 

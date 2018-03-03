@@ -45,6 +45,7 @@ namespace PSystemAPI
             resourceImagePath = new QString(":/particles/star.png");
 
         setPosition(position);
+        setPositionVariance(QVector2D(0.0f,0.0f));
         setSystemMode( pSystemMode::radius );
         
         setParticlesLife(3.1f, 0.4f);
@@ -235,21 +236,36 @@ namespace PSystemAPI
         }
     }
 
+    void pParticleSystem::restart()
+    {
+        particles->restart();
+    }
+
     void pParticleSystem::setSystemMode(pSystemMode mode)
     {
         this->mode = mode;
         this->particles->changeUpdateMode(mode);
+        restart();
     }
 
-    void pParticleSystem::setPosition(QVector2D position, QVector2D positionVariance)
+    void pParticleSystem::setPosition(QVector2D position)
     {
         this->position = position;
-        this->positionVariance = positionVariance;
     }
 
     void pParticleSystem::setPositionVariance(QVector2D positionVariance)
     {
         this->positionVariance = positionVariance;
+    }
+
+    void pParticleSystem::setPositionVarianceX(int variance)
+    {
+        positionVariance.setX(variance);
+    }
+
+    void pParticleSystem::setPositionVarianceY(int variance)
+    {
+        positionVariance.setY(variance);
     }
 
     void pParticleSystem::setParticlesLife(int life, int lifeVariance)
@@ -585,6 +601,16 @@ namespace PSystemAPI
     float pParticleSystem::getParticleLifeVariance()
     {
         return pVariances.life;
+    }
+
+    int pParticleSystem::getPositionVarianceX()
+    {
+        return positionVariance.x();
+    }
+
+    int pParticleSystem::getPositionVarianceY()
+    {
+        return positionVariance.y();
     }
 
     int pParticleSystem::getAngleVariance()

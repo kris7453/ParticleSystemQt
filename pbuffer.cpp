@@ -120,6 +120,11 @@ namespace PSystemAPI
         }
     }
 
+    void pBuffer::restart()
+    {
+        aliveParticles = 0;
+    }
+
     int pBuffer::getAliveParticlesCount()
     {
         return aliveParticles;

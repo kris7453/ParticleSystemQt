@@ -76,6 +76,7 @@ namespace PSystemAPI
             void updateParticles( float deltaT);
             void changeUpdateMode( pSystemMode mode );
             void loadBuffer(GLfloat *particlesBuffer);
+            void restart();
 
             int getAliveParticlesCount();
 
