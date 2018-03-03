@@ -69,20 +69,33 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
         colorButtonSetColor(colorWidget[3],"Kolor końcowy rozbierzność : ",color);
     });
 
-    connect(colorWidget[0]->second, &rangeParameterWidget::valueChanged, this, &QparametersController::setMainValue);
-    connect(colorWidget[1]->second, &rangeParameterWidget::valueChanged, this, &QparametersController::setVarianceValue);
-    connect(colorWidget[2]->second, &rangeParameterWidget::valueChanged, this, &QparametersController::setMainValue);
-    connect(colorWidget[3]->second, &rangeParameterWidget::valueChanged, this, &QparametersController::setVarianceValue);
+    connect(colorWidget[0]->second, static_cast<void(rangeParameterWidget::*)(int,double)>(&rangeParameterWidget::valueChanged), this, &QparametersController::setMainValue);
+    connect(colorWidget[1]->second, static_cast<void(rangeParameterWidget::*)(int,double)>(&rangeParameterWidget::valueChanged), this, &QparametersController::setVarianceValue);
+    connect(colorWidget[2]->second, static_cast<void(rangeParameterWidget::*)(int,double)>(&rangeParameterWidget::valueChanged), this, &QparametersController::setMainValue);
+    connect(colorWidget[3]->second, static_cast<void(rangeParameterWidget::*)(int,double)>(&rangeParameterWidget::valueChanged), this, &QparametersController::setVarianceValue);
+
+    // System properties
+
+    systemProperties = new rangeParameterWidget *[3]
+    {
+        new rangeParameterWidget("Czas trwania symulacji (s)[ -1 = nieskończoność ]", -1, 120, 0, drawableWidget),
+        new rangeParameterWidget("Tempo tworzenia cząstek / s", 0, 1000, 1, drawableWidget),
+        new rangeParameterWidget("Maksymalna liczba cząstek", 0, 10000, 2, drawableWidget)
+    };
+
+    connect( systemProperties[0], static_cast<void(rangeParameterWidget::*)(double)>(&rangeParameterWidget::valueChanged), [this](double val){ controller->setDurationTime(val); });
+    connect( systemProperties[1], static_cast<void(rangeParameterWidget::*)(double)>(&rangeParameterWidget::valueChanged), [this](double val){ controller->setSpawnRate(val); });
+    connect( systemProperties[2], &rangeParameterWidget::valueConfirmed, [this](double val){ controller->setMaxParticles(val); });
 
     // Other controllers
 
-    int controllersCount = 15       ;
+    int controllersCount = 15;
     values = new rangeParameterVarianceWidget *[controllersCount]
     {
         new rangeParameterVarianceWidget("Kąt + rozbierzność", "", -180, 180, "", 0, 180, range::angle, drawableWidget),
         new rangeParameterVarianceWidget("Czas życia cząstki(s) + rozbierzność", "", 0, 10, "", 0, 5, range::particleLife, drawableWidget),
 
-        new rangeParameterVarianceWidget("Rozbierzność pozycji", "X", 0, 2000, "Y", 0, 2000, range::position, gravityWidget),
+        new rangeParameterVarianceWidget("Rozbierzność pozycji X/Y", "", 0, 2000, "", 0, 2000, range::position, gravityWidget),
         new rangeParameterVarianceWidget("Prędkość + rozbierzność", "", -2000, 2000, "", 0, 1000, range::speed, gravityWidget),
         new rangeParameterVarianceWidget("Grawitacja X + rozbierzność", "", -1000, 1000, "", 0, 1000, range::gravityX, gravityWidget),
         new rangeParameterVarianceWidget("Grawitacja Y + rozbierzność", "", -1000, 1000, "", 0, 1000, range::gravityY, gravityWidget),
@@ -108,6 +121,9 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
 
     layout = drawableWidget->layout();
     layout->addWidget(resetPositionButton);
+    layout->addWidget(systemProperties[0]); // duration time
+    layout->addWidget(systemProperties[1]); // spawning rate
+    layout->addWidget(systemProperties[2]); // max particles
     layout->addWidget(values[range::angle]);
     layout->addWidget(values[range::particleLife]);
 
@@ -193,6 +209,10 @@ void QparametersController::changeValues(PSystemAPI::pParticleSystem *system)
     changeValues(reinterpret_cast<PSystemAPI::pDrawableItem*>(system));
 
     emiterMode->setCurrentIndex(system->getSystemMode());
+
+    systemProperties[0]->setValue(system->getDurationTime()); // simulating time
+    systemProperties[1]->setValue(system->getSpawnRate()); // spawn rate time
+    systemProperties[2]->setValue(system->getMaxParticles()); //max particles
 
     values[range::angle]->setSecondValue(system->getAngleVariance());
     values[range::particleLife]->setFirstValue(system->getParticleLife());

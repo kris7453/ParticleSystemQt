@@ -11,12 +11,15 @@ class rangeParameterWidget : public QWidget
 {
     Q_OBJECT
     public:
-        explicit rangeParameterWidget(QString name, double min, double max, int id, QWidget *parent = 0);
+        explicit rangeParameterWidget(QString name, double min, double max, QWidget *parent = 0);
+        rangeParameterWidget(QString name, double min, double max, int id, QWidget *parent = 0);
         void setValue(double value);
         double getValue();
 
     signals:
+        void valueChanged(double value);
         void valueChanged(int itemId, double value);
+        void valueConfirmed(double value);
 
     public slots:
 

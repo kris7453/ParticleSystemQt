@@ -17,8 +17,8 @@ rangeParameterVarianceWidget::rangeParameterVarianceWidget(QString name,
     secondParameter = new rangeParameterWidget( secondParameterName, secondMin, secondMax, id, this);
     verticalLayout->addWidget(secondParameter);
 
-    connect(firstParameter, &rangeParameterWidget::valueChanged, this, &rangeParameterVarianceWidget::firstValueChanged);
-    connect(secondParameter, &rangeParameterWidget::valueChanged, this, &rangeParameterVarianceWidget::secondValueChanged);
+    connect(firstParameter, static_cast<void(rangeParameterWidget::*)(int,double)>(&rangeParameterWidget::valueChanged), this, &rangeParameterVarianceWidget::firstValueChanged);
+    connect(secondParameter, static_cast<void(rangeParameterWidget::*)(int,double)>(&rangeParameterWidget::valueChanged), this, &rangeParameterVarianceWidget::secondValueChanged);
 }
 
 void rangeParameterVarianceWidget::setFirstValue(double value)

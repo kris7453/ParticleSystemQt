@@ -173,6 +173,24 @@ namespace PSystemAPI
             activeSystem->setPosition(QVector2D(0.0f, 0.0f));
     }
 
+    void pDrawItemsController::setDurationTime(float time)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setDurationTime(time);
+    }
+
+    void pDrawItemsController::setSpawnRate(int rate)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setSpawnRate(rate);
+    }
+
+    void pDrawItemsController::setMaxParticles(int max)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setMaxParticles(max);
+    }
+
     void pDrawItemsController::setAngle(int angle)
     {
         if ( activeSystem != nullptr )

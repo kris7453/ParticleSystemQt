@@ -47,12 +47,17 @@ namespace PSystemAPI
             void updateParticles( float deltaT);
             void draw();
             void restart();
+            bool isFull();
 
             void setSystemMode( pSystemMode mode);
             void setPosition( QVector2D position);
             void setPositionVariance( QVector2D positionVariance);
             void setPositionVarianceX( int variance);
             void setPositionVarianceY( int variance);
+
+            void setDurationTime( float time);
+            void setSpawnRate( int rate);
+            void setMaxParticles( int max);
 
             void setParticlesLife( int life, int lifeVariance = 0);
             void setParticlesLife( float life);
@@ -137,6 +142,10 @@ namespace PSystemAPI
             float getParticleLife();
             float getParticleLifeVariance();
 
+            float getDurationTime();
+            float getSpawnRate();
+            int getMaxParticles();
+
             int getPositionVarianceX();
             int getPositionVarianceY();
             int getAngleVariance();
@@ -167,7 +176,7 @@ namespace PSystemAPI
 
         private:
             pBuffer     *particles;
-            float       timeElapsed;
+
             QVector2D   positionVariance;
             QVector2D   velocityDirection;
             pSystemMode mode;
@@ -176,7 +185,10 @@ namespace PSystemAPI
             pParticleProperties pProperties;
             pParticleProperties pVariances;
 
+            float   durationTime;
             int     maxParticles;
+            float   timeElapsed;
+            float   simulatingTime;
             float   spawnRate; // emission rate
             float   spawnTimeSpan;
             QTimer  *spawnTimer;

@@ -68,7 +68,7 @@ namespace PSystemAPI
     class pBuffer
     {
         public:
-            pBuffer( int size = 128);
+            pBuffer( int size);
             ~pBuffer();
 
             void addParticle( pParticle* particle);
@@ -78,6 +78,7 @@ namespace PSystemAPI
             void loadBuffer(GLfloat *particlesBuffer);
             void restart();
 
+            int getSize();
             int getAliveParticlesCount();
 
         private:

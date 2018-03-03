@@ -61,6 +61,10 @@ namespace PSystemAPI
             void resetSystem();
             void resetSystemPosition();
 
+            void setDurationTime( float time);
+            void setSpawnRate( int rate);
+            void setMaxParticles( int max);
+
             void setAngle(int angle);
             void setAngleVariance(int variance);
             void setMode(int mode);

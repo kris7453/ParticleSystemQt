@@ -10,7 +10,7 @@ namespace PSystemAPI
 
     pBuffer::~pBuffer()
     {
-        delete buffer;
+        delete [] buffer;
     }
 
     void pBuffer::addParticle(pParticle *particle)
@@ -123,6 +123,11 @@ namespace PSystemAPI
     void pBuffer::restart()
     {
         aliveParticles = 0;
+    }
+
+    int pBuffer::getSize()
+    {
+        return size;
     }
 
     int pBuffer::getAliveParticlesCount()

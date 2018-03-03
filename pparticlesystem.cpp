@@ -5,8 +5,8 @@ namespace PSystemAPI
     pParticleSystem::pParticleSystem( QString *resourceImagePath, QString name) : pDrawableItem(resourceImagePath, name)
     {
         particleSystem = true;
-        timeElapsed = 0;
-        maxParticles = 3000;
+
+        maxParticles = 10000;
         particles = new pBuffer(maxParticles);
 
         oGLFunct->glGenVertexArrays(1,&vao);
@@ -56,11 +56,13 @@ namespace PSystemAPI
                           QColor(0, 0, 0, 255*1.0f),
                           QColor(0, 0, 0, 0));
 
-        spawnRate = 200.0f;
-        spawnTimeSpan = 1.0f / spawnRate;
+        timeElapsed = 0.0f;
+        simulatingTime = 0.0f;
+        durationTime = -1.0f;
+        setSpawnRate(200);
         angle = 90;
         angleVariance = 0;
-
+qDebug() << name << " duration time " << durationTime << " simulating time & max particles " << simulatingTime << " " << maxParticles;
         // Gravity
 
         pProperties.speed = 10;
@@ -195,12 +197,20 @@ namespace PSystemAPI
 
     void pParticleSystem::updateParticles(float deltaT)
     {
-        timeElapsed += deltaT;
+        if ( durationTime > 0 && simulatingTime < durationTime )
+            simulatingTime += deltaT;
+//qDebug() << name <<  " simulating time " << simulatingTime << " for " << durationTime << " durationTime";
+        if ( simulatingTime < durationTime || durationTime == -1 )
+        {//qDebug() <<" simulate " ;
+            timeElapsed += deltaT;
 
-        for( ; timeElapsed >= spawnTimeSpan; timeElapsed -= spawnTimeSpan)
-            spawnParticle();
+            for( ; timeElapsed >= spawnTimeSpan && !isFull() ; timeElapsed -= spawnTimeSpan)
+                spawnParticle();
+        }
+
 
         particles->updateParticles(deltaT);
+        //qDebug() << particles->getAliveParticlesCount() << " alive particles";
     }
 
     void pParticleSystem::draw()
@@ -239,6 +249,13 @@ namespace PSystemAPI
     void pParticleSystem::restart()
     {
         particles->restart();
+        timeElapsed = 0.0f;
+        simulatingTime = 0.0f;
+    }
+
+    bool pParticleSystem::isFull()
+    {
+        return particles->getAliveParticlesCount() >= maxParticles;
     }
 
     void pParticleSystem::setSystemMode(pSystemMode mode)
@@ -266,6 +283,24 @@ namespace PSystemAPI
     void pParticleSystem::setPositionVarianceY(int variance)
     {
         positionVariance.setY(variance);
+    }
+
+    void pParticleSystem::setDurationTime(float time)
+    {qDebug()<< name << " set durration to " << time;
+        this->durationTime = time;
+        simulatingTime = 0.0f;
+        timeElapsed = 0.0f;
+    }
+
+    void pParticleSystem::setSpawnRate(int rate)
+    {
+        this->spawnRate = rate;
+        spawnTimeSpan = 1.0f / spawnRate;
+    }
+
+    void pParticleSystem::setMaxParticles(int max)
+    {
+        this->maxParticles = max;
     }
 
     void pParticleSystem::setParticlesLife(int life, int lifeVariance)
@@ -601,6 +636,21 @@ namespace PSystemAPI
     float pParticleSystem::getParticleLifeVariance()
     {
         return pVariances.life;
+    }
+
+    float pParticleSystem::getDurationTime()
+    {
+        return durationTime;
+    }
+
+    float pParticleSystem::getSpawnRate()
+    {
+        return spawnRate;
+    }
+
+    int pParticleSystem::getMaxParticles()
+    {
+        return maxParticles;
     }
 
     int pParticleSystem::getPositionVarianceX()

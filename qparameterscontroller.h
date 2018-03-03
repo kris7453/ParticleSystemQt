@@ -76,6 +76,8 @@ class QparametersController : public QObject
 
         QLabel *texturePath;
         QPushButton *resetPositionButton;
+
+        rangeParameterWidget **systemProperties;
         rangeParameterVarianceWidget **values;
         std::pair<QPushButton*,rangeParameterWidget*> **colorWidget;
 

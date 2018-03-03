@@ -46,12 +46,25 @@ rangeParameterWidget::rangeParameterWidget(QString name, double min, double max,
 
     connect( slider, &QSlider::valueChanged, [this](int val){
         numberBox->setValue(val);
+        emit valueChanged(val);
         emit valueChanged(rangeId, val);
     });
+
+    connect( slider, &QSlider::sliderReleased, [this](){
+        emit valueConfirmed(slider->value());
+    });
+
     connect( numberBox, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), [this](double val){
         slider->setValue(val);
+        emit valueChanged(val);
         emit valueChanged(rangeId, val);
+        emit valueConfirmed(val);
     });
+}
+
+rangeParameterWidget::rangeParameterWidget(QString name, double min, double max, QWidget *parent) :
+    rangeParameterWidget( name,  min,  max, 0, parent)
+{
 }
 
 void rangeParameterWidget::setValue(double value)
