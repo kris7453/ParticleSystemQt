@@ -122,6 +122,9 @@ namespace PSystemAPI
             void setRotatePerSec(int rotates);
             void setRotatePerSecVariance(int variance);
 
+            void setSrcBlendingFactor(int factor);
+            void setDstBlendingFactor(int factor);
+
             QColor getParticleStartColor();
             QColor getParticleStartColorVariance();
             QColor getParticleEndColor();
@@ -172,6 +175,9 @@ namespace PSystemAPI
             int getRotatePerSec();
             int getRotatePerSecVariance();
 
+            int getSrcBlendingFactor();
+            int getDstBlendingFactor();
+
             bool operator==(const pParticleSystem& item);
 
         private:
@@ -192,6 +198,9 @@ namespace PSystemAPI
             float   spawnRate; // emission rate
             float   spawnTimeSpan;
             QTimer  *spawnTimer;
+
+            uint srcBlendingFactor;
+            uint dstBlendingFactor;
     };
 }
 

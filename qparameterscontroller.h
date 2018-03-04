@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QToolBox>
+#include <QComboBox>
 #include <QSpacerItem>
 #include <QColorDialog>
 #include <QFileDialog>
@@ -80,6 +81,7 @@ class QparametersController : public QObject
         rangeParameterWidget **systemProperties;
         rangeParameterVarianceWidget **values;
         std::pair<QPushButton*,rangeParameterWidget*> **colorWidget;
+        std::pair<QLabel*,QComboBox*> **blendingWidget;
 
         void colorButtonSetColor(std::pair<QPushButton*,rangeParameterWidget*> *pair, QString text, QColor color);
 

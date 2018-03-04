@@ -115,6 +115,28 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
     this->emiterMode = emiterMode;
     connect(emiterMode, &QToolBox::currentChanged, [this](int val){controller->setMode(val);});
 
+    blendingWidget = new std::pair<QLabel*,QComboBox*>*[2]{
+        new std::pair<QLabel*,QComboBox*>(new QLabel("Funkcja blendingu źródła", outlookWidget),new QComboBox(outlookWidget)),
+        new std::pair<QLabel*,QComboBox*>(new QLabel("Funkcja blendingu przeznaczenia", outlookWidget),new QComboBox(outlookWidget))
+    };
+
+    for (int i = 0; i < 2; i++)
+    {
+        blendingWidget[i]->second->addItem("ZERO",QVariant(GL_ZERO));
+        blendingWidget[i]->second->addItem("ONE",QVariant(GL_ONE));
+        blendingWidget[i]->second->addItem("SRC_COLOR",QVariant(GL_SRC_COLOR));
+        blendingWidget[i]->second->addItem("ONE_MINUS_SRC_COLOR",QVariant(GL_ONE_MINUS_SRC_COLOR));
+        blendingWidget[i]->second->addItem("SRC_ALPHA",QVariant(GL_SRC_ALPHA));
+        blendingWidget[i]->second->addItem("ONE_MINUS_SRC_ALPHA",QVariant(GL_ONE_MINUS_SRC_ALPHA));
+        blendingWidget[i]->second->addItem("DST_COLOR",QVariant(GL_DST_COLOR));
+        blendingWidget[i]->second->addItem("ONE_MINUS_DST_COLOR",QVariant(GL_ONE_MINUS_DST_COLOR));
+        blendingWidget[i]->second->addItem("DST_ALPHA",QVariant(GL_DST_ALPHA));
+        blendingWidget[i]->second->addItem("ONE_MINUS_DST_ALPHA",QVariant(GL_ONE_MINUS_DST_ALPHA));
+    }
+
+    connect(blendingWidget[0]->second, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int index){ controller->setSrcBlendingFactor(blendingWidget[0]->second->itemData(index).toUInt());});
+    connect(blendingWidget[1]->second, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [this](int index){ controller->setDstBlendingFactor(blendingWidget[1]->second->itemData(index).toUInt());});
+
     // Settings controllers in window
 
     QLayout *layout;
@@ -156,6 +178,10 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
     layout->addWidget(values[range::endSize]);
     layout->addWidget(values[range::startSpin]);
     layout->addWidget(values[range::endSpin]);
+    layout->addWidget(blendingWidget[0]->first);
+    layout->addWidget(blendingWidget[0]->second);
+    layout->addWidget(blendingWidget[1]->first);
+    layout->addWidget(blendingWidget[1]->second);
     layout->addItem(new QSpacerItem( 0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     for (int i = 0; i < controllersCount; i++)
@@ -251,6 +277,12 @@ void QparametersController::changeValues(PSystemAPI::pParticleSystem *system)
     colorButtonSetColor(colorWidget[1], "Kolor startowy rozbierzność : ", system->getParticleStartColorVariance());
     colorButtonSetColor(colorWidget[2], "Kolor końcowy : ", system->getParticleEndColor());
     colorButtonSetColor(colorWidget[3], "Kolor końcowy rozbierzność : ", system->getParticleEndColorVariance());
+
+    int index = blendingWidget[0]->second->findData(system->getSrcBlendingFactor());
+    blendingWidget[0]->second->setCurrentIndex(index == -1 ? 0 : index);
+
+    index = blendingWidget[1]->second->findData(system->getDstBlendingFactor());
+    blendingWidget[1]->second->setCurrentIndex(index == -1 ? 0 : index);
 }
 
 // Redirection from widgets to parameters setters

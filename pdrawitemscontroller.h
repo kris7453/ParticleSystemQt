@@ -109,6 +109,9 @@ namespace PSystemAPI
             void setParticleEndSize( short size);
             void setParticleEndSizeVariance( short variance);
 
+            void setSrcBlendingFactor(int factor);
+            void setDstBlendingFactor(int factor);
+
         private:
             pDrawableItem *activeItem;
             pParticleSystem *activeSystem;

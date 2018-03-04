@@ -427,6 +427,18 @@ namespace PSystemAPI
             activeSystem->setParticleEndSizeVariance(variance);
     }
 
+    void pDrawItemsController::setSrcBlendingFactor(int factor)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setSrcBlendingFactor(factor);
+    }
+
+    void pDrawItemsController::setDstBlendingFactor(int factor)
+    {
+        if ( activeSystem != nullptr )
+            activeSystem->setDstBlendingFactor(factor);
+    }
+
     QColor pDrawItemsController::getParticleStartColor()
     {
         return activeSystem->getParticleStartColor();

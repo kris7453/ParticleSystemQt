@@ -44,6 +44,9 @@ namespace PSystemAPI
         if ( resourceImagePath == nullptr )
             resourceImagePath = new QString(":/particles/star.png");
 
+        srcBlendingFactor = GL_SRC_ALPHA;
+        dstBlendingFactor = GL_ONE;
+
         setPosition(position);
         setPositionVariance(QVector2D(0.0f,0.0f));
         setSystemMode( pSystemMode::radius );
@@ -234,6 +237,9 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
                 qDebug() << *wsk << " " << *(wsk+1) << " " << *(wsk+2) << " " << *(wsk+3) << " " << *(wsk+4) << " " << *(wsk+5) << " " << *(wsk+6) << " " << *(wsk+7);
             }
 #endif
+            oGLFunct->glEnable(GL_BLEND);
+            oGLFunct->glBlendFunc(srcBlendingFactor,dstBlendingFactor);
+
             oGLFunct->glBindBuffer(GL_ARRAY_BUFFER, propertiesBuffer);
             oGLFunct->glBufferSubData(GL_ARRAY_BUFFER,0,bufferSize*sizeof(GLfloat),reinterpret_cast<GLvoid*>(buffer));
             delete [] buffer;
@@ -563,6 +569,18 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
         this->pVariances.rotatePerSec = variance;
     }
 
+    void pParticleSystem::setSrcBlendingFactor(int factor)
+    {
+        srcBlendingFactor = factor;
+        qDebug()<<name <<" now using src " << srcBlendingFactor << " dst " << dstBlendingFactor;
+    }
+
+    void pParticleSystem::setDstBlendingFactor(int factor)
+    {
+        dstBlendingFactor = factor;
+        qDebug()<<name <<" now using src " << srcBlendingFactor << " dst " << dstBlendingFactor;
+    }
+
     QColor pParticleSystem::getParticleStartColor()
     {
         return pProperties.startColor;
@@ -746,6 +764,16 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     int pParticleSystem::getRotatePerSecVariance()
     {
         return pVariances.rotatePerSec;
+    }
+
+    int pParticleSystem::getSrcBlendingFactor()
+    {
+        return srcBlendingFactor;
+    }
+
+    int pParticleSystem::getDstBlendingFactor()
+    {
+        return dstBlendingFactor;
     }
 
     bool pParticleSystem::operator==(const pParticleSystem &item)

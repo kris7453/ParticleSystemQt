@@ -83,9 +83,6 @@ void QmainGLWidget::drawParticles( float deltaT)
 {
     oGLFunct->glClear( GL_COLOR_BUFFER_BIT );
 
-    oGLFunct->glEnable(GL_BLEND);
-    oGLFunct->glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-
     sprogram->bind();
     sprogram->setUniformValue("textureSamp",0);
     sprogram->setUniformValue("pixelSize", pixelSize);
