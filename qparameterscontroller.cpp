@@ -3,8 +3,29 @@
 QparametersController::QparametersController(QToolBox *emiterMode, QWidget *drawableWidget,
                                              QWidget *gravityWidget, QWidget *radialWidget, QWidget *outlookWidget,
                                              QLabel *texturePath, QPushButton *textureButton, QPushButton *addSystemButton,
-                                             QmainGLWidget *mainGLWidget, QObject *parent) : QObject(parent), glWidget(mainGLWidget)
+                                             QMenu *mainMenu, QmainGLWidget *mainGLWidget, QObject *parent) : QObject(parent), glWidget(mainGLWidget)
 {
+    // Main menu
+
+    mainMenu->addAction(tr("Załaduj system z pliku"),[this](){
+        QString filePath = QFileDialog::getOpenFileName(nullptr, tr("System cząsteczkowy"), QString(), tr("plist(*.plist)") );
+        if ( !filePath.isEmpty() )
+        {
+          QString systemName = QInputDialog::getText(nullptr, tr("Nazwa systemu"), tr("Podaj nazwę systemu"), QLineEdit::Normal, QString());
+
+            glWidget->makeCurrent();
+            controller->addParticleSystemFromFile(filePath, systemName);
+
+        }
+    });
+
+    mainMenu->addAction(tr("Zapisz aktywny system do pliku"),[this](){
+        QString filePath = QFileDialog::getSaveFileName( nullptr, tr("Zapisz system cząsteczkowy"), QString(), tr("plist(*.plist)"));
+        if ( !filePath.isEmpty() )
+        {
+            controller->saveParticleSystemToFile(filePath);
+        }
+    });
 
     // Reset position button
 
@@ -226,12 +247,18 @@ void QparametersController::setDrawableController(PSystemAPI::pDrawItemsControll
 
 void QparametersController::changeValues(PSystemAPI::pDrawableItem *item)
 {
+    if (item == nullptr)
+        return;
+
     values[range::angle]->setFirstValue(item->getAngle());
     //qDebug() << "Set angle to " << item->getAngle();
 }
 
 void QparametersController::changeValues(PSystemAPI::pParticleSystem *system)
 {
+    if (system == nullptr)
+        return;
+
     changeValues(reinterpret_cast<PSystemAPI::pDrawableItem*>(system));
 
     emiterMode->setCurrentIndex(system->getSystemMode());

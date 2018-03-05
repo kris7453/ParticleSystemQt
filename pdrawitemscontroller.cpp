@@ -49,7 +49,7 @@ namespace PSystemAPI
             activeItem->translatePosition(position);
     }
 
-    void pDrawItemsController::addDefaultParticleSystem( QString name, QString *resourceImagePath )
+    pParticleSystem *pDrawItemsController::addDefaultParticleSystem( QString name, QString *resourceImagePath )
     {
         pParticleSystem *pSystem = new PSystemAPI::pParticleSystem(QVector2D(0,0), resourceImagePath, name);
 
@@ -58,17 +58,25 @@ namespace PSystemAPI
         setActiveItem( pSystem );
 
         drawableListWidget->addListItem( pSystem, name, resourceImagePath);
+        return pSystem;
     }
 
-    void pDrawItemsController::addParticleSystem(pParticleSystem *pSystem)
-    {
-        if( pSystem == nullptr)
-            addDefaultParticleSystem();
+    void pDrawItemsController::addParticleSystemFromFile(QString filePath, QString name)
+    {qDebug() << "add from file" << filePath;
+        pParticleSystem *pSystem = addDefaultParticleSystem(name, nullptr);
+        pSystem->loadFromFile(filePath);
+        setActiveItem( pSystem );
     }
 
     void pDrawItemsController::addParticleSystem(QString *resourceImagePath, QString name)
     {
         addDefaultParticleSystem(name, resourceImagePath);
+    }
+
+    void pDrawItemsController::saveParticleSystemToFile(QString filePath)
+    {
+        if (activeSystem != nullptr)
+            activeSystem->saveToFile(filePath);
     }
 
     void pDrawItemsController::setActiveItemTexture(QString texturePath)
@@ -110,7 +118,7 @@ namespace PSystemAPI
     void pDrawItemsController::setActiveItem(pDrawableItem *value)
     {
         activeItem = value;
-        if( activeItem->isParticleSystem() )
+        if( activeItem != nullptr && activeItem->isParticleSystem() )
         {
             activeSystem = reinterpret_cast<pParticleSystem*>(activeItem);
             parametersController->changeValues(activeSystem);

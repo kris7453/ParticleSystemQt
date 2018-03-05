@@ -41,9 +41,6 @@ namespace PSystemAPI
 
     pParticleSystem::pParticleSystem(QVector2D position, QString *resourceImagePath, QString name) : pParticleSystem(resourceImagePath, name)
     {
-        if ( resourceImagePath == nullptr )
-            resourceImagePath = new QString(":/particles/star.png");
-
         srcBlendingFactor = GL_SRC_ALPHA;
         dstBlendingFactor = GL_ONE;
 
@@ -90,6 +87,393 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
         pProperties.rotatePerSec = 180;
         pVariances.rotatePerSec = 0;
 
+    }
+
+    void pParticleSystem::loadFromFile(QString filePath)
+    {
+        QFile file(filePath);
+        if (!file.open(QFile::ReadOnly | QFile::Text))
+        {
+            return;
+        }
+
+        QXmlStreamReader reader;
+        reader.setDevice(&file);
+        reader.readNext();
+
+        // read to the begining of values
+
+        while ( !reader.atEnd())
+        {
+            if (reader.isStartElement())
+                if ( reader.name() == "dict")
+                {
+                    reader.readNextStartElement();
+                    break;
+                }
+
+            reader.readNextStartElement();
+        }
+
+        // reading values
+
+        while ( !reader.atEnd())
+        {
+            if (reader.isStartElement())
+                if ( reader.name() == "key")
+                {
+                    QString key = reader.readElementText();
+                    reader.readNextStartElement();
+                    if ( reader.name() == "real" || reader.name() == "integer" )
+                    {
+                        if ( key == "angle" )
+                            setAngle(reader.readElementText().toShort());
+
+                        if ( key == "angleVariance" )
+                            setAngleVariance(reader.readElementText().toShort());
+
+                        if ( key == "duration" )
+                            setDurationTime(reader.readElementText().toFloat());
+
+                        if ( key == "emitterType" )
+                            setSystemMode(reader.readElementText().toShort() == 0 ? pSystemMode::gravity : pSystemMode::radius);
+
+                        if ( key == "maxParticles" )
+                        {
+                            int max = reader.readElementText().toInt();
+                            setMaxParticles( max > 10000 ? 10000 : max );
+                        }
+
+                        if ( key == "emissionRate" )
+                            setSpawnRate(reader.readElementText().toInt());
+
+                        if ( key == "particleLifespan" )
+                            setParticlesLife(reader.readElementText().toFloat());
+
+                        if ( key == "particleLifespanVariance" )
+                            setLifeVariance(reader.readElementText().toFloat());
+
+                        //gravity
+
+                        if ( key == "sourcePositionVariancex" )
+                            setPositionVarianceX(reader.readElementText().toInt());
+
+                        if ( key == "sourcePositionVariancey" )
+                            setPositionVarianceY(reader.readElementText().toInt());
+
+                        if ( key == "speed" )
+                            setSpeed(reader.readElementText().toShort());
+
+                        if ( key == "speedVariance" )
+                            setSpeedVariance(reader.readElementText().toShort());
+
+                        if ( key == "gravityx" )
+                            setGravityX(reader.readElementText().toInt());
+
+                        if ( key == "gravityy" )
+                            setGravityY(reader.readElementText().toInt());
+
+                        if ( key == "radialAcceleration" )
+                            setRadialAccValue(reader.readElementText().toShort());
+
+                        if ( key == "radialAccelerationVariance" )
+                            setRadialAccVariance(reader.readElementText().toShort());
+
+                        if ( key == "tangentialAcceleration" )
+                            setTangentialAccValue(reader.readElementText().toShort());
+
+                        if ( key == "tangentialAccelVariance" )
+                            setTangentialAccVariance(reader.readElementText().toShort());
+
+                        // radius
+
+                        if ( key == "minRadius" )
+                            setEndRadius(reader.readElementText().toShort());
+
+                        if ( key == "minRadius" )
+                            setEndRadiusVariance(reader.readElementText().toShort());
+
+                        if ( key == "maxRadius" )
+                            setStartRadius(reader.readElementText().toShort());
+
+                        if ( key == "maxRadiusVariance" )
+                            setStartRadiusVariance(reader.readElementText().toShort());
+
+                        if ( key == "rotatePerSecond" )
+                            setRotatePerSec(reader.readElementText().toShort());
+
+                        if ( key == "rotatePerSecondVariance" )
+                            setRotatePerSecVariance(reader.readElementText().toShort());
+
+                        // particle properties
+
+                        if ( key == "rotationStart" )
+                            setParticleStartSpin(reader.readElementText().toShort());
+
+                        if ( key == "rotationStartVariance" )
+                            setParticleStartSpinVariance(reader.readElementText().toShort());
+
+                        if ( key == "rotationEnd" )
+                            setParticleEndSpin(reader.readElementText().toShort());
+
+                        if ( key == "rotationEndVariance" )
+                            setParticleEndSpinVariance(reader.readElementText().toShort());
+
+                        if ( key == "startParticleSize" )
+                            setParticleStartSize(reader.readElementText().toShort());
+
+                        if ( key == "startParticleSizeVariance" )
+                            setParticleStartSizeVariance(reader.readElementText().toShort());
+
+                        if ( key == "finishParticleSize" )
+                            setParticleEndSize(reader.readElementText().toShort());
+
+                        if ( key == "finishParticleSizeVariance" )
+                            setParticleEndSizeVariance(reader.readElementText().toShort());
+
+                        //color
+
+                        if ( key == "blendFuncSource" )
+                            setSrcBlendingFactor(reader.readElementText().toUInt());
+
+                        if ( key == "blendFuncDestination" )
+                            setDstBlendingFactor(reader.readElementText().toUInt());
+
+                        if ( key == "startColorAlpha" )
+                            setParticleStartColorAlpha(reader.readElementText().toDouble());
+
+                        if ( key == "startColorBlue" )
+                            setParticleStartColorBlue(reader.readElementText().toDouble());
+
+                        if ( key == "startColorGreen" )
+                            setParticleStartColorGreen(reader.readElementText().toDouble());
+
+                        if ( key == "startColorRed" )
+                            setParticleStartColorRed(reader.readElementText().toDouble());
+
+                        if ( key == "startColorVarianceAlpha" )
+                            setParticleStartColorVarianceAlpha(reader.readElementText().toDouble());
+
+                        if ( key == "startColorVarianceBlue" )
+                            setParticleStartColorVarianceBlue(reader.readElementText().toDouble());
+
+                        if ( key == "startColorVarianceGreen" )
+                            setParticleStartColorVarianceGreen(reader.readElementText().toDouble());
+
+                        if ( key == "startColorVarianceRed" )
+                            setParticleStartColorVarianceRed(reader.readElementText().toDouble());
+
+                        if ( key == "finishColorAlpha" )
+                            setParticleEndColorAlpha(reader.readElementText().toDouble());
+
+                        if ( key == "finishColorBlue" )
+                            setParticleEndColorBlue(reader.readElementText().toDouble());
+
+                        if ( key == "finishColorGreen" )
+                            setParticleEndColorGreen(reader.readElementText().toDouble());
+
+                        if ( key == "finishColorRed" )
+                            setParticleEndColorRed(reader.readElementText().toDouble());
+
+                        if ( key == "finishColorVarianceAlpha" )
+                            setParticleEndColorVarianceAlpha(reader.readElementText().toDouble());
+
+                        if ( key == "finishColorVarianceBlue" )
+                            setParticleEndColorVarianceBlue(reader.readElementText().toDouble());
+
+                        if ( key == "finishColorVarianceGreen" )
+                            setParticleEndColorVarianceGreen(reader.readElementText().toDouble());
+
+                        if ( key == "finishColorVarianceRed" )
+                            setParticleEndColorVarianceRed(reader.readElementText().toDouble());
+                    }
+                }
+
+            reader.readNextStartElement();
+        }
+
+        file.close();
+    }
+
+    void pParticleSystem::saveToFile( QString filePath)
+    {
+        QFile file(filePath);
+        file.open(QIODevice::WriteOnly);
+
+        QXmlStreamWriter xmlWriter(&file);
+        xmlWriter.setAutoFormatting(true);
+        xmlWriter.writeStartDocument();
+        xmlWriter.writeDTD("<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">");
+            xmlWriter.writeStartElement("plist");
+            xmlWriter.writeAttribute("version", "1.0");
+                xmlWriter.writeStartElement("dict");
+
+                    xmlWriter.writeTextElement("key", "angle");
+                    xmlWriter.writeTextElement("integer", QString::number(angle));
+
+                    xmlWriter.writeTextElement("key", "angleVariance");
+                    xmlWriter.writeTextElement("integer", QString::number(angleVariance));
+
+                    xmlWriter.writeTextElement("key", "blendFuncDestination");
+                    xmlWriter.writeTextElement("integer", QString::number(dstBlendingFactor));
+
+                    xmlWriter.writeTextElement("key", "blendFuncSource");
+                    xmlWriter.writeTextElement("integer", QString::number(srcBlendingFactor));
+
+                    xmlWriter.writeTextElement("key", "duration");
+                    xmlWriter.writeTextElement("integer", QString::number(durationTime));
+
+                    xmlWriter.writeTextElement("key", "emitterType");
+                    xmlWriter.writeTextElement("integer", QString::number(mode == pSystemMode::gravity ? 0 : 1 ));
+
+                    QColor color = pProperties.endColor;
+
+                    xmlWriter.writeTextElement("key", "finishColorAlpha");
+                    xmlWriter.writeTextElement("real", QString::number( color.alphaF() ));
+
+                    xmlWriter.writeTextElement("key", "finishColorBlue");
+                    xmlWriter.writeTextElement("real", QString::number( color.blueF() ));
+
+                    xmlWriter.writeTextElement("key", "finishColorGreen");
+                    xmlWriter.writeTextElement("real", QString::number( color.greenF() ));
+
+                    xmlWriter.writeTextElement("key", "finishColorRed");
+                    xmlWriter.writeTextElement("real", QString::number( color.redF() ));
+
+                    color = pVariances.endColor;
+
+                    xmlWriter.writeTextElement("key", "finishColorVarainceAlpha");
+                    xmlWriter.writeTextElement("real", QString::number( color.alphaF() ));
+
+                    xmlWriter.writeTextElement("key", "finishColorVarianceBlue");
+                    xmlWriter.writeTextElement("real", QString::number( color.blueF() ));
+
+                    xmlWriter.writeTextElement("key", "finishColorVarianceGreen");
+                    xmlWriter.writeTextElement("real", QString::number( color.greenF() ));
+
+                    xmlWriter.writeTextElement("key", "finishColorVarianceRed");
+                    xmlWriter.writeTextElement("real", QString::number( color.redF() ));
+
+                    xmlWriter.writeTextElement("key", "finishParticleSize");
+                    xmlWriter.writeTextElement("real", QString::number( pProperties.endSize));
+
+                    xmlWriter.writeTextElement("key", "finishParticleSizeVariance");
+                    xmlWriter.writeTextElement("integer", QString::number( pVariances.endSize));
+
+                    xmlWriter.writeTextElement("key", "gravityx");
+                    xmlWriter.writeTextElement("real", QString::number( pProperties.gravity.x() ));
+
+                    xmlWriter.writeTextElement("key", "gravityy");
+                    xmlWriter.writeTextElement("real", QString::number( pProperties.gravity.y() ));
+
+                    xmlWriter.writeTextElement("key", "maxParticles");
+                    xmlWriter.writeTextElement("integer", QString::number( maxParticles ));
+
+                    xmlWriter.writeTextElement("key", "maxRadius");
+                    xmlWriter.writeTextElement("integer", QString::number( pProperties.startRadius));
+
+                    xmlWriter.writeTextElement("key", "maxRadiusVariance");
+                    xmlWriter.writeTextElement("integer", QString::number( pVariances.startRadius));
+
+                    xmlWriter.writeTextElement("key", "minRadius");
+                    xmlWriter.writeTextElement("integer", QString::number( pProperties.endRadius));
+
+                    xmlWriter.writeTextElement("key", "particleLifespan");
+                    xmlWriter.writeTextElement("real", QString::number( pProperties.life/1000.0f));
+
+                    xmlWriter.writeTextElement("key", "particleLifespanVariance");
+                    xmlWriter.writeTextElement("real", QString::number( pVariances.life/1000.0f));
+
+                    xmlWriter.writeTextElement("key", "radialAccelVariance");
+                    xmlWriter.writeTextElement("real", QString::number( pVariances.radialAccValue));
+
+                    xmlWriter.writeTextElement("key", "radialAcceleration");
+                    xmlWriter.writeTextElement("real", QString::number( pProperties.radialAccValue));
+
+                    xmlWriter.writeTextElement("key", "rotatePerSecond");
+                    xmlWriter.writeTextElement("integer", QString::number( pProperties.rotatePerSec));
+
+                    xmlWriter.writeTextElement("key", "rotatePerSecondVariance");
+                    xmlWriter.writeTextElement("integer", QString::number( pVariances.rotatePerSec));
+
+                    xmlWriter.writeTextElement("key", "rotationEnd");
+                    xmlWriter.writeTextElement("real", QString::number( pProperties.endSpin));
+
+                    xmlWriter.writeTextElement("key", "rotationEndVariance");
+                    xmlWriter.writeTextElement("real", QString::number( pVariances.endSpin));
+
+                    xmlWriter.writeTextElement("key", "rotationStart");
+                    xmlWriter.writeTextElement("real", QString::number( pProperties.startSpin));
+
+                    xmlWriter.writeTextElement("key", "rotationStartVariance");
+                    xmlWriter.writeTextElement("real", QString::number( pVariances.startSpin));
+
+                    xmlWriter.writeTextElement("key", "sourcePositionVariancex");
+                    xmlWriter.writeTextElement("integer", QString::number( positionVariance.x()));
+
+                    xmlWriter.writeTextElement("key", "sourcePositionVariancey");
+                    xmlWriter.writeTextElement("integer", QString::number( positionVariance.y()));
+
+                    xmlWriter.writeTextElement("key", "sourcePositionx");
+                    xmlWriter.writeTextElement("real", QString::number( 0.0f));
+
+                    xmlWriter.writeTextElement("key", "sourcePositiony");
+                    xmlWriter.writeTextElement("real", QString::number( 0.0f));
+
+                    xmlWriter.writeTextElement("key", "speed");
+                    xmlWriter.writeTextElement("integer", QString::number( pProperties.speed));
+
+                    xmlWriter.writeTextElement("key", "speedVariance");
+                    xmlWriter.writeTextElement("integer", QString::number( pVariances.speed));
+
+                    color = pProperties.startColor;
+
+                    xmlWriter.writeTextElement("key", "startColorAlpha");
+                    xmlWriter.writeTextElement("real", QString::number( color.alphaF() ));
+
+                    xmlWriter.writeTextElement("key", "startColorBlue");
+                    xmlWriter.writeTextElement("real", QString::number( color.blueF() ));
+
+                    xmlWriter.writeTextElement("key", "startColorGreen");
+                    xmlWriter.writeTextElement("real", QString::number( color.greenF() ));
+
+                    xmlWriter.writeTextElement("key", "startColorRed");
+                    xmlWriter.writeTextElement("real", QString::number( color.redF() ));
+
+                    color = pVariances.startColor;
+
+                    xmlWriter.writeTextElement("key", "startColorVarainceAlpha");
+                    xmlWriter.writeTextElement("real", QString::number( color.alphaF() ));
+
+                    xmlWriter.writeTextElement("key", "startColorVarianceBlue");
+                    xmlWriter.writeTextElement("real", QString::number( color.blueF() ));
+
+                    xmlWriter.writeTextElement("key", "startColorVarianceGreen");
+                    xmlWriter.writeTextElement("real", QString::number( color.greenF() ));
+
+                    xmlWriter.writeTextElement("key", "startColorVarianceRed");
+                    xmlWriter.writeTextElement("real", QString::number( color.redF() ));
+
+                    xmlWriter.writeTextElement("key", "startParticleSize");
+                    xmlWriter.writeTextElement("real", QString::number( pProperties.startSize));
+
+                    xmlWriter.writeTextElement("key", "startParticleSizeVariance");
+                    xmlWriter.writeTextElement("integer", QString::number( pVariances.startSize));
+
+                    xmlWriter.writeTextElement("key", "tangentialAccelVariance");
+                    xmlWriter.writeTextElement("real", QString::number( pVariances.tangentialAccValue));
+
+                    xmlWriter.writeTextElement("key", "tangentialAcceleration");
+                    xmlWriter.writeTextElement("real", QString::number( pProperties.tangentialAccValue));
+
+                    xmlWriter.writeTextElement("key", "emissionRate");
+                    xmlWriter.writeTextElement("real", QString::number( spawnRate));
+
+                xmlWriter.writeEndElement(); // dist
+            xmlWriter.writeEndElement(); // plist
+        xmlWriter.writeEndDocument();
+
+        file.close();
     }
 
     void pParticleSystem::spawnParticle()
@@ -346,6 +730,26 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
         this->pProperties.startColor.setAlpha(alpha);
     }
 
+    void pParticleSystem::setParticleStartColorAlpha(double alpha)
+    {
+        this->pProperties.startColor.setAlphaF(alpha);
+    }
+
+    void pParticleSystem::setParticleStartColorRed(double red)
+    {
+        this->pProperties.startColor.setRedF(red);
+    }
+
+    void pParticleSystem::setParticleStartColorGreen(double green)
+    {
+        this->pProperties.startColor.setGreenF(green);
+    }
+
+    void pParticleSystem::setParticleStartColorBlue(double blue)
+    {
+        this->pProperties.startColor.setBlueF(blue);
+    }
+
     void pParticleSystem::setParticleStartColorVariance(QColor color)
     {
         this->pVariances.startColor = color;
@@ -354,6 +758,26 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     void pParticleSystem::setParticleStartColorVarianceAlpha(int alpha)
     {
         this->pVariances.startColor.setAlpha(alpha);
+    }
+
+    void pParticleSystem::setParticleStartColorVarianceAlpha(double alpha)
+    {
+        this->pVariances.startColor.setAlphaF(alpha);
+    }
+
+    void pParticleSystem::setParticleStartColorVarianceRed(double red)
+    {
+        this->pVariances.startColor.setRedF(red);
+    }
+
+    void pParticleSystem::setParticleStartColorVarianceGreen(double green)
+    {
+        this->pVariances.startColor.setGreenF(green);
+    }
+
+    void pParticleSystem::setParticleStartColorVarianceBlue(double blue)
+    {
+        this->pVariances.startColor.setBlueF(blue);
     }
 
     void pParticleSystem::setParticleEndColor(QColor color)
@@ -366,6 +790,26 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
         this->pProperties.endColor.setAlpha(alpha);
     }
 
+    void pParticleSystem::setParticleEndColorAlpha(double alpha)
+    {
+        this->pProperties.endColor.setAlphaF(alpha);
+    }
+
+    void pParticleSystem::setParticleEndColorRed(double red)
+    {
+        this->pProperties.endColor.setRedF(red);
+    }
+
+    void pParticleSystem::setParticleEndColorGreen(double green)
+    {
+        this->pProperties.endColor.setGreenF(green);
+    }
+
+    void pParticleSystem::setParticleEndColorBlue(double blue)
+    {
+        this->pProperties.endColor.setBlueF(blue);
+    }
+
     void pParticleSystem::setParticleEndColorVariance(QColor color)
     {
         this->pVariances.endColor = color;
@@ -374,6 +818,26 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     void pParticleSystem::setParticleEndColorVarianceAlpha(int alpha)
     {
         this->pVariances.endColor.setAlpha(alpha);
+    }
+
+    void pParticleSystem::setParticleEndColorVarianceAlpha(double alpha)
+    {
+        this->pVariances.endColor.setAlphaF(alpha);
+    }
+
+    void pParticleSystem::setParticleEndColorVarianceRed(double red)
+    {
+        this->pVariances.endColor.setRedF(red);
+    }
+
+    void pParticleSystem::setParticleEndColorVarianceGreen(double green)
+    {
+        this->pVariances.endColor.setGreenF(green);
+    }
+
+    void pParticleSystem::setParticleEndColorVarianceBlue(double blue)
+    {
+        this->pVariances.endColor.setBlueF(blue);
     }
 
     void pParticleSystem::setParticlesColor(QColor startColor, QColor startColorVariance)
@@ -472,7 +936,7 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     }
 
     void pParticleSystem::setAngleVariance(short variance)
-    {
+    {qDebug() << name <<" set angle to " << variance;
         this->angleVariance = variance;
     }
 
@@ -648,12 +1112,12 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
 
     float pParticleSystem::getParticleLife()
     {
-        return pProperties.life;
+        return pProperties.life / 1000.0f;
     }
 
     float pParticleSystem::getParticleLifeVariance()
     {
-        return pVariances.life;
+        return pVariances.life / 1000.0f;
     }
 
     float pParticleSystem::getDurationTime()

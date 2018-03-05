@@ -42,6 +42,7 @@ class MainWindow : public QMainWindow
         static QLabel *texturePath;
         static QPushButton *textureButton;
         static QPushButton *addSystemButton;
+        static QMenu *mainMenu;
 
     public slots:
 

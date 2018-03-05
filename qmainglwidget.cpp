@@ -8,11 +8,6 @@ QmainGLWidget::~QmainGLWidget()
 {
 }
 
-void QmainGLWidget::addParticleSystem(PSystemAPI::pParticleSystem *pSystem)
-{
-    itemsController->addParticleSystem(pSystem);
-}
-
 void QmainGLWidget::addParticleSystem(QString *resourceImagePath, QString name)
 {
     itemsController->addParticleSystem(resourceImagePath, name);
@@ -45,6 +40,7 @@ void QmainGLWidget::initializeGL()
                                                   MainWindow::texturePath,
                                                   MainWindow::textureButton,
                                                   MainWindow::addSystemButton,
+                                                  MainWindow::mainMenu,
                                                   this));
 
     MainWindow::drawableListWidget->setController(itemsController);

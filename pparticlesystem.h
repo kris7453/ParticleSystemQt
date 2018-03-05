@@ -4,6 +4,9 @@
 #include "pdrawableitem.h"
 #include "pbuffer.h"
 #include <time.h>
+#include <QFile>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #define STRIDE_SIZE 8 // x, y size, spin, r, g, b, a
 
@@ -43,6 +46,8 @@ namespace PSystemAPI
             pParticleSystem( QString *resourceImagePath, QString name = QString("Default"));
             pParticleSystem( QVector2D position, QString *resourceImagePath, QString name = QString("Default"));
 
+            void loadFromFile(QString filePath);
+            void saveToFile( QString filePath);
             void spawnParticle();
             void updateParticles( float deltaT);
             void draw();
@@ -68,12 +73,28 @@ namespace PSystemAPI
 
             void setParticleStartColor( QColor color);
             void setParticleStartColorAlpha( int alpha);
+            void setParticleStartColorAlpha( double alpha);
+            void setParticleStartColorRed( double red);
+            void setParticleStartColorGreen( double green);
+            void setParticleStartColorBlue( double blue);
             void setParticleStartColorVariance( QColor color);
             void setParticleStartColorVarianceAlpha( int alpha);
+            void setParticleStartColorVarianceAlpha( double alpha);
+            void setParticleStartColorVarianceRed( double red);
+            void setParticleStartColorVarianceGreen( double green);
+            void setParticleStartColorVarianceBlue( double blue);
             void setParticleEndColor( QColor color);
             void setParticleEndColorAlpha( int alpha);
+            void setParticleEndColorAlpha( double alpha);
+            void setParticleEndColorRed( double red);
+            void setParticleEndColorGreen( double green);
+            void setParticleEndColorBlue( double blue);
             void setParticleEndColorVariance( QColor color);
             void setParticleEndColorVarianceAlpha( int alpha);
+            void setParticleEndColorVarianceAlpha( double alpha);
+            void setParticleEndColorVarianceRed( double red);
+            void setParticleEndColorVarianceGreen( double green);
+            void setParticleEndColorVarianceBlue( double blue);
 
             void setParticlesColor( QColor startColor, QColor startColorVariance);
             void setParticlesColor( QColor startColor, QColor startColorVariance, QColor endColor, QColor endColorVariance);

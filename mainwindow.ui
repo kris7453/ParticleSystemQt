@@ -322,7 +322,7 @@ QPushButton:hover{background-color:#525252;}</string>
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="properties">
            <property name="styleSheet">
@@ -361,7 +361,7 @@ QPushButton:hover{background-color:#525252;}</string>
 QLabel{font: 16px bold 'Arial';color:#fff;}</string>
               </property>
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="motion">
                <property name="styleSheet">

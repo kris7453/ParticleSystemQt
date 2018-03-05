@@ -119,11 +119,11 @@ void resourceItemWidget::createElements()
     layerDownBtn->setMaximumSize(12,12);
     layerDownBtn->setIcon(icon->arrowDown);
 
-    renameBtn = new QPushButton("R",this);
+    renameBtn = new QPushButton(this);
     renameBtn->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     renameBtn->setMinimumSize(24,24);
     renameBtn->setMaximumSize(24,24);
-    //renameBtn->setIcon(icon->close);
+    renameBtn->setIcon(icon->edit);
 }
 
 void resourceItemWidget::connectElements()

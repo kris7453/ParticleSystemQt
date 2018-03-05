@@ -21,7 +21,8 @@ struct _icon
             arrowDown,
             hidden,
             visible,
-            close;
+            close,
+            edit;
     _icon()
     {
         arrowUp = QIcon(QString(":/icons/upArrow.png"));
@@ -29,6 +30,7 @@ struct _icon
         hidden = QIcon(QString(":/icons/unvisible.png"));
         visible = QIcon(QString(":/icons/visible.png"));
         close = QIcon(QString(":/icons/cross.png"));
+        edit = QIcon(QString(":/icons/edit.png"));
     }
 };
 
@@ -36,7 +38,7 @@ class QdrawableListWidget : public QObject
 {
     Q_OBJECT
     public:
-        QdrawableListWidget( QListWidget *list);
+        QdrawableListWidget( QListWidget *list, QWidget *parametersWidget);
         ~QdrawableListWidget();
 
         void setController(PSystemAPI::pDrawItemsController *value);
@@ -76,6 +78,8 @@ signals:
         void setActive(PSystemAPI::pDrawableItem *active, int activeRow);
 
     private:
+        QWidget *parametersWidget;
+
         QPushButton *activeLayerUp;
         QPushButton *activeLayerDown;
         QPushButton *activeVisibility;

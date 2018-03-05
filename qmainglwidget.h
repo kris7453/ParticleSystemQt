@@ -37,7 +37,6 @@ class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
         explicit QmainGLWidget(QWidget *parent = 0);
         ~QmainGLWidget();
 
-        void addParticleSystem(PSystemAPI::pParticleSystem *pSystem = nullptr);
         void addParticleSystem(QString *resourceImagePath, QString name);
 
     signals:

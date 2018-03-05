@@ -30,7 +30,7 @@ class QparametersController : public QObject
         explicit QparametersController( QToolBox *emiterMode, QWidget *drawableWidget,
                                         QWidget *gravityWidget, QWidget *radialWidget, QWidget *outlookWidget,
                                         QLabel *texturePath, QPushButton *textureButton, QPushButton *addSystemButton,
-                                        QmainGLWidget *mainGLWidget, QObject *parent = 0);
+                                        QMenu *mainMenu, QmainGLWidget *mainGLWidget, QObject *parent = 0);
 
         void setDrawableController(PSystemAPI::pDrawItemsController *controller);
         void changeValues(PSystemAPI::pDrawableItem *item);

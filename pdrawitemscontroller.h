@@ -29,10 +29,10 @@ namespace PSystemAPI
             void saveLastPosition();
             void translatePosition( QVector2D position);
 
-            void addDefaultParticleSystem( QString name = QString("Default"), QString *resourceImagePath = nullptr );
-            void addParticleSystem(pParticleSystem *pSystem = nullptr);
+            pParticleSystem *addDefaultParticleSystem( QString name = QString("Default"), QString *resourceImagePath = nullptr );
+            void addParticleSystemFromFile(QString filePath, QString name);
             void addParticleSystem(QString *resourceImagePath, QString name);
-
+            void saveParticleSystemToFile(QString filePath);
             void setActiveItemTexture( QString texturePath);
 
             int deleteItem( pDrawableItem *item);

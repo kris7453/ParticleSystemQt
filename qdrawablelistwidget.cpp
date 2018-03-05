@@ -2,7 +2,7 @@
 
 _icon *QdrawableListWidget::icon;
 
-QdrawableListWidget::QdrawableListWidget(QListWidget *list) : list(list)
+QdrawableListWidget::QdrawableListWidget(QListWidget *list, QWidget *parametersWidget) : list(list), parametersWidget(parametersWidget)
 {
     if( icon == nullptr )
         icon = new _icon();
@@ -85,6 +85,8 @@ void QdrawableListWidget::setActiveItemDesc(PSystemAPI::pDrawableItem *item)
         activeClose->setEnabled(true);
         activeLayerUp->setEnabled(true);
         activeLayerDown->setEnabled(true);
+
+        parametersWidget->setEnabled(true);
     }
     else
     {
@@ -94,6 +96,8 @@ void QdrawableListWidget::setActiveItemDesc(PSystemAPI::pDrawableItem *item)
         activeClose->setEnabled(false);
         activeLayerUp->setEnabled(false);
         activeLayerDown->setEnabled(false);
+
+        parametersWidget->setEnabled(false);
     }
 }
 
@@ -117,7 +121,8 @@ void QdrawableListWidget::changeItemVisibility(resourceItemWidget *item)
     }
 }
 
-void QdrawableListWidget::closeItem(resourceItemWidget *item)
+void QdrawableListWidget::
+closeItem(resourceItemWidget *item)
 {
     PSystemAPI::pDrawableItem *itemP = item == nullptr ? activeItem : item->getItemPointer();
     item = item == nullptr ? getWidgetFromPosition(activeItemRow) : item;

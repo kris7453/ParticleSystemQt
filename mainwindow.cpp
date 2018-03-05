@@ -13,6 +13,7 @@ QWidget *MainWindow::outlook;
 QLabel *MainWindow::texturePath;
 QPushButton *MainWindow::textureButton;
 QPushButton *MainWindow::addSystemButton;
+QMenu *MainWindow::mainMenu;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,10 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::CustomizeWindowHint);
 
-    QMenu *a = new QMenu();
-    a->addAction("Plik");
-
-    ui->mainMenu->setMenu(a);
+    mainMenu = new QMenu();
+    ui->mainMenu->setMenu(mainMenu);
 
     //---------------------------------------------------------------------------------------
 
@@ -34,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     radialParameters = ui->radialMode;
     outlook = ui->outlookScrollArea;
 
-    drawableListWidget = new QdrawableListWidget(ui->resourcesList);
+    drawableListWidget = new QdrawableListWidget(ui->resourcesList, ui->sideBar->widget(0));
     drawableListWidget->setActiveWidgets(ui->activeLayerUpBtn,
                                          ui->activeLayerDownBtn,
                                          ui->activeVisibilityBtn,
