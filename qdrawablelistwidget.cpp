@@ -7,6 +7,8 @@ QdrawableListWidget::QdrawableListWidget(QListWidget *list, QWidget *parametersW
     if( icon == nullptr )
         icon = new _icon();
 
+    parametersWidget->setEnabled(false);
+
     resourceItemWidget::setListWidgetPointer(this);
 
     connect( this, &QdrawableListWidget::changeVisibility, this, &QdrawableListWidget::changeItemVisibility);
@@ -43,6 +45,7 @@ void QdrawableListWidget::setController(PSystemAPI::pDrawItemsController *value)
 {
     controller = value;
     connect( controller, &PSystemAPI::pDrawItemsController::activeChanged, this, &QdrawableListWidget::setActive);
+    controller->setFirstItemAsActive();
 }
 
 void QdrawableListWidget::setActiveItem(PSystemAPI::pDrawableItem *value)
@@ -115,14 +118,10 @@ void QdrawableListWidget::changeItemVisibility(resourceItemWidget *item)
     item->changeVisibilityIcon(isVisible);
 
     if (itemP == activeItem)
-    {
-        qDebug() << "QdrawableListWidget::changeItemVisibility at position " << activeItemRow;
         setActiveItemVisibilityIcon(isVisible);
-    }
 }
 
-void QdrawableListWidget::
-closeItem(resourceItemWidget *item)
+void QdrawableListWidget::closeItem(resourceItemWidget *item)
 {
     PSystemAPI::pDrawableItem *itemP = item == nullptr ? activeItem : item->getItemPointer();
     item = item == nullptr ? getWidgetFromPosition(activeItemRow) : item;
@@ -150,17 +149,14 @@ void QdrawableListWidget::changeItemLayer(resourceItemWidget *item, int layerDir
         resourceItemWidget *rw = new resourceItemWidget(*item);
 
         QListWidgetItem *lw = list->takeItem(itemPosition);
-        //lw->setSizeHint(QSize(0,24));
-        list->insertItem( result, lw);qDebug() << "QdrawableListWidget::changeItemLayer inser item";
-        list->setItemWidget(lw, rw);qDebug() << "QdrawableListWidget::changeItemLayer set item widget";
+        list->insertItem( result, lw);
+        list->setItemWidget(lw, rw);
 
-        qDebug() << "QdrawableListWidget::changeItemLayer new position " << result;
         if ( itemP == activeItem)
             activeItemRow = result;
         else
             if( result == activeItemRow )
                 activeItemRow += layerDirection * (-1);
-        qDebug() << "QdrawableListWidget::changeItemLayer active position " << activeItemRow;
     }
 }
 

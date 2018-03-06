@@ -122,9 +122,7 @@ namespace PSystemAPI
             void setSpeedVariance(short variance);
 
             void setGravityX( int x);
-            void setGravityXVariance( int variance);
             void setGravityY( int y);
-            void setGravityYVariance( int variance);
 
             void setRadialAccValue( short acceleration);
             void setRadialAccVariance(short variance);
@@ -177,9 +175,7 @@ namespace PSystemAPI
             int getSpeedVariance();
 
             int getGravityX();
-            int getGravityXVariance();
             int getGravityY();
-            int getGravityYVariance();
 
             int getRadialAccValue();
             int getRadialAccVariance();
@@ -216,6 +212,7 @@ namespace PSystemAPI
             int     maxParticles;
             float   timeElapsed;
             float   simulatingTime;
+            float   restartTime;
             float   spawnRate; // emission rate
             float   spawnTimeSpan;
             QTimer  *spawnTimer;

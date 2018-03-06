@@ -261,22 +261,10 @@ namespace PSystemAPI
             activeSystem->setGravityX(x);
     }
 
-    void pDrawItemsController::setGravityXVariance(int variance)
-    {
-        if ( activeSystem != nullptr )
-            activeSystem->setGravityXVariance(variance);
-    }
-
     void pDrawItemsController::setGravityY(int y)
     {
         if ( activeSystem != nullptr )
             activeSystem->setGravityY(y);
-    }
-
-    void pDrawItemsController::setGravityYVariance(int variance)
-    {
-        if ( activeSystem != nullptr )
-            activeSystem->setGravityYVariance(variance);
     }
 
     void pDrawItemsController::setRadialAccValue(int acceleration)

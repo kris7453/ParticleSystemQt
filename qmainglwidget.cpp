@@ -8,11 +8,6 @@ QmainGLWidget::~QmainGLWidget()
 {
 }
 
-void QmainGLWidget::addParticleSystem(QString *resourceImagePath, QString name)
-{
-    itemsController->addParticleSystem(resourceImagePath, name);
-}
-
 void QmainGLWidget::initializeGL()
 {   
     oGLFunct = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
@@ -45,9 +40,6 @@ void QmainGLWidget::initializeGL()
 
     MainWindow::drawableListWidget->setController(itemsController);
 
-    addParticleSystem( new QString(":/particles/star.png"), QString("star"));
-    addParticleSystem( new QString(":/particles/ball.png"), QString("ball"));
-
     updateTime = new QTime();
     t = new QTimer(this);
     t->setInterval(1);
@@ -69,8 +61,8 @@ void QmainGLWidget::resizeGL(int w, int h)
     pixelSize.setX( 2.0f / w);
     pixelSize.setY( 2.0f / h);
 
-    qDebug()<< "pixels size " << pixelSize.x()  << " " << pixelSize.y();
-    qDebug() << "psize " << (50*pixelSize.x()*0.5) << " " << (50*pixelSize.y()*0.5);
+//    qDebug()<< "pixels size " << pixelSize.x()  << " " << pixelSize.y();
+//    qDebug() << "psize " << (50*pixelSize.x()*0.5) << " " << (50*pixelSize.y()*0.5);
 
     paintGL();
 }

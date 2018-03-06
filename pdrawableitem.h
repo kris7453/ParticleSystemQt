@@ -42,7 +42,6 @@ namespace PSystemAPI
             static QOpenGLFunctions_3_3_Core *oGLFunct;
             static GLuint bilboard;
 
-        //private:
             QVector2D position;
             QVector2D lastPosition;
             short angle;

@@ -58,6 +58,7 @@ namespace PSystemAPI
 
         timeElapsed = 0.0f;
         simulatingTime = 0.0f;
+        restartTime = 0.0f;
         durationTime = -1.0f;
         setSpawnRate(200);
         angle = 90;
@@ -71,7 +72,6 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
         pProperties.velocity = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180)) * pProperties.speed;
 
         pProperties.gravity = QVector2D(0,0);
-        pVariances.gravity = QVector2D(0,0);
 
         pProperties.radialAccValue = 0;
         pVariances.radialAccValue = 0;
@@ -488,9 +488,6 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
 
         pProperties.velocity = QVector2D(cos(angleInRadians),sin(angleInRadians)) * speed;
 
-        QVector2D gravityVariance = QVector2D(rand()%(2*static_cast<int>(pVariances.gravity.x())+1) - pVariances.gravity.x(),
-                                         rand()%(2*static_cast<int>(pVariances.gravity.y())+1) - pVariances.gravity.y());
-
         short radialAccValue = pProperties.radialAccValue + ( rand() % (2*pVariances.radialAccValue+1) - pVariances.radialAccValue);
         short tangentialAccValue = pProperties.tangentialAccValue + ( rand() % (2*pVariances.tangentialAccValue+1) - pVariances.tangentialAccValue);
 
@@ -563,7 +560,7 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
 
         // Gravity
         pbuffer->values.velocity = pProperties.velocity;
-        pbuffer->values.gravity = pProperties.gravity + gravityVariance;
+        pbuffer->values.gravity = pProperties.gravity;
         pbuffer->values.radialAccValue = radialAccValue;
         pbuffer->values.tangentialAccValue = tangentialAccValue;
 
@@ -586,18 +583,21 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     {
         if ( durationTime > 0 && simulatingTime < durationTime )
             simulatingTime += deltaT;
-//qDebug() << name <<  " simulating time " << simulatingTime << " for " << durationTime << " durationTime";
+        else
+            if (restartTime < 3.0f)
+                restartTime += deltaT;
+            else
+                restartTime = simulatingTime = 0.0f;
+
         if ( simulatingTime < durationTime || durationTime == -1 )
-        {//qDebug() <<" simulate " ;
+        {
             timeElapsed += deltaT;
 
             for( ; timeElapsed >= spawnTimeSpan && !isFull() ; timeElapsed -= spawnTimeSpan)
                 spawnParticle();
         }
 
-
         particles->updateParticles(deltaT);
-        //qDebug() << particles->getAliveParticlesCount() << " alive particles";
     }
 
     void pParticleSystem::draw()
@@ -849,7 +849,7 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     }
 
     void pParticleSystem::setParticlesColor(QColor startColor, QColor startColorVariance, QColor endColor, QColor endColorVariance )
-    {qDebug() << "start color " << startColor;
+    {
         this->pProperties.startColor = startColor;
         this->pProperties.endColor = endColor;
         this->pVariances.startColor = startColorVariance;
@@ -931,19 +931,16 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     void pParticleSystem::setAngle(short angle)
     {
         this->angle = angle;
-//        this->velocityDirection = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180));
-//        this->pProperties.velocity = velocityDirection* pProperties.speed;
     }
 
     void pParticleSystem::setAngleVariance(short variance)
-    {qDebug() << name <<" set angle to " << variance;
+    {
         this->angleVariance = variance;
     }
 
     void pParticleSystem::setSpeed(short speed)
     {
         this->pProperties.speed = speed;
-//        this->pProperties.velocity =  velocityDirection * pProperties.speed;
     }
 
     void pParticleSystem::setSpeedVariance(short variance)
@@ -956,19 +953,9 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
         this->pProperties.gravity.setX( x);
     }
 
-    void pParticleSystem::setGravityXVariance(int variance)
-    {
-        this->pVariances.gravity.setX( variance);
-    }
-
     void pParticleSystem::setGravityY(int y)
     {
         this->pProperties.gravity.setY( y);
-    }
-
-    void pParticleSystem::setGravityYVariance(int variance)
-    {
-        this->pVariances.gravity.setY( variance);
     }
 
     void pParticleSystem::setRadialAccValue(short acceleration)
@@ -1036,13 +1023,11 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     void pParticleSystem::setSrcBlendingFactor(int factor)
     {
         srcBlendingFactor = factor;
-        qDebug()<<name <<" now using src " << srcBlendingFactor << " dst " << dstBlendingFactor;
     }
 
     void pParticleSystem::setDstBlendingFactor(int factor)
     {
         dstBlendingFactor = factor;
-        qDebug()<<name <<" now using src " << srcBlendingFactor << " dst " << dstBlendingFactor;
     }
 
     QColor pParticleSystem::getParticleStartColor()
@@ -1165,19 +1150,9 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
         return pProperties.gravity.x();
     }
 
-    int pParticleSystem::getGravityXVariance()
-    {
-        return pVariances.gravity.x();
-    }
-
     int pParticleSystem::getGravityY()
     {
         return pProperties.gravity.y();
-    }
-
-    int pParticleSystem::getGravityYVariance()
-    {
-        return pVariances.gravity.y();
     }
 
     int pParticleSystem::getRadialAccValue()

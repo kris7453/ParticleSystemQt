@@ -76,9 +76,7 @@ namespace PSystemAPI
             void setSpeed(int speed);
             void setSpeedVariance(int variance);
             void setGravityX( int x);
-            void setGravityXVariance( int variance);
             void setGravityY( int y);
-            void setGravityYVariance( int variance);
             void setRadialAccValue( int acceleration);
             void setRadialAccVariance( int variance);
             void setTangentialAccValue( int acceleration);

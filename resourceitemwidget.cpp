@@ -47,15 +47,11 @@ resourceItemWidget::resourceItemWidget(resourceItemWidget &item) : QWidget(item.
     connectElements();
     createButtonsConnections();
     changeVisibilityIcon( itemPointer->isVisible() );
-
-    qDebug() << "resourceItemWidget::resourceItemWidget copy itemWidget";
 }
 
 resourceItemWidget::~resourceItemWidget()
 {
     clearButtonsConnections();
-
-    qDebug() << "resourceItemWidget::~resourceItemWidget destroyed item named " << name;
 }
 
 void resourceItemWidget::changeVisibilityIcon( bool isVisible)
@@ -152,11 +148,11 @@ void resourceItemWidget::clearElementsConnections()
 
 void resourceItemWidget::createButtonsConnections()
 {
-    visibilityConnection = connect(visibilityBtn, &QPushButton::clicked, [this](){qDebug()<<"resourceItemWidget::visibilityBtn  ";emit listWidgetPointer->changeVisibility(this);});
-    closeConnection = connect(closeBtn, &QPushButton::clicked, [this](){qDebug()<<"resourceItemWidget::closeBtn  ";emit listWidgetPointer->close(this);});
-    layerUpConnection = connect(layerUpBtn, &QPushButton::clicked, [this](){qDebug()<<"resourceItemWidget::layerUpBtn ";emit listWidgetPointer->layerUp(this);});
-    layerDownConnection = connect(layerDownBtn, &QPushButton::clicked, [this](){qDebug()<<"resourceItemWidget::layerDownBtn ";emit listWidgetPointer->layerDown(this);});
-    changeNameConnection = connect(renameBtn, &QPushButton::clicked, [this](){qDebug()<<"resourceItemWidget::renameBtn ";
+    visibilityConnection = connect(visibilityBtn, &QPushButton::clicked, [this](){ emit listWidgetPointer->changeVisibility(this);});
+    closeConnection = connect(closeBtn, &QPushButton::clicked, [this](){ emit listWidgetPointer->close(this);});
+    layerUpConnection = connect(layerUpBtn, &QPushButton::clicked, [this](){ emit listWidgetPointer->layerUp(this);});
+    layerDownConnection = connect(layerDownBtn, &QPushButton::clicked, [this](){ emit listWidgetPointer->layerDown(this);});
+    changeNameConnection = connect(renameBtn, &QPushButton::clicked, [this](){
         bool ok;
         QString name = QInputDialog::getText(this, tr("Nowa nazwa"), tr("Podaj nazwę obiektu"), QLineEdit::Normal,QString(), &ok);
 
@@ -166,7 +162,7 @@ void resourceItemWidget::createButtonsConnections()
             resourceName->setText(name);
             emit listWidgetPointer->changeName(this, name);
         }
-        });
+    });
 }
 
 void resourceItemWidget::clearButtonsConnections()

@@ -29,9 +29,22 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
 
     // Reset position button
 
-    resetPositionButton = new QPushButton(tr("Resetuj pozycję"), drawableWidget);
+    QWidget *resetButtonsWidget = new QWidget(drawableWidget);
+    QHBoxLayout *resetButtonsLayout = new QHBoxLayout(resetButtonsWidget);
 
+    resetButtonsLayout->setContentsMargins(0,0,0,0);
+    resetButtonsLayout->setSpacing(4);
+
+    resetPositionButton = new QPushButton(tr("Resetuj pozycję"), resetButtonsWidget);
+    resetPositionButton->setMinimumHeight(24);
     connect(resetPositionButton, &QPushButton::clicked, [this](){ controller->resetSystemPosition(); });
+
+    resetSystemButton = new QPushButton(tr("Resetuj system"),resetButtonsWidget);
+    resetSystemButton->setMinimumHeight(24);
+    connect(resetSystemButton, &QPushButton::clicked, [this](){ controller->resetSystem(); });
+
+    resetButtonsLayout->addWidget(resetPositionButton);
+    resetButtonsLayout->addWidget(resetSystemButton);
 
 
     // Colors widgets
@@ -110,7 +123,7 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
 
     // Other controllers
 
-    int controllersCount = 15;
+    int controllersCount = 14;
     values = new rangeParameterVarianceWidget *[controllersCount]
     {
         new rangeParameterVarianceWidget("Kąt + rozbierzność", "", -180, 180, "", 0, 180, range::angle, drawableWidget),
@@ -118,8 +131,7 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
 
         new rangeParameterVarianceWidget("Rozbierzność pozycji X/Y", "", 0, 2000, "", 0, 2000, range::position, gravityWidget),
         new rangeParameterVarianceWidget("Prędkość + rozbierzność", "", -2000, 2000, "", 0, 1000, range::speed, gravityWidget),
-        new rangeParameterVarianceWidget("Grawitacja X + rozbierzność", "", -1000, 1000, "", 0, 1000, range::gravityX, gravityWidget),
-        new rangeParameterVarianceWidget("Grawitacja Y + rozbierzność", "", -1000, 1000, "", 0, 1000, range::gravityY, gravityWidget),
+        new rangeParameterVarianceWidget("Grawitacja X/Y", "", -1000, 1000, "", 0, 1000, range::gravity, gravityWidget),
         new rangeParameterVarianceWidget("Przyspieszenie promieniowe + rozbierzność", "", -1000, 1000, "", 0, 1000, range::radialAccValue, gravityWidget),
         new rangeParameterVarianceWidget("Przyspieszenie styczne + rozbierzność", "", -1000, 1000, "", 0, 1000, range::tangentialAccValue, gravityWidget),
 
@@ -163,7 +175,7 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
     QLayout *layout;
 
     layout = drawableWidget->layout();
-    layout->addWidget(resetPositionButton);
+    layout->addWidget(resetButtonsWidget);
     layout->addWidget(systemProperties[0]); // duration time
     layout->addWidget(systemProperties[1]); // spawning rate
     layout->addWidget(systemProperties[2]); // max particles
@@ -173,8 +185,7 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
     layout = gravityWidget->layout();
     layout->addWidget(values[range::position]); // main = x, variance = y
     layout->addWidget(values[range::speed]);
-    layout->addWidget(values[range::gravityX]);
-    layout->addWidget(values[range::gravityY]);
+    layout->addWidget(values[range::gravity]);
     layout->addWidget(values[range::radialAccValue]);
     layout->addWidget(values[range::tangentialAccValue]);
     layout->addItem(new QSpacerItem( 0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
@@ -251,7 +262,6 @@ void QparametersController::changeValues(PSystemAPI::pDrawableItem *item)
         return;
 
     values[range::angle]->setFirstValue(item->getAngle());
-    //qDebug() << "Set angle to " << item->getAngle();
 }
 
 void QparametersController::changeValues(PSystemAPI::pParticleSystem *system)
@@ -275,10 +285,8 @@ void QparametersController::changeValues(PSystemAPI::pParticleSystem *system)
     values[range::position]->setSecondValue(system->getPositionVarianceY());
     values[range::speed]->setFirstValue(system->getSpeed());
     values[range::speed]->setSecondValue(system->getSpeedVariance());
-    values[range::gravityX]->setFirstValue(system->getGravityX());
-    values[range::gravityX]->setSecondValue(system->getGravityXVariance());
-    values[range::gravityY]->setFirstValue(system->getGravityY());
-    values[range::gravityY]->setSecondValue(system->getGravityYVariance());
+    values[range::gravity]->setFirstValue(system->getGravityX());
+    values[range::gravity]->setSecondValue(system->getGravityY());
     values[range::radialAccValue]->setFirstValue(system->getRadialAccValue());
     values[range::radialAccValue]->setSecondValue(system->getRadialAccVariance());
     values[range::tangentialAccValue]->setFirstValue(system->getTangentialAccValue());
@@ -323,8 +331,7 @@ void QparametersController::setMainValue(int itemId, double value)
 
         case range::position: controller->setPositionVarianceX(value); break;
         case range::speed: controller->setSpeed(value); break;
-        case range::gravityX: controller->setGravityX(value); break;
-        case range::gravityY: controller->setGravityY(value); break;
+        case range::gravity: controller->setGravityX(value); break;
         case range::radialAccValue: controller->setRadialAccValue(value); break;
         case range::tangentialAccValue: controller->setTangentialAccValue(value); break;
 
@@ -356,8 +363,7 @@ void QparametersController::setVarianceValue(int itemId, double value)
 
         case range::position: controller->setPositionVarianceY(value); break;
         case range::speed: controller->setSpeedVariance(value); break;
-        case range::gravityX: controller->setGravityXVariance(value); break;
-        case range::gravityY: controller->setGravityYVariance(value); break;
+        case range::gravity: controller->setGravityY(value); break;
         case range::radialAccValue: controller->setRadialAccVariance(value); break;
         case range::tangentialAccValue: controller->setTangentialAccVariance(value); break;
 

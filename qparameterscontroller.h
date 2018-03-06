@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QHBoxLayout>
 #include <QToolBox>
 #include <QComboBox>
 #include <QSpacerItem>
@@ -50,8 +51,7 @@ class QparametersController : public QObject
 
             position,
             speed,
-            gravityX,
-            gravityY,
+            gravity,
             radialAccValue,
             tangentialAccValue,
 
@@ -77,6 +77,7 @@ class QparametersController : public QObject
 
         QLabel *texturePath;
         QPushButton *resetPositionButton;
+        QPushButton *resetSystemButton;
 
         rangeParameterWidget **systemProperties;
         rangeParameterVarianceWidget **values;

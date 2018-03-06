@@ -8,7 +8,7 @@ namespace PSystemAPI
     pDrawableItem::pDrawableItem(QString *resourceImagePath, QString name) : name(name)
     {
         particleSystem = false;
-        qDebug()<< "resource image " <<resourceImagePath;
+
         texture = new QOpenGLTexture(QImage((resourceImagePath != nullptr) ? *resourceImagePath : QString(":/particles/star.png")).mirrored());
         texture->generateMipMaps();
         texture->setMinificationFilter(QOpenGLTexture::Nearest);
