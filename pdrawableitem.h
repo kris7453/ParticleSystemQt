@@ -36,6 +36,7 @@ namespace PSystemAPI
             void setTexture( QString *imagePath);
 
             QString getName();
+            QString getTexturePath();
             int getAngle();
 
         protected:
@@ -50,6 +51,7 @@ namespace PSystemAPI
             GLuint propertiesBuffer;
 
             QOpenGLTexture *texture;
+            QString texturePath;
             QString name;
 
             bool visibility;

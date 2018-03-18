@@ -103,7 +103,7 @@ namespace PSystemAPI
     {
         pParticle *particle = buffer;
         GLfloat *bufferParticle = particlesBuffer;
-        //qDebug() << "load particles";
+
         for( int i = 0; i < aliveParticles; i++, particle++, bufferParticle += STRIDE_SIZE)
         {
             *bufferParticle     = particle->position.x();
@@ -115,8 +115,6 @@ namespace PSystemAPI
             *(bufferParticle+5) = particle->color.y();
             *(bufferParticle+6) = particle->color.z();
             *(bufferParticle+7) = particle->color.w();
-
-            //qDebug()<< *bufferParticle << " " << *(bufferParticle+1) << " " << *(bufferParticle+2) << " " << *(bufferParticle+3) << " " << *(bufferParticle+4) << " " << *(bufferParticle+5) << " " << *(bufferParticle+6) << " " << *(bufferParticle+7) << " " << particle->life;
         }
     }
 

@@ -49,7 +49,7 @@ class QmainGLWidget : public QOpenGLWidget,protected QOpenGLFunctions
 
         QPoint mouseClickPosition;
 
-        QTimer *t;
+        QTimer *updateInterval;
         QTime *updateTime;
         int lastUpdate;
         QOpenGLFunctions_3_3_Core *oGLFunct;

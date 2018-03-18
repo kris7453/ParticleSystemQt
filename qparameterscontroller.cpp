@@ -55,7 +55,7 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
                 new QPushButton("Kolor startowy", outlookWidget),
                 new rangeParameterWidget("Kanał alfa", 0,255,range::startColorAlpha, outlookWidget)),
         new std::pair<QPushButton*,rangeParameterWidget*>(
-                new QPushButton("Kolor startowy rozbierzność", outlookWidget),
+                new QPushButton("Kolor startowy rozbieżność", outlookWidget),
                 new rangeParameterWidget("Kanał alfa", 0,255,range::startColorAlpha, outlookWidget)),
         new std::pair<QPushButton*,rangeParameterWidget*>(
                 new QPushButton("Kolor końcowy", outlookWidget),
@@ -74,33 +74,49 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
     connect(colorWidget[0]->first, &QPushButton::clicked, [this]()
     {
         QColor color = QColorDialog::getColor(controller->getActiveSystem()->getParticleStartColor());
-        controller->setParticleStartColor(color);
-        color.setAlpha(static_cast<int>(colorWidget[0]->second->getValue()));
-        colorButtonSetColor(colorWidget[0],"Kolor startowy : ",color);
+
+        if (color.isValid())
+        {
+            controller->setParticleStartColor(color);
+            color.setAlpha(static_cast<int>(colorWidget[0]->second->getValue()));
+            colorButtonSetColor(colorWidget[0],"Kolor startowy : ",color);
+        }
     });
 
     connect(colorWidget[1]->first, &QPushButton::clicked, [this]()
     {
         QColor color = QColorDialog::getColor(controller->getActiveSystem()->getParticleStartColorVariance());
-        controller->setParticleStartColorVariance(color);
-        color.setAlpha(static_cast<int>(colorWidget[1]->second->getValue()));
-        colorButtonSetColor(colorWidget[1],"Kolor startowy rozbierzność : ",color);
+
+        if (color.isValid())
+        {
+            controller->setParticleStartColorVariance(color);
+            color.setAlpha(static_cast<int>(colorWidget[1]->second->getValue()));
+            colorButtonSetColor(colorWidget[1],"Kolor startowy rozbieżność : ",color);
+        }
     });
 
     connect(colorWidget[2]->first, &QPushButton::clicked, [this]()
     {
         QColor color = QColorDialog::getColor(controller->getActiveSystem()->getParticleEndColor());
-        controller->setParticleEndColor(color);
-        color.setAlpha(static_cast<int>(colorWidget[2]->second->getValue()));
-        colorButtonSetColor(colorWidget[2],"Kolor końcowy : ",color);
+
+        if (color.isValid())
+        {
+            controller->setParticleEndColor(color);
+            color.setAlpha(static_cast<int>(colorWidget[2]->second->getValue()));
+            colorButtonSetColor(colorWidget[2],"Kolor końcowy : ",color);
+        }
     });
 
     connect(colorWidget[3]->first, &QPushButton::clicked, [this]()
     {
         QColor color = QColorDialog::getColor(controller->getActiveSystem()->getParticleEndColorVariance());
-        controller->setParticleEndColorVariance(color);
-        color.setAlpha(static_cast<int>(colorWidget[3]->second->getValue()));
-        colorButtonSetColor(colorWidget[3],"Kolor końcowy rozbierzność : ",color);
+
+        if (color.isValid())
+        {
+            controller->setParticleEndColorVariance(color);
+            color.setAlpha(static_cast<int>(colorWidget[3]->second->getValue()));
+            colorButtonSetColor(colorWidget[3],"Kolor końcowy rozbieżność : ",color);
+        }
     });
 
     connect(colorWidget[0]->second, static_cast<void(rangeParameterWidget::*)(int,double)>(&rangeParameterWidget::valueChanged), this, &QparametersController::setMainValue);
@@ -126,23 +142,23 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
     int controllersCount = 14;
     values = new rangeParameterVarianceWidget *[controllersCount]
     {
-        new rangeParameterVarianceWidget("Kąt + rozbierzność", "", -180, 180, "", 0, 180, range::angle, drawableWidget),
-        new rangeParameterVarianceWidget("Czas życia cząstki(s) + rozbierzność", "", 0, 10, "", 0, 5, range::particleLife, drawableWidget),
+        new rangeParameterVarianceWidget("Kąt + rozbieżność", "", -180, 180, "", 0, 180, range::angle, drawableWidget),
+        new rangeParameterVarianceWidget("Czas życia cząstki(s) + rozbieżność", "", 0, 10, "", 0, 5, range::particleLife, drawableWidget),
 
-        new rangeParameterVarianceWidget("Rozbierzność pozycji X/Y", "", 0, 2000, "", 0, 2000, range::position, gravityWidget),
-        new rangeParameterVarianceWidget("Prędkość + rozbierzność", "", -2000, 2000, "", 0, 1000, range::speed, gravityWidget),
-        new rangeParameterVarianceWidget("Grawitacja X/Y", "", -1000, 1000, "", 0, 1000, range::gravity, gravityWidget),
-        new rangeParameterVarianceWidget("Przyspieszenie promieniowe + rozbierzność", "", -1000, 1000, "", 0, 1000, range::radialAccValue, gravityWidget),
-        new rangeParameterVarianceWidget("Przyspieszenie styczne + rozbierzność", "", -1000, 1000, "", 0, 1000, range::tangentialAccValue, gravityWidget),
+        new rangeParameterVarianceWidget("Rozbieżność pozycji X/Y", "", 0, 2000, "", 0, 2000, range::position, gravityWidget),
+        new rangeParameterVarianceWidget("Prędkość + rozbieżność", "", -2000, 2000, "", 0, 1000, range::speed, gravityWidget),
+        new rangeParameterVarianceWidget("Grawitacja X/Y", "", -1000, 1000, "", -1000, 1000, range::gravity, gravityWidget),
+        new rangeParameterVarianceWidget("Przyspieszenie promieniowe + rozbieżność", "", -1000, 1000, "", 0, 1000, range::radialAccValue, gravityWidget),
+        new rangeParameterVarianceWidget("Przyspieszenie styczne + rozbieżność", "", -1000, 1000, "", 0, 1000, range::tangentialAccValue, gravityWidget),
 
-        new rangeParameterVarianceWidget("Promień startowy + rozbierzność", "", -1000, 1000, "", 0, 1000, range::startRadius, radialWidget),
-        new rangeParameterVarianceWidget("Promień końcowy + rozbierzność", "", -1000, 1000, "", 0, 1000, range::endRadius, radialWidget),
-        new rangeParameterVarianceWidget("Obrotów/s (stopnie) + rozbierzność", "", -1000, 1000, "", 0, 1000, range::rotatePerSec, radialWidget),
+        new rangeParameterVarianceWidget("Promień startowy + rozbieżność", "", -1000, 1000, "", 0, 1000, range::startRadius, radialWidget),
+        new rangeParameterVarianceWidget("Promień końcowy + rozbieżność", "", -1000, 1000, "", 0, 1000, range::endRadius, radialWidget),
+        new rangeParameterVarianceWidget("Obrotów/s (stopnie) + rozbieżność", "", -1000, 1000, "", 0, 1000, range::rotatePerSec, radialWidget),
 
-        new rangeParameterVarianceWidget("Rozmiar startowy + rozbierzność", "", 0, 200, "", 0, 200, range::startSize, outlookWidget),
-        new rangeParameterVarianceWidget("Rozmiar końcowy + rozbierzność", "", 0, 200, "", 0, 200, range::endSize, outlookWidget),
-        new rangeParameterVarianceWidget("Obrót startowy (stopnie) + rozbierzność", "", -1000, 1000, "", 0, 1000, range::startSpin, outlookWidget),
-        new rangeParameterVarianceWidget("Obrót końcowy (stopnie) + rozbierzność", "", -1000, 1000, "", 0, 1000, range::endSpin, outlookWidget),
+        new rangeParameterVarianceWidget("Rozmiar startowy + rozbieżność", "", 0, 200, "", 0, 200, range::startSize, outlookWidget),
+        new rangeParameterVarianceWidget("Rozmiar końcowy + rozbieżność", "", 0, 200, "", 0, 200, range::endSize, outlookWidget),
+        new rangeParameterVarianceWidget("Obrót startowy (stopnie) + rozbieżność", "", -1000, 1000, "", 0, 1000, range::startSpin, outlookWidget),
+        new rangeParameterVarianceWidget("Obrót końcowy (stopnie) + rozbieżność", "", -1000, 1000, "", 0, 1000, range::endSpin, outlookWidget),
     };
 
     this->emiterMode = emiterMode;
@@ -260,7 +276,8 @@ void QparametersController::changeValues(PSystemAPI::pDrawableItem *item)
 {
     if (item == nullptr)
         return;
-
+    this->texturePath->setText(item->getTexturePath());
+    this->texturePath->setToolTip(item->getTexturePath());
     values[range::angle]->setFirstValue(item->getAngle());
 }
 
@@ -309,9 +326,9 @@ void QparametersController::changeValues(PSystemAPI::pParticleSystem *system)
     values[range::endSpin]->setSecondValue(system->getParticleEndSpinVariance());
 
     colorButtonSetColor(colorWidget[0], "Kolor startowy : ", system->getParticleStartColor());
-    colorButtonSetColor(colorWidget[1], "Kolor startowy rozbierzność : ", system->getParticleStartColorVariance());
+    colorButtonSetColor(colorWidget[1], "Kolor startowy rozbieżność : ", system->getParticleStartColorVariance());
     colorButtonSetColor(colorWidget[2], "Kolor końcowy : ", system->getParticleEndColor());
-    colorButtonSetColor(colorWidget[3], "Kolor końcowy rozbierzność : ", system->getParticleEndColorVariance());
+    colorButtonSetColor(colorWidget[3], "Kolor końcowy rozbieżność : ", system->getParticleEndColorVariance());
 
     int index = blendingWidget[0]->second->findData(system->getSrcBlendingFactor());
     blendingWidget[0]->second->setCurrentIndex(index == -1 ? 0 : index);
@@ -377,10 +394,10 @@ void QparametersController::setVarianceValue(int itemId, double value)
         case range::endSpin: controller->setParticleEndSpinVariance(value); break;
 
         case range::startColorAlpha: controller->setParticleStartColorVarianceAlpha(value);
-                                     colorButtonSetColor(colorWidget[1], "Kolor startowy rozbierzność : ", controller->getParticleStartColorVariance());
+                                     colorButtonSetColor(colorWidget[1], "Kolor startowy rozbieżność : ", controller->getParticleStartColorVariance());
                                      break;
         case range::endColorAlpha: controller->setParticleEndColorVarianceAlpha(value);
-                                   colorButtonSetColor(colorWidget[3], "Kolor końcowy rozbierzność : ", controller->getParticleEndColorVariance());
+                                   colorButtonSetColor(colorWidget[3], "Kolor końcowy rozbieżność : ", controller->getParticleEndColorVariance());
                                    break;
     }
 }

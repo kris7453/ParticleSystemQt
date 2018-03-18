@@ -7,14 +7,14 @@ QMyMenuBar::QMyMenuBar(QWidget *parent) : QWidget(parent), mainWindow(parent->pa
 void QMyMenuBar::mousePressEvent(QMouseEvent *e)
 {
     mouseLastPosition = e->pos();
-    qDebug() << mouseLastPosition.x() << " " << mouseLastPosition.y();
+    //qDebug() << mouseLastPosition.x() << " " << mouseLastPosition.y();
 }
 
 void QMyMenuBar::mouseMoveEvent(QMouseEvent *e)
 {
 
     QPoint p = e->pos();
-    qDebug() << p.x() << " " << p.y();
+    //qDebug() << p.x() << " " << p.y();
     p -= mouseLastPosition;
     mainWindow->move( mainWindow->pos()+p );
 }

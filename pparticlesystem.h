@@ -201,7 +201,6 @@ namespace PSystemAPI
             pBuffer     *particles;
 
             QVector2D   positionVariance;
-            QVector2D   velocityDirection;
             pSystemMode mode;
 
             short angleVariance;
@@ -211,11 +210,10 @@ namespace PSystemAPI
             float   durationTime;
             int     maxParticles;
             float   timeElapsed;
-            float   simulatingTime;
+            float   simulationTime;
             float   restartTime;
             float   spawnRate; // emission rate
             float   spawnTimeSpan;
-            QTimer  *spawnTimer;
 
             uint srcBlendingFactor;
             uint dstBlendingFactor;

@@ -8,6 +8,7 @@ namespace PSystemAPI
     pDrawableItem::pDrawableItem(QString *resourceImagePath, QString name) : name(name)
     {
         particleSystem = false;
+        texturePath = resourceImagePath != nullptr ? *resourceImagePath : QString("");
 
         texture = new QOpenGLTexture(QImage((resourceImagePath != nullptr) ? *resourceImagePath : QString(":/particles/star.png")).mirrored());
         texture->generateMipMaps();
@@ -86,6 +87,8 @@ namespace PSystemAPI
 
     void pDrawableItem::setTexture(QString *imagePath)
     {
+        texturePath = *imagePath;
+
         delete texture;
         texture = new QOpenGLTexture(QImage(*imagePath).mirrored());
         texture->generateMipMaps();
@@ -96,6 +99,11 @@ namespace PSystemAPI
     QString pDrawableItem::getName()
     {
         return name;
+    }
+
+    QString pDrawableItem::getTexturePath()
+    {
+        return texturePath;
     }
 
     int pDrawableItem::getAngle()

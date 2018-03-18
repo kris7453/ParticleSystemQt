@@ -57,18 +57,17 @@ namespace PSystemAPI
                           QColor(0, 0, 0, 0));
 
         timeElapsed = 0.0f;
-        simulatingTime = 0.0f;
+        simulationTime = 0.0f;
         restartTime = 0.0f;
         durationTime = -1.0f;
         setSpawnRate(200);
         angle = 90;
         angleVariance = 0;
-qDebug() << name << " duration time " << durationTime << " simulating time & max particles " << simulatingTime << " " << maxParticles;
+//qDebug() << name << " duration time " << durationTime << " simulating time & max particles " << simulationTime << " " << maxParticles;
         // Gravity
 
         pProperties.speed = 10;
         pVariances.speed = 0;
-        velocityDirection = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180));
         pProperties.velocity = QVector2D(cos(angle*M_PI/180),sin(angle*M_PI/180)) * pProperties.speed;
 
         pProperties.gravity = QVector2D(0,0);
@@ -581,15 +580,15 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
 
     void pParticleSystem::updateParticles(float deltaT)
     {
-        if ( durationTime > 0 && simulatingTime < durationTime )
-            simulatingTime += deltaT;
+        if ( durationTime > 0 && simulationTime < durationTime )
+            simulationTime += deltaT;
         else
             if (restartTime < 3.0f)
                 restartTime += deltaT;
             else
-                restartTime = simulatingTime = 0.0f;
+                restartTime = simulationTime = 0.0f;
 
-        if ( simulatingTime < durationTime || durationTime == -1 )
+        if ( simulationTime < durationTime || durationTime == -1 )
         {
             timeElapsed += deltaT;
 
@@ -640,7 +639,7 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     {
         particles->restart();
         timeElapsed = 0.0f;
-        simulatingTime = 0.0f;
+        simulationTime = 0.0f;
     }
 
     bool pParticleSystem::isFull()
@@ -676,9 +675,9 @@ qDebug() << name << " duration time " << durationTime << " simulating time & max
     }
 
     void pParticleSystem::setDurationTime(float time)
-    {qDebug()<< name << " set durration to " << time;
+    {//qDebug()<< name << " set durration to " << time;
         this->durationTime = time;
-        simulatingTime = 0.0f;
+        simulationTime = 0.0f;
         timeElapsed = 0.0f;
     }
 

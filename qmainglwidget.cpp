@@ -41,10 +41,10 @@ void QmainGLWidget::initializeGL()
     MainWindow::drawableListWidget->setController(itemsController);
 
     updateTime = new QTime();
-    t = new QTimer(this);
-    t->setInterval(1);
-    t->connect(t,SIGNAL(timeout()),this,SLOT(update()));
-    t->start();
+    updateInterval = new QTimer(this);
+    updateInterval->setInterval(1000.0f / 60);
+    updateInterval->connect(updateInterval,SIGNAL(timeout()),this,SLOT(update()));
+    updateInterval->start();
     updateTime->start();
 }
 
