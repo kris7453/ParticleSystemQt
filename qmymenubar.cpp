@@ -1,6 +1,6 @@
 #include "qmymenubar.h"
 
-QMyMenuBar::QMyMenuBar(QWidget *parent) : QWidget(parent), mainWindow(parent->parentWidget()), mouseLastPosition(QPoint(0,0))
+QMyMenuBar::QMyMenuBar(QWidget *parent) : QWidget(parent), mainWindow(parent->parentWidget()), mouseLastPosition(QPoint(0,0)), maximalized(false)
 {
 }
 
@@ -21,5 +21,16 @@ void QMyMenuBar::mouseMoveEvent(QMouseEvent *e)
 
 void QMyMenuBar::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    mainWindow->isMaximized() ? mainWindow->showNormal() : mainWindow->showMaximized();
+
+    if(!maximalized)
+    {
+        minSize = mainWindow->geometry();
+        QRect screen = QApplication::desktop()->availableGeometry(mainWindow);
+        mainWindow->setGeometry(screen);
+    }
+    else
+        mainWindow->setGeometry(minSize);
+
+    maximalized = !maximalized;
+    //mainWindow->isMaximized() ? mainWindow->showNormal() : mainWindow->showMaximized();
 }

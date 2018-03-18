@@ -129,7 +129,7 @@ QparametersController::QparametersController(QToolBox *emiterMode, QWidget *draw
     systemProperties = new rangeParameterWidget *[3]
     {
         new rangeParameterWidget("Czas trwania symulacji (s)[ -1 = nieskończoność ]", -1, 120, 0, drawableWidget),
-        new rangeParameterWidget("Tempo tworzenia cząstek / s", 0, 1000, 1, drawableWidget),
+        new rangeParameterWidget("Tempo tworzenia cząstek / s", 0, 10000, 1, drawableWidget),
         new rangeParameterWidget("Maksymalna liczba cząstek", 0, 10000, 2, drawableWidget)
     };
 

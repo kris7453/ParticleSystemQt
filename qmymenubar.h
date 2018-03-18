@@ -1,6 +1,8 @@
 #ifndef QMYMENUBAR_H
 #define QMYMENUBAR_H
 
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QMainWindow>
 #include <QObject>
 
@@ -22,6 +24,8 @@ public slots:
 
 private:
     QWidget *mainWindow;
+    bool maximalized;
+    QRect minSize;
     QPoint mouseLastPosition;
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);

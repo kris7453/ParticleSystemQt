@@ -155,10 +155,10 @@ namespace PSystemAPI
                         //gravity
 
                         if ( key == "sourcePositionVariancex" )
-                            setPositionVarianceX(reader.readElementText().toInt());
+                            setPositionVarianceX(abs(reader.readElementText().toInt()));
 
                         if ( key == "sourcePositionVariancey" )
-                            setPositionVarianceY(reader.readElementText().toInt());
+                            setPositionVarianceY(abs(reader.readElementText().toInt()));
 
                         if ( key == "speed" )
                             setSpeed(reader.readElementText().toShort());
