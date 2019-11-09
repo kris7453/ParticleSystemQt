@@ -7,7 +7,7 @@ The application allows the user to create particle systems based on Cocos Studio
 
 At first, you must load an existant particle system or create a new one from the menu placed in the left upper corner.
 
-![workingSpace](.\workspace.png "Application workspace")
+![workingSpace](./workspace.png "Application workspace")
 
 For every system, it is possible to set parameters like:
 - movement type (gravity/radial),
@@ -29,7 +29,7 @@ Program pozwala na tworzenie systemów cząsteczkowych w oparciu o systemy cząs
 
 Aby rozpocząć pracę nad systemem cząsteczkowym, należy załadować już istniejący system, bądź utworzyć nowy z dostępnej opcji widocznej w menu z prawej strony.
 
-![workingSpace](.\workspace.png "Przestrzeń robocza aplikacji")
+![workingSpace](./workspace.png "Przestrzeń robocza aplikacji")
 
 Dla każdego systemu można zmieniać takie opcje jak:
 - rodzaj ruchu (grawitacyjny/radialny),
