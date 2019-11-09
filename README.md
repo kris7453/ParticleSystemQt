@@ -1,11 +1,11 @@
 # Engineer's degree graduation work
 ## What does the app do?
 
-The application allows the user to create particle systems based on Cocos Studio engine particle systems. <abbr title="User Interface">UI</abbr> has been created with use of the Qt framework, while particle systems rendering has been done with OpenGL API.
+The application allows the user to create particle systems based on Cocos Studio engine particle systems. <abbr title="User Interface">UI</abbr> has been created with use of the Qt 5.6.3 framework, while particle systems rendering has been done with OpenGL API.
 
 ## How it works?
 
-At first, you must load an existant particle system or create a new one from the menu placed in the left upper corner.
+At first, you must load an existant particle system (left upper corner menu) or create a new one from the menu placed in the right side.
 
 ![workingSpace](./workspace.png "Application workspace")
 
@@ -19,7 +19,7 @@ For every of properties, you choose basic value and variance for new particles.
 
 ---
 # [PL]
-Projekt powstał na potrzeby pracy inżynierskiej. Interfejs użytkownika został wykonany z użyciem framework-a Qt, natomiast renderowanie systemów cząsteczkowych odbywało się z wykorzystaniem API OpenGL.
+Projekt powstał na potrzeby pracy inżynierskiej. Interfejs użytkownika został wykonany z użyciem framework-a Qt 5.6.3, natomiast renderowanie systemów cząsteczkowych odbywało się z wykorzystaniem API OpenGL.
 
 ## Co ta aplikacja robi?
 
@@ -27,7 +27,7 @@ Program pozwala na tworzenie systemów cząsteczkowych w oparciu o systemy cząs
 
 ## Jak rozpocząć pracę w programie?
 
-Aby rozpocząć pracę nad systemem cząsteczkowym, należy załadować już istniejący system, bądź utworzyć nowy z dostępnej opcji widocznej w menu z prawej strony.
+Aby rozpocząć pracę nad systemem cząsteczkowym, należy załadować już istniejący system (lewe górne menu), bądź utworzyć nowy z dostępnej opcji w menu z prawej strony.
 
 ![workingSpace](./workspace.png "Przestrzeń robocza aplikacji")
 
